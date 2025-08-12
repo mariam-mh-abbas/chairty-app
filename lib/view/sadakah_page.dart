@@ -46,17 +46,21 @@ class _SadakahPageState extends State<SadakahPage> {
               CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    leading: IconButton(onPressed: (){
-                      Navigator.pop(context);
-                    }, icon: Icon(Icons.arrow_back,color: AppColors.white
-                    ,)),
+                    leading: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: AppColors.white,
+                        )),
                     pinned: true,
                     floating: false,
                     backgroundColor: Color(0xff028174),
                     expandedHeight: 220,
                     flexibleSpace: FlexibleSpaceBar(
                       title: Padding(
-                        padding: const EdgeInsets.only(left:10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           "Sadakah",
                           style: TextStyle(
@@ -109,19 +113,22 @@ class _SadakahPageState extends State<SadakahPage> {
                           ),
                           Divider(color: AppColors.primary),
                           Padding(
-                            padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
-                            child: Text('set donaition amount', style: AppTextStyle.a),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 10),
+                            child: Text('set donaition amount',
+                                style: AppTextStyle.a),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 20, left: 10, right: 10),
+                            padding: const EdgeInsets.only(
+                                top: 20, left: 10, right: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: amounts.map((amount) {
                                 final isSelected = selectedamount == amount;
                                 return Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
                                     child: GestureDetector(
                                       onTap: () => updateAmount(amount),
                                       child: Container(
@@ -133,8 +140,10 @@ class _SadakahPageState extends State<SadakahPage> {
                                           color: isSelected
                                               ? AppColors.primary
                                               : AppColors.white,
-                                          border: Border.all(color: AppColors.primary),
-                                          borderRadius: BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color: AppColors.primary),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         alignment: Alignment.center,
                                         child: Text(
@@ -154,8 +163,8 @@ class _SadakahPageState extends State<SadakahPage> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 20, left: 10, right: 10),
+                            padding: const EdgeInsets.only(
+                                top: 20, left: 10, right: 10),
                             child: TextFormField(
                               cursorColor: AppColors.primary,
                               controller: amountin,
@@ -163,8 +172,10 @@ class _SadakahPageState extends State<SadakahPage> {
                               onChanged: onTextChanged,
                               validator: (value) {
                                 int val = int.tryParse(value ?? '') ?? 0;
-                                if (val > 1000) return "Amount must be less than 1000";
-                                if (val <= 0) return "Please enter a valid amount";
+                                if (val > 1000)
+                                  return "Amount must be less than 1000";
+                                if (val <= 0)
+                                  return "Please enter a valid amount";
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -173,7 +184,8 @@ class _SadakahPageState extends State<SadakahPage> {
                                 suffix: Text('\$'),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(color: AppColors.primary),
+                                  borderSide:
+                                      BorderSide(color: AppColors.primary),
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
@@ -208,15 +220,15 @@ class _SadakahPageState extends State<SadakahPage> {
                           ),
                           SizedBox(height: 40),
                           Column(
-                            
-                            
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 50),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
                                 child: ElevatedButton(
                                   onPressed: isValid
                                       ? () {
-                                          if (formkey.currentState!.validate()) {
+                                          if (formkey.currentState!
+                                              .validate()) {
                                             final amount = amountin.text;
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -251,7 +263,8 @@ class _SadakahPageState extends State<SadakahPage> {
                                 child: ElevatedButton(
                                   onPressed: isValid
                                       ? () {
-                                          if (formkey.currentState!.validate()) {
+                                          if (formkey.currentState!
+                                              .validate()) {
                                             final amount = amountin.text;
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -300,4 +313,3 @@ class _SadakahPageState extends State<SadakahPage> {
     );
   }
 }
-

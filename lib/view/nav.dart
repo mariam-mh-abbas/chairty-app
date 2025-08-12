@@ -12,7 +12,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final Color _unselectedColor = Colors.white;
 
   final List<Widget> _pages = [
-    Center(child: Text('الصفحة الرئيسية', style: TextStyle(color: Colors.white))),
+    Center(
+        child: Text('الصفحة الرئيسية', style: TextStyle(color: Colors.white))),
     Center(child: Text('صفحة التبرع', style: TextStyle(color: Colors.white))),
     Center(child: Text('صندوق الخير', style: TextStyle(color: Colors.white))),
     Center(child: Text('طلب المساعدة', style: TextStyle(color: Colors.white))),

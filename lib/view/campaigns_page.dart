@@ -6,6 +6,7 @@ import 'package:charity_project/view/donate_campaigns_page.dart';
 import 'package:charity_project/view/donation_categories_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 final List<Map<String, dynamic>> Donaition = [
   {
     'category': 'Campaigns',
@@ -51,11 +52,11 @@ final List<Map<String, dynamic>> Donaition = [
     ],
   },
 ];
- 
+
 class CampaignsPage extends StatefulWidget {
   final String category;
 
-  const CampaignsPage({super.key,required this.category});
+  const CampaignsPage({super.key, required this.category});
 
   @override
   State<CampaignsPage> createState() => _CampaignsPageState();
@@ -67,9 +68,9 @@ class _CampaignsPageState extends State<CampaignsPage> {
   @override
   void initState() {
     super.initState();
-    
-     campaignCategories = Donaition
-        .firstWhere((element) => element['category'] == widget.category)['tabs']
+
+    campaignCategories = Donaition.firstWhere(
+            (element) => element['category'] == widget.category)['tabs']
         .cast<Map<String, String>>();
   }
 
@@ -97,7 +98,7 @@ class _CampaignsPageState extends State<CampaignsPage> {
           child: TabBarView(
             children: campaignCategories.map((tab) {
               final id = tab['id'];
-              return DonaitionCategoryViewPage(Category:widget. category);
+              return DonaitionCategoryViewPage(Category: widget.category);
             }).toList(),
           ),
         ),
