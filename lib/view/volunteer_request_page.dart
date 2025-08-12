@@ -1,104 +1,234 @@
-import 'dart:math';
 
+import 'dart:math';
+import 'package:charity_project/helpers/app_language.dart';
+
+import 'package:charity_project/model/VolunteerRequestModel.dart';
+import 'package:charity_project/service/VolunteerRequestService.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/charity_fund_page.dart';
 import 'package:charity_project/view/input_decoraition.dart';
-import 'package:charity_project/view/sadakah_page.dart';
-import 'package:flutter/material.dart';
 
+ 
 class VolunteerRequestPage extends StatefulWidget {
+  
    VolunteerRequestPage({super.key});
-final formkey = GlobalKey<FormState>();
+  
 
   @override
   State<VolunteerRequestPage> createState() => _VolunteerRequestPageState();
+  
 }
 
 class _VolunteerRequestPageState extends State<VolunteerRequestPage> {
-  TextEditingController firstname = TextEditingController();
-TextEditingController lastname = TextEditingController();
-TextEditingController birthDate = TextEditingController();
-TextEditingController address = TextEditingController();
-TextEditingController job = TextEditingController();
-TextEditingController phoneNumber = TextEditingController();
-TextEditingController details = TextEditingController();
-TextEditingController experiencedetails = TextEditingController();
-String? selectedEducation;
-String? experience;
-String? Time;
-DateTime? selectedDate;
-String? gender ;
-bool FieldWork = false;
-bool Administrative = false;
-bool Awareness = false;
-bool Media = false;
-bool Design = false;
-bool Technical = false;
-bool Sunday = false;
-bool Monday = false;
-bool Tuesday = false;
-bool Wednisdey = false;
-bool Thursday = false;
-bool Friday = false;
-bool Saturday = false;
-bool Agree = false;
-List<String> study = [
-  "School Student","University Student","Diploma","Bachelor's Degree","Master's Degree","None"
-];
+  final TextEditingController firstname = TextEditingController();
+  final TextEditingController lastname = TextEditingController();
+  final TextEditingController birthDate = TextEditingController();
+  final TextEditingController address = TextEditingController();
+  final TextEditingController job = TextEditingController();
+  final TextEditingController phoneNumber = TextEditingController();
+  final TextEditingController details = TextEditingController();
+  final TextEditingController experiencedetails = TextEditingController();
+Volunteerrequestservice volunteerrequestservice = Volunteerrequestservice();
+  String? selectedEducation;
+  String? Time;
+  DateTime? selectedDate;
+  String? gender;
+  bool hasPreviousExperience = false;
+  bool FieldWork = false;
+  bool Administrative = false;
+  bool Awareness = false;
+  bool Media = false;
+  bool Design = false;
+  bool Technical = false;
+  bool Sunday = false;
+  bool Monday = false;
+  bool Tuesday = false;
+  bool Wednesday = false;
+  bool Thursday = false;
+  bool Friday = false;
+  bool Saturday = false;
+  bool Agree = false;
 
+  final List<String> study = [
+    "School Student",
+    "University Student",
+    "Diploma",
+    "Bachelor's Degree",
+    "Master's Degree",
+    "None"
+  ];
 
-void pickedBirthDate ()async {
-  DateTime? pickedDate = await showDatePicker(context: context,
-  initialDate: DateTime.now(),
-   firstDate: DateTime(1900), lastDate: DateTime.now(),
-   
-   
-    builder: (BuildContext context, Widget? child) {
-      return Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: ColorScheme.light(
-            primary:AppColors.primary, // لون الترويسة والأزرار
-            onPrimary: Colors.white,    // لون النص فوق اللون الأساسي
-            onSurface: Colors.black,    // لون النص الأساسي
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary, // لون زر "CANCEL" و "OK"
+  void pickedBirthDate() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppColors.primary,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.primary,
+              ),
             ),
           ),
-        ),
-        child: child!,
-      );
-    },
+          child: child!,
+        );
+      },
+    );
 
-   );
-if (pickedDate != null) {
-  setState(() {
-    selectedDate = pickedDate;
-    birthDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-  });
-}
+    if (pickedDate != null) {
+      setState(() {
+        selectedDate = pickedDate;
+        birthDate.text =
+            "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+      });
+    }
+  }
+ 
+  bool isVolunteerTypeSelected() {
+    return FieldWork || Administrative || Awareness || Media || Design || Technical;
+  }
 
-}
-void submitForm(){
-  if (formkey.currentState!.validate()) {
-  Navigator.push((context), MaterialPageRoute(builder: (context)=> CharityFundPage()));
+  bool isDaySelected() {
+    return Sunday || Monday || Tuesday || Wednesday || Thursday || Friday || Saturday;
+  }
+
+  List<String> _getSelectedVolunteerTypes(bool isArabic) {
+    List<String> types = [];
+    if (FieldWork) types.add(isArabic ? "ميداني" : "FieldWork");
+    if (Administrative) types.add(isArabic ? "إداري" :"Administrative");
+    if (Awareness) types.add(isArabic ? "توعوي" :"Awareness");
+    if (Media) types.add(isArabic ? "إعلامي" :"Media");
+    if (Design) types.add(isArabic ? "تصميم" :"Design");
+    if (Technical) types.add(isArabic ? "تقني":"Technical");
+    return types;
+  }
+
+  List<String> _getSelectedDays(bool isArabic) {
+    List<String> days = [];
+    if (Sunday) days.add(isArabic ? "الأحد" :"Sunday");
+    if (Monday) days.add(isArabic ? "الاثنين" :"Monday");
+    if (Tuesday) days.add(isArabic ? "الثلاثاء" :"Tuesday");
+    if (Wednesday) days.add(isArabic ? "الأربعاء" :"Wednesday");
+    if (Thursday) days.add(isArabic ? "الخميس":"Thursday");
+    if (Friday) days.add(isArabic ? "الجمعة":"Friday");
+    if (Saturday) days.add(isArabic ? "السبت" :"Saturday");
+    return days;
+  }
+String getLocalizedGender(bool isArabic) {
+  switch (gender) {
+    case "ذكر":
+    case "Male":
+      return isArabic ? "ذكر" : "Male";
+    case "أنثى":
+    case "Female":
+      return isArabic ? "أنثى" : "Female";
+    default:
+      return gender ?? '';
   }
 }
+String getLocalizedTime(bool isArabic) {
+  switch (Time) {
+    case "صباحاً":
+    case "Morning":
+      return isArabic ? "صباحاً" : "Morning";
+    case "مساءً":
+    case "Evening":
+      return isArabic ?"مساءً" : "Evening";
+    case "طوال اليوم":
+    case "All Day":
+      return isArabic ? "طوال اليوم" : "All Day";
+    default:
+      return Time ?? '';
+  }
+}
+ final formKey = GlobalKey<FormState>();
+  void submitForm() async {
+    if (!formKey.currentState!.validate()) {
+      return; 
+    }
+    if (!Agree) {
+      showError('You must agree to the terms and conditions.');
+      return;
+    }
+    if (gender == null) {
+      showError('Please select your gender.');
+      return;
+    }
+    if (!isVolunteerTypeSelected()) {
+      showError('Please select at least one volunteering type.');
+      return;
+    }
+    if (!isDaySelected()) {
+      showError('Please select at least one available day.');
+      return;
+    }
+    if (Time == null) {
+      showError('Please select a preferred volunteering time.');
+      return;
+    }
+    if (selectedEducation == null) {
+      showError('Please select your study qualification.');
+      return;
+    }
+    
 
+    final model = VolunteerRequestModel(
+      fullName: "${firstname.text} ${lastname.text}",
+      gender: getLocalizedGender(LangHelper.isArabic(context)),
+      birthDate: birthDate.text,
+      address: address.text,
+      studyQualification: selectedEducation!,
+      job: job.text.isNotEmpty ? job.text : null,
+      preferredTimes: getLocalizedTime(LangHelper.isArabic(context)),
+      hasPreviousVolunteer: hasPreviousExperience,
+      previousVolunteer:
+          hasPreviousExperience ? experiencedetails.text : null,
+      phone: "0${phoneNumber.text}",
+      notes: details.text.isNotEmpty ? details.text : null,
+      days: _getSelectedDays(LangHelper.isArabic(context)),
+      types: _getSelectedVolunteerTypes(LangHelper.isArabic(context)),
+    );
+
+    try {
+      await volunteerrequestservice.VolunteerRequestService(model);
+      PaymentResultDialog.showSuccessVolunteerRequest(context);
+
+    } catch (e) {
+      showError('Submission failed: $e');
+    }
+  }
+
+  void showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg).tr(), backgroundColor: Colors.red),
+    );
+  }
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
                 backgroundColor: AppColors.white,
-                title: Text('Volunteer Request',style: AppTextStyle.a,),
+                title: Text('Volunteer Request'.tr(),style: AppTextStyle.a,),
               ),
       body: BackgroundWrapper(
         child: Form(
-          key: formkey,
+          key: formKey,
           child: Column(
             children: [
               
@@ -109,7 +239,7 @@ void submitForm(){
                     children: [
                          Padding(
                         padding: const EdgeInsets.only(top:5,left: 20,right: 20),
-                        child: Text('Full Name',style: AppTextStyle.helpReq,),
+                        child: Text('Full Name'.tr(),style: AppTextStyle.helpReq,),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -122,12 +252,18 @@ void submitForm(){
                     
                     controller: firstname,
                     decoration: AppInputDecoration.defaultDecoration.copyWith(
-                  label: Text("First Name")
+                  label: Text("First Name".tr())
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'please enter your first name';
+                        return 'please enter your first name'.tr();
                       }
+                    if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                      ? "من فضلك اكتب الاسم الأول باللغة العربية"
+                      : "Please enter your first name in English";
+                }
+                     
                       return null;
                     },
                   
@@ -143,12 +279,18 @@ void submitForm(){
                     
                     controller: lastname,
                     decoration: AppInputDecoration.defaultDecoration.copyWith(
-                               label: Text("Last Name")
+                               label: Text("Last Name".tr())
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'please enter your last name';
+                        return 'please enter your last name'.tr();
                       }
+                      if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                      ?"من فضلك اكتب الاسم الآخر باللغة العربية"
+                      : "please enter your last name in English";
+                }
+                      
                       return null;
                     },
                                
@@ -165,17 +307,17 @@ void submitForm(){
                 children: [
                     Padding(
                 padding: const EdgeInsets.only(top:5,left: 20,right: 20),
-                child: Text('Gender : ',style: AppTextStyle.helpReq,),
+                child: Text('Gender :'.tr(),style: AppTextStyle.helpReq,),
                           ),
                           Padding(
                 padding: const EdgeInsets.only(top:7),
                 child: Row(
                   children: [
                     Radio(activeColor: AppColors.primary,
-                      value: "male", groupValue: gender, onChanged: (val)=>setState(() {
+                      value: "Male", groupValue: gender, onChanged: (val)=>setState(() {
                       gender =val as String;
                     })),
-                    Text("male")
+                    Text("Male").tr()
                   ],
                 ),
                           ),
@@ -185,11 +327,11 @@ void submitForm(){
                   child: Row(
                     children: [
                       Radio(activeColor: AppColors.primary,
-                        value: "female", groupValue: gender, onChanged: (val)=>setState(() {
+                        value: "Female", groupValue: gender, onChanged: (val)=>setState(() {
                         gender =val as String;
                       })
                       ),
-                      Text("female")
+                      Text("Female").tr()
                     ],
                   ),
                 ),]
@@ -208,7 +350,7 @@ void submitForm(){
                     readOnly: true,
                     validator: (value) {
                       if (selectedDate == null) {
-                        return 'please enter your date';
+                        return 'please enter your Birthdate'.tr();
                       }
                       return null;
                     },
@@ -221,7 +363,7 @@ void submitForm(){
                    children: [
                       Padding(
                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 20),
-                 child: Text('Your address',style: AppTextStyle.helpReq,),
+                 child: Text('Your Address'.tr(),style: AppTextStyle.helpReq,),
                            ),
                      Padding(
                        padding:  const EdgeInsets.only(left: 20,right: 20),
@@ -230,13 +372,20 @@ void submitForm(){
                         maxLines: 2,
                        keyboardType: TextInputType.text,
                          decoration: AppInputDecoration.defaultDecoration.copyWith(
-                         label: Text("Your address")
+                         label: Text("Your Address".tr())
                            
                          ),
                          validator: (value) {
                            if (value == null || value.isEmpty) {
-                             return 'please enter your address';
+                             return 'please enter your address'.tr();
                            }
+
+                            if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                    ? "من فضلك اكتب العنوان باللغة العربية"
+                      : "please enter your address in English";
+                }
+                       
                          },
                        ),
                      ),
@@ -248,20 +397,20 @@ void submitForm(){
                    children: [
                       Padding(
                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,),
-                 child: Text('Volunteer Qualifications:',style: AppTextStyle.helpReq,),
+                 child: Text('Volunteer Qualifications:'.tr(),style: AppTextStyle.helpReq,),
                            ),
                            SizedBox(height: 2,),
                             Padding(
                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10),
-                 child: Text('Study Qualification:',style: AppTextStyle.helpReq,),
+                 child: Text('Study Qualification:'.tr(),style: AppTextStyle.helpReq,),
                            ),
                            Padding(
                              padding:  const EdgeInsets.only(left: 20,right: 20),
                              child: DropdownButtonFormField(decoration: AppInputDecoration.defaultDecoration.copyWith(
-                               label: Text("Study")
+                               label: Text("Study".tr())
                              ),
                               value: selectedEducation,items: study.map((studyType){
-                             return DropdownMenuItem(child: Text(studyType),value: studyType,);
+                             return DropdownMenuItem(child: Text(studyType).tr(),value: studyType,);
                              }).toList()
                              , onChanged: (value)=>setState(() {
                                selectedEducation = value;
@@ -274,10 +423,23 @@ void submitForm(){
                         
                        keyboardType: TextInputType.text,
                          decoration: AppInputDecoration.defaultDecoration.copyWith(
-                         label: Text("Job (if you have):")
+                         label: Text("Job (if you have):".tr())
                            
                          ),
-                         
+                         validator: (value) {
+                          if (value!=null) {
+                             if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                         ?"من فضلك اكتب العنوان باللغة العربية"
+                      : "please enter your address in English";
+                }
+                          }
+                        else {
+                          return null;
+                        }
+                      
+                      
+                         },
                        ),
                      ),
                    ],
@@ -288,7 +450,7 @@ void submitForm(){
                 
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 20),
-                  child: Text('Preferred Volunteering Type:',style: AppTextStyle.helpReq,),
+                  child: Text('Preferred Volunteering Type:'.tr(),style: AppTextStyle.helpReq,),
                 ),
                 Row(
                   children: [
@@ -306,7 +468,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Field Work",style: AppTextStyle.helpReq,)
+                              Text("Field Work".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -324,7 +486,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Administrative",style: AppTextStyle.helpReq,)
+                              Text("Administrative".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -345,7 +507,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Awareness",style: AppTextStyle.helpReq,)
+                              Text("Awareness".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -373,7 +535,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Media",style: AppTextStyle.helpReq,)
+                              Text("Media".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -394,7 +556,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Design",style: AppTextStyle.helpReq,)
+                              Text("Design".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -413,7 +575,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Technical",style: AppTextStyle.helpReq,)
+                              Text("Technical".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -424,13 +586,13 @@ void submitForm(){
                 
                 Padding(
                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 18),
-                 child: Text('Availability and Preferred Time:',style: AppTextStyle.helpReq,),
+                 child: Text('Availability and Preferred Time:'.tr(),style: AppTextStyle.helpReq,),
                            ),
                            
       
       Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,),
-                  child: Text('Preferred Days:',style: AppTextStyle.helpReq,),
+                  child: Text('Preferred Days:'.tr(),style: AppTextStyle.helpReq,),
                 ),
                 Row(
                   children: [
@@ -448,7 +610,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Sunday",style: AppTextStyle.helpReq,)
+                              Text("Sunday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -466,7 +628,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Monday",style: AppTextStyle.helpReq,)
+                              Text("Monday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -487,7 +649,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Tuesday",style: AppTextStyle.helpReq,)
+                              Text("Tuesday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -504,13 +666,13 @@ void submitForm(){
                           child: Row(
                             children: [
                               Checkbox(activeColor: AppColors.primary,
-                                value: Wednisdey, onChanged: (val){
+                                value: Wednesday, onChanged: (val){
                                 setState(() {
-                                  Wednisdey = val!;
+                                  Wednesday = val!;
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Wednisday",style: AppTextStyle.helpReq,)
+                              Text("Wednesday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -533,11 +695,11 @@ void submitForm(){
                               Checkbox(activeColor: AppColors.primary,
                                 value: Thursday, onChanged: (val){
                                 setState(() {
-                                  Thursday = val!;
+                                  Thursday= val!;
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Thursday",style: AppTextStyle.helpReq,)
+                              Text("Thursday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -556,7 +718,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Friday",style: AppTextStyle.helpReq,)
+                              Text("Friday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -575,7 +737,7 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("Saturday",style: AppTextStyle.helpReq,)
+                              Text("Saturday".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
@@ -590,7 +752,7 @@ void submitForm(){
           children: [
             Padding(
                     padding: const EdgeInsets.only(top:10,left: 20,right: 20),
-                    child: Text('Preferred Time:',style: AppTextStyle.helpReq,),
+                    child: Text('Preferred Time:'.tr(),style: AppTextStyle.helpReq,),
                               ),
                     Row(
                     children: [
@@ -605,7 +767,7 @@ void submitForm(){
                             value: "Morning", groupValue: Time, onChanged: (val)=>setState(() {
                             Time =val as String;
                           })),
-                          Text("Morning")
+                          Text("Morning").tr()
                         ],
                       ),
                     ),
@@ -620,7 +782,7 @@ void submitForm(){
                             Time =val as String;
                           })
                           ),
-                          Text("Evening")
+                          Text("Evening").tr()
                         ],
                       ),
                     ),
@@ -634,7 +796,7 @@ void submitForm(){
                             Time =val as String;
                           })
                           ),
-                          Text("All Day")
+                          Text("All Day").tr()
                         ],
                       ),
                     ),
@@ -643,24 +805,27 @@ void submitForm(){
                     ),
           ],
         ),
-                
+           Padding(
+                 padding: const EdgeInsets.only(left: 20,right: 20,bottom:4,top: 18),
+                 child: Text('Previous Volunteering Experience: '.tr(),style: AppTextStyle.helpReq,),
+                           ),     
        Column(
          children: [
        Row(
                     children: [
                         Padding(
-                    padding: const EdgeInsets.only(top:5,left: 20,),
-                    child: Text('Previous Volunteering Experience: ',style: AppTextStyle.helpReq,),
+                    padding: const EdgeInsets.only(top:5,left: 20,right: 20),
+                    child: Text('Have you ever volunteered?'.tr(),style: AppTextStyle.helpReq,),
                               ),
                               Padding(
                     padding: const EdgeInsets.only(top:7),
                     child: Row(
                       children: [
                         Radio(activeColor: AppColors.primary,
-                          value: "True", groupValue: experience, onChanged: (val)=>setState(() {
-                          experience =val as String;
+                          value: true, groupValue: hasPreviousExperience, onChanged: (val)=>setState(() {
+                          hasPreviousExperience =val!;
                         })),
-                        Text("Yes")
+                        Text("Yes").tr()
                       ],
                     ),
                               ),
@@ -672,11 +837,11 @@ void submitForm(){
                       child: Row(
                         children: [
                           Radio(activeColor: AppColors.primary,
-                            value: "false", groupValue: experience, onChanged: (val)=>setState(() {
-                            experience =val as String;
+                            value: false, groupValue: hasPreviousExperience, onChanged: (val)=>setState(() {
+                            hasPreviousExperience =val! ;
                           })
                           ),
-                          Text("No")
+                          Text("No").tr()
                         ],
                       ),
                     ),
@@ -685,21 +850,27 @@ void submitForm(){
                     ]
                     ),
       
-      if (experience == "True")
+      if (hasPreviousExperience == true)
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
                   child: TextFormField(
                     controller: experiencedetails,
                     maxLines: 2,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     decoration: AppInputDecoration.defaultDecoration.copyWith(
-                      labelText: "Please mention your experience or organizations:",
+                      labelText: "Please mention your experience or organizations:".tr(),
                   
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                         return "Please mention your experience or organizations";
+                         return "Please mention your experience or organizations".tr();
                       }
+                       if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                    ?"من فضلك اكتب الخبرات والجهات باللغة العربية"
+                      : "please enter experience or organizations in English";
+                }
+                      
                     },
                   ),
                 ),
@@ -713,12 +884,12 @@ void submitForm(){
                  children: [
                     Padding(
                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10,top: 20),
-               child: Text('phone Number :',style: AppTextStyle.helpReq,),
+               child: Text('Phone Number'.tr(),style: AppTextStyle.helpReq,),
                          ),
                          
                          Padding(
                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 4),
-               child: Text('please make sure of the phone number ehere\nyou will be connected',style: AppTextStyle.helpReq,),
+               child: Text('please make sure of the phone number\nwehere you will be connected'.tr(),style: AppTextStyle.helpReq,),
                          ), 
                    Padding(
                      padding:  const EdgeInsets.only(left: 20,right: 20),
@@ -727,11 +898,11 @@ void submitForm(){
                       controller: phoneNumber,
                      keyboardType: TextInputType.number,
                        decoration: AppInputDecoration.defaultDecoration.copyWith(
-                         label: Text("Your phone number"),
+                         label: Text("Your phone number").tr(),
                         prefixIcon:
                           
                             Icon(Icons.phone),
-                            prefix :Text('+963')
+                            prefix :Text('+963').tr()
                           
                         
                       
@@ -739,13 +910,13 @@ void submitForm(){
                        ),
                        validator: (value) {
                          if (value == null || value.isEmpty) {
-                           return 'please enter your phone Number';
+                           return 'please enter your phone Number'.tr();
                          }
                          else if (value.length != 9){
-                          return 'it must be 9 numbers';
+                          return 'it must be 9 numbers'.tr();
                          }
                          else if (!RegExp(r'^\d{9}$').hasMatch(value)){
-                          return 'Only digits are allowed';
+                          return 'Only digits are allowed'.tr();
                          }
                           return null;
                        },
@@ -760,7 +931,7 @@ void submitForm(){
                    children: [
                       Padding(
                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 20),
-                 child: Text('Additional Notes or Details:',style: AppTextStyle.helpReq,),
+                 child: Text('Additional Notes or Details:'.tr(),style: AppTextStyle.helpReq,),
                            ),
                      Padding(
                        padding:  const EdgeInsets.only(left: 20,right: 20),
@@ -772,11 +943,21 @@ void submitForm(){
                          
                            
                          ),
-                        //  validator: (value) {
-                        //    if (value == null || value.isEmpty) {
-                        //      return 'please enter your address';
-                        //    }
-                        //  },
+                          validator: (value) {
+                          if (value!=null) {
+                             if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                         ?"من فضلك اكتب الملاحظات أو التفاصيل الإضافية باللغة العربية"
+                      : "please enter Additional Notes or Details in English";
+                }
+                          }
+                        else {
+                          return null;
+                        }
+                      
+                      
+                         },
+                        
                        ),
                      ),
                    ],
@@ -793,18 +974,18 @@ void submitForm(){
                                 });
                               }),
                               SizedBox(width: 10,),
-                              Text("I agree to the terms and conditions of\nvolunteering at the association.",style: AppTextStyle.helpReq,)
+                              Text("I agree to the terms and conditions of\nvolunteering at the association.".tr(),style: AppTextStyle.helpReq,)
                             ],
                           ),
                         ),
       
       
       Padding(
-                 padding:  EdgeInsets.only(left: 250,right: 20,top: 20),
+                 padding:  EdgeInsets.only(left: 230,right: 30,top: 20,bottom: 20),
                  child: ElevatedButton(onPressed: (){
                   
                   submitForm();
-                 }, child: Text('Next'),
+                 }, child: Text('Submit').tr(),
                  style: ElevatedButton.styleFrom(
                    backgroundColor: AppColors.primary,
                    fixedSize: Size(100, 40),

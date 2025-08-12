@@ -8,12 +8,11 @@ import 'package:charity_project/view/one_campaign_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/flutter_percent_indicator.dart';
- double raisedamount =1000;
- double goalamount = 1200;
-    final progress = (raisedamount / goalamount).clamp(0.0, 1.0);
+ 
 class DonaitionCategoryViewPage extends StatefulWidget {
-  const DonaitionCategoryViewPage({super.key,required this.Category});
+  const DonaitionCategoryViewPage({super.key,required this.Category,required this.categoryId});
 final String Category;
+final int categoryId;
   @override
   State<DonaitionCategoryViewPage> createState() => _DonaitionCategoryViewPageState();
 }
@@ -23,19 +22,19 @@ class _DonaitionCategoryViewPageState extends State<DonaitionCategoryViewPage> {
  
   @override
 Widget build(BuildContext context) {
-  if (widget.Category == "Campaigns") {
-    return CampaignViewPage();  }
-    else if(widget.Category == "HumanitarianCases"){
-      return HumanitariancasesViewPage();
+  if (widget.Category == "Campaign") {
+    return CampaignViewPage(categoryId:widget.categoryId,Category: widget.Category,);  }
+    else if(widget.Category == "HumanCase"){
+      return HumanitariancasesViewPage(categoryId:widget.categoryId,Category: widget.Category,);
     }
-    else if(widget.Category == "Sponsorships"){
-      return SponsorshipsViewPage();
+    else if(widget.Category == "Sponsorship"){
+      return SponsorshipsViewPage(categoryId:widget.categoryId,Category: widget.Category);
     }
   return Scaffold(
     
     body: 
         
-         Center(child: Text("لا يوجد بيانات")), // أو أي واجهة أخرى
+         Center(child: Text("No Data")), 
   );
 }
 }

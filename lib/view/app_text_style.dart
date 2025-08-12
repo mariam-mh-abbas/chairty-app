@@ -33,11 +33,25 @@ static const TextStyle agray = TextStyle(
     fontSize: 12,
 
   );
+  static const TextStyle c1 = TextStyle(
+    color: AppColors.primary,
+    fontWeight: FontWeight.w600,
+    fontSize: 12,
+
+  );
+
 
   static const TextStyle d = TextStyle(
     color: Color.fromARGB(148, 0, 0, 0),
     fontWeight: FontWeight.w600,
     fontSize: 15,
+
+  );
+
+  static const TextStyle emergency = TextStyle(
+    color: AppColors.primary,
+    fontWeight: FontWeight.w600,
+    fontSize: 12,
 
   );
 }

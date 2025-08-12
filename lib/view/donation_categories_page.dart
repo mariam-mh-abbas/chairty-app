@@ -1,10 +1,13 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/main.dart';
 import 'package:charity_project/view/Kaffarat_and_Sadaqah_view.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/before_inKind_donaition.dart';
-import 'package:charity_project/view/campaigns_page.dart';
+
+import 'package:charity_project/view/donaition_category_tabbar.dart';
 import 'package:charity_project/view/general_donaition_page.dart';
 import 'package:charity_project/view/homa_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DonationCategoriesPage extends StatelessWidget {
@@ -13,17 +16,21 @@ class DonationCategoriesPage extends StatelessWidget {
 List<Map<String,String>> DonationCategories = [
 
 {'title':'Campaigns',
+"backName":"Campaign",
 'image':"assets/images/camp.png"},
 
 {"title":'HumanitarianCases',
+"backName":"HumanCase",
 "image":"assets/images/aa.png"},
 
 
 {'title':'Kaffarat and Sadaqah',
+"backName":"kafarat",
 "image":"assets/images/kk.png"},
 
 
 {'title':'Sponsorships',
+"backName":"Sponsorship",
 "image":"assets/images/mmmm.png"},
 
 {'title':'General Donation',
@@ -52,7 +59,7 @@ List<Map<String,String>> DonationCategories = [
             // elevation: 5,
             // shadowColor: AppColors.unselected,
             title: Text(
-              'Donaition Categories',
+              'Donaition Categories'.tr(),
               style: TextStyle(
                   color: AppColors.primary, fontWeight: FontWeight.w700),
             ),
@@ -70,13 +77,13 @@ List<Map<String,String>> DonationCategories = [
        if (DonationCategories[index]["title"] == "Campaigns" ||
       DonationCategories[index]["title"] == "HumanitarianCases" || 
       DonationCategories[index]["title"] == "Sponsorships") {
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=> CampaignsPage(category: DonationCategories[index]["title"]!,)));
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=> DonaitionCategoryTabbar(category: DonationCategories[index]["backName"]!,title: DonationCategories[index]["title"]!,)));
                 }
              else if (DonationCategories[index]["title"]== "Kaffarat and Sadaqah"){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> KaffaratAndSadaqahView()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> KaffaratAndSadaqahView(Type:DonationCategories[index]["backName"]! ,)));
              }
              else if (DonationCategories[index]["title"]== "General Donation"){
-              //  Navigator.push(context, MaterialPageRoute(builder: (context)=> GeneralDonaitionPage()));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=> GeneralDonaitionPage()));
              }
              else if (DonationCategories[index]["title"]== "In-kind Donations"){
                Navigator.push(context, MaterialPageRoute(builder: (context)=> BeforeInkindDonaition()));
@@ -110,7 +117,7 @@ List<Map<String,String>> DonationCategories = [
                                     ),
                                   ] 
                                 ),
-                                Text(DonationCategories[index]['title']!,style: TextStyle(
+                                Text(DonationCategories[index]['title']!.tr(),style: TextStyle(
                                   color: AppColors.primary,fontWeight: FontWeight.w600
                                 ),)
                               ],

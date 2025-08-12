@@ -1,3 +1,4 @@
+import 'package:charity_project/view/input_decoraition.dart';
 import 'package:charity_project/view/pay_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:charity_project/app_colors.dart';
@@ -79,6 +80,7 @@ class _DonateWidgetState extends State<DonateWidget> {
           child: Form(
             key: formKey,
             child: TextFormField(
+
               controller: amountController,
               keyboardType: TextInputType.number,
               onChanged: onTextChanged,
@@ -89,18 +91,12 @@ class _DonateWidgetState extends State<DonateWidget> {
                 if (val <= 0) return "Please enter a valid amount";
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "Another amount",
-                suffix: const Text("\$"),
-                labelStyle: TextStyle(color: AppColors.primary),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(color: AppColors.primary),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
+              decoration: AppInputDecoration.defaultDecoration.copyWith(
+                      labelText: "Another amount",
+                      suffix: const Text("\$"),
+                  labelStyle: TextStyle(color: AppColors.primary),
+                    ),
+               
             ),
           ),
         ),
@@ -138,7 +134,7 @@ class _DonateWidgetState extends State<DonateWidget> {
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(content: Text("Paid $amount \$")),
                     // );
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage()));
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage()));
                   }
                 : null,
             style: ElevatedButton.styleFrom(
