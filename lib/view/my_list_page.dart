@@ -2,6 +2,7 @@ import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/profile_bloc/bloc/profile_bloc.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/view/Activity_Expanded.dart';
+import 'package:charity_project/view/ArchivedTabbarPage.dart';
 import 'package:charity_project/view/Settings_Expandable.dart';
 import 'package:charity_project/view/about_us_page.dart';
 import 'package:charity_project/view/background.dart';
@@ -195,6 +196,10 @@ class _MyListPageState extends State<MyListPage> {
                           ),
                           InkWell(
                             onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Archivedtabbarpage()));
                               // Navigator.push(
                               //     context,
                               //     MaterialPageRoute(

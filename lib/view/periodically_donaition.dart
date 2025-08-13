@@ -1,5 +1,9 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/model/CartItemModel.dart';
 import 'package:charity_project/view/background.dart';
+import 'package:charity_project/view/input_decoraition.dart';
+import 'package:charity_project/view/pay_details_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +17,7 @@ class PeriodicallyDonaition extends StatefulWidget {
 class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
 
   final List <int> amounts = [10,20,50,100];
-  final List <String> periodically = ['Daily','Weekly','Monthly'];
+  final List <String> periodically = ['daily','weekly','monthly'];
   int? selectedamount;
   String? selectedperiodically;
   final _formkey = GlobalKey<FormState>();
@@ -36,7 +40,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
  void onTextChanged(String value) {
     final entered = int.tryParse(value);
     setState(() {
-      selectedamount = (entered != null && entered < 1000) ? entered : null;
+      selectedamount = (entered != null  ) ? entered : null;
     });
   }
 
@@ -60,7 +64,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top:20),
-                child: Text('Periodically Donaition',style: TextStyle(color: AppColors.primary,fontSize: 20,fontWeight: FontWeight.w700),),
+                child: Text('Recurring Donation'.tr(),style: TextStyle(color: AppColors.primary,fontSize: 20,fontWeight: FontWeight.w700),),
               ),
               Padding(
                 padding: const EdgeInsets.only(top:20),
@@ -68,10 +72,10 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                   height: 100,width: 150,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Color(0xff32bfa0).withOpacity(0.5),
+                    color: Color(0xffeaf8f9),
                     
                   ),
-                  child: Image.asset('assets/images/mmm.png',height: 100,),
+                  child: Image.asset('assets/images/mmm.png',height: 100,color: AppColors.primary,),
           
                 ),
               ),
@@ -100,7 +104,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                 alignment: Alignment.center,
                 child: Center(
                   child: Text(
-                    "$period ",
+                    'period.$period'.tr(),
                     style: TextStyle(
                       color: isSelected ? Colors.white : AppColors.primary,
                       fontSize: 16,
@@ -114,20 +118,6 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                }).toList(),
              ),
            )
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
       
       
            ,Padding(
@@ -178,23 +168,17 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
               onChanged: onTextChanged,
               validator: (value) {
                 int val = int.tryParse(value ?? '') ?? 0 ;
-                if (val > 1000) return "Amount must be less than 1000";
-                    if (val <= 0) return "Please enter a valid amount";
+               
+                    if (val <= 0) return "Please enter a valid amount".tr();
                     return null;
-              },decoration: InputDecoration(
-                labelStyle: TextStyle(color: AppColors.primary),
-                labelText: "anouther amount",
-                suffix: Text('\$'),
-                
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(color: AppColors.primary)
-                )
-              , border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20)
-              )
-              
-              ),
+              }, decoration: AppInputDecoration
+                                        .paymentInput
+                                        .copyWith(
+                                      labelText: "Another amount".tr(),
+                                      suffix: const Text("\$"),
+                                      labelStyle:
+                                          TextStyle(color: AppColors.primary),)
+             ,
              ),
            ),
            SizedBox(height: 30,),
@@ -202,7 +186,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
             children: [
             Padding(
               padding: const EdgeInsets.only(left:20,right: 20),
-              child: Text('Total Amount :',style: TextStyle(
+              child: Text('Total Amount :'.tr(),style: TextStyle(
                 color: AppColors.black,fontSize: 20,fontWeight: FontWeight.w700,
               ),),
             ),
@@ -217,21 +201,26 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
        ElevatedButton(
                       onPressed: isValid
                           ? () {
-                              if (_formkey.currentState!.validate()) {
+                              if (_formkey.currentState!.validate()&& selectedamount != null) {
                                 final amount = amountin.text;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          "Paid $amount \$ (${selectedperiodically!})")),
+                                final item = CartItemModel(
+                                  name: "Recurring Donation".tr(),
+              Campainid: null,
+              boxId: null,
+              image:  null,
+              Amount: selectedamount,
+               donationType: "Recurring Donation",
+              periodic: selectedperiodically
                                 );
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage(paydetails: item)));
                               }
                             }
                           : null,
                       child: Row(
                         children: [
                           Icon(Icons.payment,color: AppColors.white,size: 30,),
-                           SizedBox(width: 33,),
-                          Text("Pay Now",style: TextStyle(fontSize: 16),),
+                           SizedBox(width: 20,),
+                          Text("Pay Now".tr(),style: TextStyle(fontSize: 16),),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
@@ -244,47 +233,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
       
       
       
-      
-      
-      
-      
-      SizedBox(height: 20,) ,
-      
-      
-      
-      
-      
-            ElevatedButton(
-              onPressed: isValid
-                  ? () {
-                      if (_formkey.currentState!.validate()) {
-                        final amount = amountin.text;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(
-                                  "Added $amount \$ to cart (${selectedperiodically!})")),
-                        );
-                      }
-                    }
-                  : null,
-              child: Row(
-                children: [
-                  Image.asset('assets/images/fund.png',color: AppColors.primary,height: 30,),
-                  SizedBox(width: 30,),
-                  Text("Add to Cart",style: TextStyle(fontSize: 16),),
-                ],
-              ),
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-      side: BorderSide(color: AppColors.primary,width: 2),
-                  borderRadius: BorderRadius.circular(25)
-                ),
-                backgroundColor: AppColors.white,
-                foregroundColor: AppColors.primary,
-                fixedSize: Size(250, 50)
-              ),
-              
-            ),
+  
                  
       
       

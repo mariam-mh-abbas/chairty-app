@@ -32,4 +32,35 @@ class AppInputDecoration {
       borderSide: BorderSide(color: Colors.red, width: 2),
     ),
   );
+
+
+
+   static InputDecoration get paymentInput => InputDecoration(
+    
+    labelStyle: TextStyle(color: AppColors.primary),
+    
+    suffixStyle: TextStyle(color: AppColors.primary),
+    filled: true,
+    fillColor: const Color.fromARGB(255, 248, 247, 245),
+    border: OutlineInputBorder(
+      
+      borderRadius: BorderRadius.circular(20),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: AppColors.primary, width: 2),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: Colors.red, width: 1.5),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: Colors.red, width: 2),
+    ),
+  );
 }
