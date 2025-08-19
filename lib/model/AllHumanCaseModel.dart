@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class AllHumancasesmodel {
-    final int id;
+    final int? id;
     final int? categoryId;
     final String? title;
     final String? description;
@@ -12,14 +12,14 @@ class AllHumancasesmodel {
     final int? remainingAmount;
 
     AllHumancasesmodel({
-        required this.id,
-        required this.categoryId,
-        required this.title,
-        required this.description,
-        required this.image,
-        required this.goalAmount,
-        required this.collectedAmount,
-        required this.remainingAmount,
+         this.id,
+         this.categoryId,
+         this.title,
+         this.description,
+         this.image,
+         this.goalAmount,
+         this.collectedAmount,
+         this.remainingAmount,
     });
 
     factory AllHumancasesmodel.fromJson(String str) => AllHumancasesmodel.fromMap(json.decode(str));
@@ -27,14 +27,14 @@ class AllHumancasesmodel {
     String toJson() => json.encode(toMap());
 
     factory AllHumancasesmodel.fromMap(Map<String, dynamic> json) => AllHumancasesmodel(
-        id: json["id"] ,
-        categoryId: json["category_id"] ?? "",
-        title: json["title"]?? "",
-        description: json["description"]?? "",
-        image: json["image"]?? "",
-        goalAmount: json["goal_amount"]?? "",
-        collectedAmount: json["collected_amount"]?? "",
-        remainingAmount: json["remaining_amount"]?? "",
+        id: json["id"] as int?,
+        categoryId: json["category_id"] as int?,
+        title: json["title"] as String?,
+        description: json["description"]as String?,
+        image: json["image"]as String?,
+        goalAmount: json["goal_amount"] as int?,
+        collectedAmount: json["collected_amount"]as int?,
+        remainingAmount: json["remaining_amount"]as int?,
     );
 
     Map<String, dynamic> toMap() => {

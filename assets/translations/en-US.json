@@ -127,6 +127,11 @@
           "monthly":"Monthly",
           "weekly":"Weekly"
      },
+     "selectedperiodically":{
+          "daily":"Daily",
+          "monthly":"Monthly",
+          "weekly":"Weekly"
+     },
      "Thank you for your donation!":"Thank you for your donation!",
      "Sorry !! You currently have no balance to donate": "Sorry !! You currently have no balance to donate",
      "Don't worry — even good intentions are rewarded!":"Don't worry — even good intentions are rewarded!",
@@ -371,6 +376,7 @@
     "Save your donations in the “Goodness Box”." : "Save your donations in the “Goodness Box”." ,
     "Track your impact with clear reports." : "Track your impact with clear reports." ,
     "Next" : "Next" ,
+    "select type of general donation" : "select type of general donation" ,
     "Get Started" : "Get Started" ,
     "Give What You Can" : "Give What You Can" ,
     "You don’t need money to help!" : "You don’t need money to help!" ,
@@ -396,5 +402,19 @@
     "" : "" ,
     "" : "" ,
     "" : "" ,
-    "Please enter a valid amount":"Please enter a valid amount"
+    "Please enter a valid amount":"Please enter a valid amount",
+    "Please sign in first to proceed.":"Please sign in first to proceed."  ,
+    "Thank you for your willingness to donate!" : "Thank you for your willingness to donate!",
+    "Go To LogIn Page" :  "Go To LogIn Page",
+    "We’re happy you’d like to volunteer with us!" : "We’re happy you’d like to volunteer with us!",
+    "We’re happy you’d like to benefit from our services!" : "We’re happy you’d like to benefit from our services!",
+    "Failed sending your volunteer request" : "Failed sending your volunteer request",
+    "please enter your monthly income" : "please enter your monthly income",
+    "Failed sending your help request" : "Failed sending your help request",
+    "Please enter" : "Please enter",
+    "Please select" : "Please select",
+    "All" : "All",
+    "please enter Recipient phone number" : "please enter Recipient phone number",
+    "please enter Recipient name" : "please enter Recipient name",
+    "Please enter amount to donate":"Please enter amount to donate"
 }

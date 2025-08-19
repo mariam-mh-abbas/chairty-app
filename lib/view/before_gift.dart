@@ -1,5 +1,7 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/gift_request.dart';
@@ -36,8 +38,15 @@ class BeforeGift extends StatelessWidget {
               ],
             ),
           ),
-      ElevatedButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> GiftRequest()));
+      ElevatedButton(onPressed: ()async{
+                                                              
+  final token = await SharedPrefs.getToken() ?? '';
+  if (token == null || token.isEmpty) {
+    return PaymentResultDialog.Guest(context);
+  } else {
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> GiftRequest()));
+  }
+     
       }, child: Text('Send a Gift').tr(),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,

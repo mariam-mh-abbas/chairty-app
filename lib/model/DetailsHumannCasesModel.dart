@@ -13,13 +13,13 @@ class Detailshumanncasesmodel {
 
     Detailshumanncasesmodel({
         required this.id,
-        required this.title,
-        required this.description,
-        required this.image,
-        required this.goalAmount,
-        required this.collectedAmount,
+         this.title,
+         this.description,
+         this.image,
+         this.goalAmount,
+         this.collectedAmount,
         required this.campaignId,
-        required this.remainingAmount,
+         this.remainingAmount,
     });
 
     factory Detailshumanncasesmodel.fromJson(String str) => Detailshumanncasesmodel.fromMap(json.decode(str));
@@ -28,13 +28,13 @@ class Detailshumanncasesmodel {
 
     factory Detailshumanncasesmodel.fromMap(Map<String, dynamic> json) => Detailshumanncasesmodel(
         id: json["id"],
-        title: json["title"] ?? "",
-        description: json["description"]?? "",
-        image: json["image"] ?? "",
-        goalAmount: json["goal_amount"]?? "",
-        collectedAmount: json["collected_amount"]?? "",
+        title: json["title"] as String?,
+        description: json["description"]as String?,
+        image: json["image"] as String?,
+        goalAmount: json["goal_amount"]as int?,
+        collectedAmount: json["collected_amount"]as int?,
         campaignId: json["campaign_id"],
-        remainingAmount: json["remaining_amount"]?? "",
+        remainingAmount: json["remaining_amount"]as int?,
     );
 
     Map<String, dynamic> toMap() => {

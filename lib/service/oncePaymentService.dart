@@ -23,6 +23,7 @@
 
 // }
 // once_payment_service.dart
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/core/api/api_resourses.dart';
 import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/view/homa_page.dart';
@@ -30,6 +31,7 @@ import 'package:dio/dio.dart';
 
 class Oncepaymentservice extends Baseservice {
   Future<bool> oncepaymentmethod(Map<String, dynamic> payedBody) async {
+     final token = await SharedPrefs.getToken() ?? '';
     try {
       responce = await dio.post(
         "$baseURL/${ApiResourses.OncePayment}",

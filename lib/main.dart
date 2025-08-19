@@ -184,6 +184,16 @@
 
 
 
+import 'package:charity_project/blocForApp/AllSponsorships/bloc/all_sponsorships_bloc_bloc.dart';
+import 'package:charity_project/blocForApp/ArchivedCampaigns/bloc/archived_campaigns_bloc.dart';
+import 'package:charity_project/blocForApp/ArchivedHumanCases/bloc/archived_humancases_bloc.dart';
+import 'package:charity_project/blocForApp/SponsorshipsByCategory/bloc/sponsorships_by_category_bloc_bloc.dart';
+import 'package:charity_project/blocForApp/SponsorshipsDetails/bloc/sponsorship_details_bloc.dart';
+import 'package:charity_project/blocForApp/blocDetailsCampaign/bloc/bloc_details_campaign_bloc.dart';
+import 'package:charity_project/blocForApp/blocEmergencyHumanCases/bloc/bloc_emergency_human_cases_bloc.dart';
+import 'package:charity_project/blocForApp/blocHomeCampaign/bloc/campaign_home_bloc.dart';
+import 'package:charity_project/blocForApp/blocHumanCaseByCategory/bloc/humancase_by_category_bloc.dart';
+import 'package:charity_project/blocForApp/blocHumanCaseDetails/bloc/bloc_humancase_details_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/blocs/change_language_bloc/bloc/change_langauge_bloc.dart';
 import 'package:charity_project/blocs/donation_bloc/bloc/donation_bloc.dart';
@@ -225,6 +235,7 @@ import 'package:charity_project/view/inKind_donaition_request.dart';
 
 import 'package:charity_project/view/periodically_donaition.dart';
 import 'package:charity_project/view/request_help_page.dart';
+import 'package:charity_project/view/splash_screen.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -288,7 +299,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => PeriodicallyDonaitionBloc()),
         BlocProvider(create: (context) => AllCampaignBloc()),
         BlocProvider(create: (context) => AllHumanCasesBloc()),
+         BlocProvider(create: (context) => AllSponsorshipsBlocBloc()),
+          BlocProvider(create: (context) => SponsorshipsByCategoryBlocBloc()),
+            BlocProvider(create: (context) => CampaignByCategoryIdBloc()),
+                BlocProvider(create: (context) => HumancaseByCategoryBloc()),
         BlocProvider(create: (context) => CampaignByCategoryIdBloc()),
+        BlocProvider(create: (context) => CampaignHomeBloc()),
+        BlocProvider(create: (context) => BlocDetailsCampaignBloc()),
+         BlocProvider(create: (context) => BlocHumancaseDetailsBloc()),
+         BlocProvider(create: (context) => SponsorshipDetailsBloc()),
+        BlocProvider(create: (context) => BlocEmergencyHumanCasesBloc()),
+        BlocProvider(create: (context) => ArchivedCampaignsBloc()),
+        BlocProvider(create: (context) => ArchivedHumancasesBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -298,7 +320,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
         debugShowCheckedModeBanner: false,
-        home: startPage,
+        home: startPage
       ),
     );
   }

@@ -32,10 +32,12 @@ return ListView.builder(
   itemCount: state.Emergencyhumancases.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                           final String imageUrl=state.Emergencyhumancases[index].image!;
-                          final String finalImage =Uri.parse("$baseUrlImage").resolve(imageUrl).toString();
-                          final collected = state.Emergencyhumancases[index].collectedAmount;
-                          final goal = state.Emergencyhumancases[index].goalAmount;
+                           final String? imageUrl=state.Emergencyhumancases[index].image!;
+                          final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
+    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+    : null;
+                          final collected = state.Emergencyhumancases[index].collectedAmount ?? 0;
+                          final goal = state.Emergencyhumancases[index].goalAmount ?? 0;
              int calculateDonationPercentage(int collectedAmount, int goalAmount) {
   if (goalAmount <= 0) return 0;
   int percent = ((collectedAmount / goalAmount) * 100).round();
@@ -45,7 +47,7 @@ return ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => OneHumanitariancasesViewPage(id: state.Emergencyhumancases[index].id),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => OneHumanitariancasesViewPage(id: state.Emergencyhumancases[index].id ?? 0),));
               },
               child: Container(
                 height: 180,
@@ -62,62 +64,73 @@ return ListView.builder(
                         width: 180,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
+                            image: finalImage != null 
+                           ? DecorationImage(
                                 image: NetworkImage(
                                    finalImage
                                 ),
-                                fit: BoxFit.cover)),
+                                fit: BoxFit.cover)
+                                : DecorationImage(
+                                image: AssetImage(
+                                   "assets/images/general.png"
+                                ),
+                                fit: BoxFit.cover)
+                                ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 4, left: 6, right: 5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(textmax(state.Emergencyhumancases[index].title, 20)
+                            Text(textmax(state.Emergencyhumancases[index].title ?? "Unknown", 24)
                               ,
                               style: AppTextStyle.emergency,
                             ),
                           
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 120),
-                                  child: Text( calculateDonationPercentage(collected, goal).toString()+"%"
-                                    ,
-                                    style: AppTextStyle.c,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 250,
-                                  child: LinearPercentIndicator(
-                                    maskFilter: MaskFilter.blur(BlurStyle.solid, 3),
-                                    linearGradient: LinearGradient(colors: [
-                                      AppColors.primary,
-                                      AppColors.teal
-                                    ]),
-                                    barRadius: Radius.circular(10),
-                                    curve: Curves.easeInOut,
-                                    clipLinearGradient: true,
-                                    lineHeight: 10,
-                                    // progressColor: AppColors.primary,
-                                    percent: goal > 0 ? (collected/goal) : 0.0,
-                                    animation: true,
-                                    animationDuration: 1000,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                          "\$${state.Emergencyhumancases[index].collectedAmount} / \$${state.Emergencyhumancases[index].goalAmount}",
-                                          style: AppTextStyle.c)
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                           Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    
+    Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10,right: 10),
+          child: Text(
+            "${calculateDonationPercentage(collected, goal)}%",
+            style: AppTextStyle.c,
+          ),
+        ),
+      ],
+    ),
+
+    SizedBox(
+      width: 250,
+      child: LinearPercentIndicator(
+        maskFilter: MaskFilter.blur(BlurStyle.solid, 3),
+        linearGradient: LinearGradient(colors: [
+          AppColors.primary,
+          AppColors.teal,
+        ]),
+        barRadius: Radius.circular(10),
+        curve: Curves.easeInOut,
+        clipLinearGradient: true,
+        lineHeight: 10,
+        percent: goal > 0 ? (collected / goal) : 0.0,
+        animation: true,
+        animationDuration: 1000,
+      ),
+    ),
+
+    Padding(
+      padding: const EdgeInsets.only(top: 4, left: 10,right: 10),
+      child: Text(
+        "\$${collected} / \$${goal}",
+        style: AppTextStyle.c,
+      ),
+    ),
+  ],
+),
                           ],
                         ),
                       )

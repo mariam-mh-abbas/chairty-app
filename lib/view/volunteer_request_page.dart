@@ -208,7 +208,7 @@ String getLocalizedTime(bool isArabic) {
       PaymentResultDialog.showSuccessVolunteerRequest(context);
 
     } catch (e) {
-      showError('Submission failed: $e');
+      showError("Failed sending your volunteer request");
     }
   }
 
@@ -427,16 +427,19 @@ String getLocalizedTime(bool isArabic) {
                            
                          ),
                          validator: (value) {
-                          if (value!=null) {
-                //              if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
-                //   return LangHelper.isArabic(context)
-                //          ?"من فضلك اكتب العنوان باللغة العربية"
-                //       : "please enter your address in English";
-                // }
+                          if (value == null || value.trim().isEmpty) {
+                            return null;
                           }
-                        else {
+                          
+                             if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                         ?"من فضلك اكتب المهنة باللغة العربية"
+                      : "please enter your job in English";
+                }
+                          
+                       
                           return null;
-                        }
+                        
                       
                       
                          },
@@ -943,20 +946,25 @@ String getLocalizedTime(bool isArabic) {
                          
                            
                          ),
-                          validator: (value) {
-                          if (value!=null) {
+
+                         validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return null;
+                          }
+                          
                              if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
                   return LangHelper.isArabic(context)
-                         ?"من فضلك اكتب الملاحظات أو التفاصيل الإضافية باللغة العربية"
+                       ?"من فضلك اكتب الملاحظات أو التفاصيل الإضافية باللغة العربية"
                       : "please enter Additional Notes or Details in English";
                 }
-                          }
-                        else {
+                          
+                       
                           return null;
-                        }
+                        
                       
                       
                          },
+                         
                         
                        ),
                      ),

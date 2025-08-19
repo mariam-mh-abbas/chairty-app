@@ -15,12 +15,12 @@ class Humancasebycategorymodel {
     Humancasebycategorymodel({
         required this.id,
         required this.categoryId,
-        required this.title,
-        required this.description,
-        required this.image,
-        required this.goalAmount,
-        required this.collectedAmount,
-        required this.remainingAmount,
+         this.title,
+         this.description,
+         this.image,
+         this.goalAmount,
+         this.collectedAmount,
+         this.remainingAmount,
        
     });
 
@@ -31,12 +31,12 @@ class Humancasebycategorymodel {
     factory Humancasebycategorymodel.fromMap(Map<String, dynamic> json) => Humancasebycategorymodel(
         id: json["id"] ,
         categoryId: json["category_id"] ,
-        title: json["title"] ?? "",
-        description: json["description"]?? "",
-        image: json["image"]?? "",
-        goalAmount: json["goal_amount"]?? "",
-        collectedAmount: json["collected_amount"]?? "",
-        remainingAmount: json["remaining_amount"]?? "",
+        title: json["title"] as String?,
+        description: json["description"] as String?,
+        image: json["image"] as String?,
+        goalAmount: json["goal_amount"]as int?,
+        collectedAmount: json["collected_amount"]as int?,
+        remainingAmount: json["remaining_amount"]as int?,
       
     );
 

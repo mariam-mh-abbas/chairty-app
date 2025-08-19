@@ -1,5 +1,7 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/model/CartItemModel.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/input_decoraition.dart';
 import 'package:charity_project/view/pay_details_page.dart';
@@ -94,10 +96,10 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                      child: GestureDetector(
               onTap: () => updatePeriod(period),
               child: Container(
-                height: 50,width: 70,
+                height: 55,width: 70,
                 padding: EdgeInsets.symmetric(vertical: 14),
                 decoration: BoxDecoration(
-                  color:  isSelected ? AppColors.primary : AppColors.white,
+                  color:  isSelected ? AppColors.primary : AppColors.input,
                   border: Border.all(color: AppColors.primary),
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -106,7 +108,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                   child: Text(
                     'period.$period'.tr(),
                     style: TextStyle(
-                      color: isSelected ? Colors.white : AppColors.primary,
+                      color: isSelected ? AppColors.input : AppColors.primary,
                       fontSize: 16,
                     ),
                   ),
@@ -135,7 +137,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                 height: 50,width: 70,
                 padding: EdgeInsets.symmetric(vertical: 14),
                 decoration: BoxDecoration(
-                  color:  isSelected ? AppColors.primary : AppColors.white,
+                  color:  isSelected ? AppColors.primary : AppColors.input,
                   border: Border.all(color: AppColors.primary),
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -143,7 +145,7 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                 child: Text(
                   "$amount \$",
                   style: TextStyle(
-                    color: isSelected ? Colors.white : AppColors.primary,
+                    color: isSelected ? AppColors.input : AppColors.primary,
                     fontSize: 16,
                   ),
                 ),
@@ -190,8 +192,10 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                 color: AppColors.black,fontSize: 20,fontWeight: FontWeight.w700,
               ),),
             ),
-      
-            Text(isValid ? "$displayamount \$ ($selectedperiodically)":"__",
+           
+            Text(isValid
+      ? "$displayamount ${'period.$selectedperiodically'.tr()}"
+      : "__",
             style: TextStyle(color: AppColors.primary,fontSize: 20,fontWeight: FontWeight.w700,),)
            ],),
       
@@ -200,8 +204,13 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
       
        ElevatedButton(
                       onPressed: isValid
-                          ? () {
-                              if (_formkey.currentState!.validate()&& selectedamount != null) {
+                          ? () async {
+                            final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    }
+    else{
+ if (_formkey.currentState!.validate()&& selectedamount != null) {
                                 final amount = amountin.text;
                                 final item = CartItemModel(
                                   name: "Recurring Donation".tr(),
@@ -214,6 +223,8 @@ class _PeriodicallyDonaitionState extends State<PeriodicallyDonaition> {
                                 );
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage(paydetails: item)));
                               }
+    }
+                             
                             }
                           : null,
                       child: Row(

@@ -6,46 +6,45 @@ class Allcampaignmodel {
 
 @immutable
 
-  final int id;
-  final int categoryId;
-  final String title;
-  final String description;
+  final int? id;
+  final int? categoryId;
+  final String? title;
+  final String? description;
   final String? image;
-  final int goalAmount;
-  final int collectedAmount;
+  final int? goalAmount;
+  final int? collectedAmount;
 
-  final int remainingAmount;
+  final int? remainingAmount;
   
 
   const Allcampaignmodel({
-    required this.id,
-     required this.categoryId,
-    required this.title,
-    required this.description,
-    required this.image,
-    required this.goalAmount,
-    required this.collectedAmount,
+    this.id,
+     this.categoryId,
+     this.title,
+     this.description,
+     this.image,
+     this.goalAmount,
+     this.collectedAmount,
     
-    required this.remainingAmount,
+     this.remainingAmount,
     
   });
 
 
-  /// تحويل الكائن إلى JSON String
   String toJson() => json.encode(toMap());
 
-  /// Factory لتحويل Map إلى كائن CampaignHome
+  
   factory Allcampaignmodel.fromMap(Map<String, dynamic> json) {
     return Allcampaignmodel(
-      id: json["id"],
-      categoryId : json["category_id"],
-      title: json["title"],
-      description: json["description"],
-      image: json["image"],
-      goalAmount: json["goal_amount"],
-      collectedAmount: json["collected_amount"],
+      id: json["id"] as int?,
+      categoryId : json["category_id"] as int?,
+      title: json["title"]as String?,
+      description: json["description"] as String?,
+      image: json["image"] as String?,
+      goalAmount: json["goal_amount"] as int?,
+      collectedAmount: json["collected_amount"] as int?,
     
-      remainingAmount: json["remaining_amount"],
+      remainingAmount: json["remaining_amount"] as int?,
       
     );
   }

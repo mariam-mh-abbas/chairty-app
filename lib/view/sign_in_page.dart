@@ -1,4 +1,5 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/main.dart';
@@ -12,6 +13,7 @@ import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:charity_project/view/reset_password_page.dart';
 import 'package:charity_project/view/set_language_page.dart';
 import 'package:charity_project/view/sign_up_page.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,18 +48,49 @@ class _sign_in_pageState extends State<sign_in_page> {
             //   )
             //   ),
             // );
-          } else if (state is LoginSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content: Text("Logged in".tr()),
-                  backgroundColor: Colors.green),
-            );
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => MainNavbarPage()),
-              (route) => false,
-            );
-          } else if (state is LoginFailure) {
+          } 
+   else if (state is LoginSuccess) {
+  () async {
+    
+    context.read<BlocCartBloc>().add(ClearCart());
+
+    
+    final token = await SharedPrefs.getToken(); 
+    await SharedPrefs.savePhone(phoneNumber.text.trim());
+
+    
+    final phone = await SharedPrefs.getPhone();
+    context.read<BlocCartBloc>().add(LoadCart(phone));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Logged in".tr()),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => MainNavbarPage()),
+      (route) => false,
+    );
+  }();
+}
+          // else if (state is LoginSuccess) {
+            
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //         content: Text("Logged in".tr()),
+          //         backgroundColor: Colors.green),
+          //   );
+          //   Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(builder: (_) => MainNavbarPage()),
+          //     (route) => false,
+          //   );
+
+          // } 
+          else if (state is LoginFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Unable to log on'.tr()),

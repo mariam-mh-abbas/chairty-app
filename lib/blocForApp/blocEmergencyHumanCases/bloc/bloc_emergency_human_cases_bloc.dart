@@ -24,8 +24,9 @@ class BlocEmergencyHumanCasesBloc extends Bloc<BlocEmergencyHumanCasesEvent, Blo
     for (var i = 0; i < result.length; i++) {
       Emergencyhumancasesmodel emergencyCasesdata = Emergencyhumancasesmodel.fromMap(result[i]);
       emergencyCases.add(emergencyCasesdata);
-     emit(BlocEmergencyHumanCasesLoaded(emergencyCases));
+    
     }
+     emit(BlocEmergencyHumanCasesLoaded(emergencyCases));
   }
    else {
         emit(BlocEmergencyHumanCasesError("Failed to fetch emergencyCases"));

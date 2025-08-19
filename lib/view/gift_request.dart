@@ -136,7 +136,7 @@ class _GiftRequestState extends State<GiftRequest> {
                                 decoration: BoxDecoration(
                                   color: isSelected
                                       ? AppColors.primary
-                                      : AppColors.white,
+                                      : AppColors.input,
                                   border:
                                       Border.all(color: AppColors.primary),
                                   borderRadius: BorderRadius.circular(20),
@@ -146,7 +146,7 @@ class _GiftRequestState extends State<GiftRequest> {
                                   "$amount \$",
                                   style: TextStyle(
                                     color: isSelected
-                                        ? Colors.white
+                                        ? AppColors.input
                                         : AppColors.primary,
                                     fontSize: 16,
                                   ),
@@ -168,28 +168,26 @@ class _GiftRequestState extends State<GiftRequest> {
                       onChanged: onTextChanged,
                       cursorColor: AppColors.primary,
                       validator: (value) {
-                        if (value == null) {
-                           return "please enter amount to donate";
-                           
-                        }
-                       else{
-                        final val = int.tryParse(value ?? '') ?? 0;
-                        if (val <= 0 ) return "Please enter a valid amount";
-                       } 
-                        
-                      },
-                      decoration: InputDecoration(
-                        labelText: "Another amount".tr(),
-                        suffix: const Text("\$"),
-                        labelStyle: TextStyle(color: AppColors.primary),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: AppColors.primary),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
+  if (value == null || value.trim().isEmpty) {
+    return "Please enter amount to donate".tr();
+  } else {
+    final val = int.tryParse(value) ?? 0;
+    if (val <= 0) {
+      return "Please enter a valid amount".tr();
+    }
+  }
+  return null;
+},
+                       decoration: AppInputDecoration
+                                        .paymentInput
+                                        .copyWith(
+                                      labelText: "Another amount".tr(),
+                                      suffix: const Text("\$"),
+                                      labelStyle:
+                                          TextStyle(color: AppColors.primary),
+                                    ),
+                      
+                      
                     ),
                   ),
     
@@ -233,7 +231,7 @@ class _GiftRequestState extends State<GiftRequest> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'please enter Recipient name';
+                          return 'please enter Recipient name'.tr();
                         }
                         return null;
                       },
@@ -253,11 +251,11 @@ class _GiftRequestState extends State<GiftRequest> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'please enter Recipient phone number';
+                          return 'please enter Recipient phone number'.tr();
                         } else if (value.length != 9) {
-                          return 'it must be 9 numbers';
+                          return 'it must be 9 numbers'.tr();
                         } else if (!RegExp(r'^\d{9}$').hasMatch(value)) {
-                          return 'Only digits are allowed';
+                          return 'Only digits are allowed'.tr();
                         }
                         return null;
                       },

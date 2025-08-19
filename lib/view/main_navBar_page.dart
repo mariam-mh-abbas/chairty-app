@@ -1,5 +1,6 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/view/before_help_request.dart';
 import 'package:charity_project/view/charity_fund_page.dart';
 import 'package:charity_project/view/donation_categories_page.dart';
@@ -28,6 +29,22 @@ class _MainNavbarPageState extends State<MainNavbarPage> {
     BeforeHelpRequest(),
     MyListPage()
   ];
+  @override
+  void initState() {
+    super.initState();
+    _loadCartAfterRestart();
+  }
+
+  void _loadCartAfterRestart() async {
+    final userId = await SharedPrefs.getPhone();
+    final token = await SharedPrefs.getToken();
+    if (userId != null && userId.isNotEmpty && token !=null ) {
+      context.read<BlocCartBloc>().add(LoadCart(userId));
+    }
+    else{
+       context.read<BlocCartBloc>().add(ClearCart());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BlocCartBloc, BlocCartState>(

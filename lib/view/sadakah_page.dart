@@ -1,8 +1,10 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/Box/bloc/box_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
 import 'package:charity_project/model/CartItemModel.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/charity_fund_page.dart';
@@ -62,8 +64,10 @@ class _SadakahPageState extends State<SadakahPage> {
               return Center(child: Text(state.ErrorMsg),);
             }
             else if(state is BoxLoaded){
-               final String imageUrl = state.box.image ?? '';
-    final String finalImage = Uri.parse(baseUrlImage).resolve(imageUrl).toString();
+               final String? imageUrl = state.box.image ;
+    final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
+    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+    : null;
  return Form(
                 key: formkey,
                 child: Stack(
@@ -100,10 +104,9 @@ class _SadakahPageState extends State<SadakahPage> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(finalImage)
-                                    ),
+                                    image: finalImage != null
+                                 ? DecorationImage(image: NetworkImage(finalImage),fit: BoxFit.cover)
+                                 : DecorationImage(image: AssetImage("assets/images/sadaqah.jpg"),fit: BoxFit.cover)
                                   ),
                                 ),
                                 Container(
@@ -166,7 +169,7 @@ class _SadakahPageState extends State<SadakahPage> {
                                               decoration: BoxDecoration(
                                                 color: isSelected
                                                     ? AppColors.primary
-                                                    : AppColors.white,
+                                                    : AppColors.input,
                                                 border: Border.all(
                                                     color: AppColors.primary),
                                                 borderRadius:
@@ -177,7 +180,7 @@ class _SadakahPageState extends State<SadakahPage> {
                                                 "$amount \$",
                                                 style: TextStyle(
                                                   color: isSelected
-                                                      ? Colors.white
+                                                      ? AppColors.input
                                                       : AppColors.primary,
                                                   fontSize: 16,
                                                 ),
@@ -248,8 +251,13 @@ class _SadakahPageState extends State<SadakahPage> {
                                           horizontal: 50),
                                       child: ElevatedButton(
                                         onPressed: isValid
-                                            ? () {
-                                                if (formkey.currentState!
+                                            ? () async{
+                                              final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    }
+    else{
+if (formkey.currentState!
                                                     .validate() && selectedamount != null) {
                                                       final item = CartItemModel(
                                                          id: state.box.id!,
@@ -265,6 +273,8 @@ class _SadakahPageState extends State<SadakahPage> {
                                                   final amount = amountin.text;
                                                   
                                                 }
+    }
+                                                
                                               }
                                             : null,
                                         child: Row(
@@ -292,9 +302,50 @@ class _SadakahPageState extends State<SadakahPage> {
                                           const EdgeInsets.only(bottom: 20),
                                       child: ElevatedButton(
                                         onPressed: isValid
-                                            ? () {
-                                              print(state.box.id);
-                                               final item = CartItemModel(
+                                            ? () async {
+                                              final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    }
+    else{
+  
+//                                                 if (formkey.currentState!
+//                                                     .validate()&& selectedamount != null) {
+                                                      
+//     final phone = await SharedPrefs.getPhone();
+//                                                final item = CartItemModel(
+//                                                          id: state.box.id!,
+//               name: state.box.name,
+//               Campainid: null,
+//               boxId: state.box.id!,
+//               image: finalImage,
+//               Amount: selectedamount,
+//               donationType: "Sadaqah",
+//               periodic: "Once"
+//                                                       );
+//                                                       context.read<BlocCartBloc>().add(SaveCart(phone));
+//                                                       context.read<BlocCartBloc>().add(AddToCart(item));
+//                                                   final amount = amountin.text;
+//                                                   ScaffoldMessenger.of(context)
+//                                                       .showSnackBar(
+//                                                     SnackBar(
+//                                                       backgroundColor: AppColors.primary,
+//                                                       content: Text(
+//                                                         'added_to_cart'.tr(namedArgs: {'amount':amount.toString()})
+//                                                           // "Added $amount \$ to cart "
+//                                                           ),
+                                                          
+//                                                     ),
+//                                                   );
+// Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
+//                                                 }
+
+
+                                  if (formkey.currentState!
+                                                    .validate()&& selectedamount != null) {
+                                                        final phone = await SharedPrefs.getPhone();
+    
+                                                  final item = CartItemModel(
                                                          id: state.box.id!,
               name: state.box.name,
               Campainid: null,
@@ -304,9 +355,8 @@ class _SadakahPageState extends State<SadakahPage> {
               donationType: "Sadaqah",
               periodic: "Once"
                                                       );
-                                                if (formkey.currentState!
-                                                    .validate()&& selectedamount != null) {
-                                                      context.read<BlocCartBloc>().add(AddToCart(item));
+                                                    context.read<BlocCartBloc>().add(AddToCart(item));
+                                                    context.read<BlocCartBloc>().add(SaveCart(phone));
                                                   final amount = amountin.text;
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
@@ -320,7 +370,9 @@ class _SadakahPageState extends State<SadakahPage> {
                                                     ),
                                                   );
 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
-                                                }
+                                                }                 
+    }
+                                            
                                               }
                                             : null,
                                         child: Row(

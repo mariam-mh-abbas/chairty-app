@@ -1,5 +1,6 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/model/CartItemModel.dart';
@@ -42,7 +43,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
   void onTextChanged(String value) {
     final entered = int.tryParse(value);
     setState(() {
-      selectedAmount = (entered != null && entered > 0 && entered <=widget.detailsCampaignModel.remainingAmount) ? entered : null;
+      selectedAmount = (entered != null && entered > 0 && entered <=widget.detailsCampaignModel.remainingAmount!) ? entered : null;
     });
   }
 
@@ -114,7 +115,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
             children:  amounts.map((amount) {
         final isSelected = selectedAmount == amount;
         
-        final isDisabled = amount > widget.detailsCampaignModel.remainingAmount;
+        final isDisabled = amount > widget.detailsCampaignModel.remainingAmount!;
                 
         return Expanded(
           child: Padding(
@@ -124,7 +125,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
         child: Container(
           height: 50,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : AppColors.white,
+            color: isSelected ? AppColors.primary : AppColors.input,
             border: Border.all(color: AppColors.primary),
             borderRadius: BorderRadius.circular(20),
           ),
@@ -132,7 +133,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
           child: Text(
             "$amount \$",
             style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.primary,
+              color: isSelected ? AppColors.input : AppColors.primary,
               fontSize: 16,
             ),
           ),
@@ -157,7 +158,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
               cursorColor: AppColors.primary,
               validator: (value) {
                 final val = int.tryParse(value ?? '') ?? 0;
-                if (val > widget.detailsCampaignModel.remainingAmount) return "Amount exceeds remaining campaign amount";
+                if (val > widget.detailsCampaignModel.remainingAmount!) return "Amount exceeds remaining campaign amount";
                 if (val <= 0) return "Please enter a valid amount";
                 return null;
               },
@@ -198,7 +199,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: ElevatedButton(
-            onPressed: isValid && selectedAmount! <=widget.detailsCampaignModel.remainingAmount && formKey.currentState!.validate()
+            onPressed: isValid && selectedAmount! <=widget.detailsCampaignModel.remainingAmount! && formKey.currentState!.validate()
                 ? () {
                     final item = CartItemModel(
                        id: widget.detailsCampaignModel.id,
@@ -237,9 +238,10 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: ElevatedButton(
-            onPressed: isValid && selectedAmount! <=widget.detailsCampaignModel.remainingAmount && formKey.currentState!.validate()
-                ? () {
+            onPressed: isValid && selectedAmount! <=widget.detailsCampaignModel.remainingAmount! && formKey.currentState!.validate()
+                ? () async{
                     final amount = amountController.text;
+                      final phone = await SharedPrefs.getPhone();
                      final item = CartItemModel(
                        id: widget.detailsCampaignModel.id,
               name: widget.detailsCampaignModel.title,
@@ -253,7 +255,7 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
                     
                      
                      context.read<BlocCartBloc>().add(AddToCart(item));
-                   
+                   context.read<BlocCartBloc>().add(SaveCart(phone));
                        ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
@@ -297,3 +299,5 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
     );
   }
 }
+
+

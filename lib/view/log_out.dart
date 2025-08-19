@@ -1,4 +1,5 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/view/background.dart';
@@ -84,6 +85,7 @@ class _change_languageState extends State<log_out> {
               ElevatedButton(
                 onPressed: () {
                   BlocProvider.of<AuthBloc>(context).add(LogoutUser());
+                  context.read<BlocCartBloc>().add(LoggedOut());
                 },
                 child: Text('Yes'.tr()),
                 style: ElevatedButton.styleFrom(

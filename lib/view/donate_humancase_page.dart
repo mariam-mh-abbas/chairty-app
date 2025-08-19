@@ -1,5 +1,6 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/model/CartItemModel.dart';
@@ -124,7 +125,7 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
         child: Container(
           height: 50,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : AppColors.white,
+            color: isSelected ? AppColors.primary : AppColors.input,
             border: Border.all(color: AppColors.primary),
             borderRadius: BorderRadius.circular(20),
           ),
@@ -132,7 +133,7 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
           child: Text(
             "$amount \$",
             style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.primary,
+              color: isSelected ? AppColors.input : AppColors.primary,
               fontSize: 16,
             ),
           ),
@@ -237,8 +238,9 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: ElevatedButton(
             onPressed: isValid && selectedAmount! <=widget.detailshumanncasesmodel.remainingAmount! && formKey.currentState!.validate()
-                ? () {
+                ? ()async {
                     final amount = amountController.text;
+                      final phone = await SharedPrefs.getPhone();
                       final item = CartItemModel(
                        id: widget.detailshumanncasesmodel.id,
               name: widget.detailshumanncasesmodel.title,
@@ -250,6 +252,7 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
               periodic: "Once"
                     );
                      context.read<BlocCartBloc>().add(AddToCart(item));
+                     context.read<BlocCartBloc>().add(SaveCart(phone));
                      ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(

@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 class SponsorshipModel {
   final int id;
-  final int? categoryId;
+  final int categoryId;
   final String? title;
   final String? description;
   final int? monthlyAmount;
@@ -12,21 +12,21 @@ class SponsorshipModel {
   SponsorshipModel({
     required this.id,
     required this.categoryId,
-    required this.title,
-    required this.description,
-    required this.monthlyAmount,
-    required this.remainingAmount,
-    required this.image,
+     this.title,
+     this.description,
+     this.monthlyAmount,
+     this.remainingAmount,
+     this.image,
   });
 
   factory SponsorshipModel.fromMap(Map<String, dynamic> json) => SponsorshipModel(
     id: json["id"],
     categoryId: json["category_id"],
-    title: json["title"] ?? "",
-    description: json["description"] ?? "",
-    monthlyAmount: json["monthly_amount"] ?? 0,
-    remainingAmount: json["remaining_amount"] ?? 0,
-    image: json["image"] ?? "",
+    title: json["title"] as String?,
+    description: json["description"] as String?,
+    monthlyAmount: json["monthly_amount"] as int?,
+    remainingAmount: json["remaining_amount"] as int?,
+    image: json["image"] as String?,
   );
 
   Map<String, dynamic> toMap() => {

@@ -1,4 +1,5 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/services/auth_service.dart';
@@ -300,6 +301,7 @@ class _sign_up_pageState extends State<sign_up_page> {
                 // ),
                 TextButton(
                   onPressed: () {
+                    context.read<BlocCartBloc>().add(ClearCart());
                     Navigator.push(
                         context,
                         MaterialPageRoute(

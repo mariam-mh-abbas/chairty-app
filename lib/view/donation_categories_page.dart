@@ -65,7 +65,7 @@ List<Map<String,String>> DonationCategories = [
             ),
           ),
           SizedBox(height: 50,),
-          SizedBox(height: 560,
+          Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(

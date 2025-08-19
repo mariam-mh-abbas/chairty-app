@@ -6,6 +6,6 @@ abstract class Baseservice {
   Dio dio = Dio();
   late Response responce;
   String baseURL = "http://localhost:8000/api";
-String token = "1|PD4S4LaPOUANCS4giTDMmMqyJ86LdNAFs31BHGVbe1364cdf";
+// String token1 = "1|PD4S4LaPOUANCS4giTDMmMqyJ86LdNAFs31BHGVbe1364cdf";
 
 }

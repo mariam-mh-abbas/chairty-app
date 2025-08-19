@@ -116,7 +116,7 @@ class _DonateSponsorshipPageState extends State<DonateSponsorshipPage> {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primary : AppColors.white,
+                        color: isSelected ? AppColors.primary : AppColors.input,
                         border: Border.all(color: AppColors.primary),
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -124,7 +124,7 @@ class _DonateSponsorshipPageState extends State<DonateSponsorshipPage> {
                       child: Text(
                         "$amount \$",
                         style: TextStyle(
-                          color: isSelected ? Colors.white : AppColors.primary,
+                          color: isSelected ? AppColors.input : AppColors.primary,
                           fontSize: 16,
                         ),
                       ),

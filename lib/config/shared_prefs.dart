@@ -44,4 +44,15 @@ class SharedPrefs {
     final prefs = await SharedPreferences.getInstance();
     return prefs.remove(_onboardingKey);
   }
+
+  static Future<void> savePhone(String phone) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("phone", phone);
+  }
+  
+  static Future<String?> getPhone() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("phone");
+  }
+  
 }

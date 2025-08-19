@@ -2,9 +2,11 @@ import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/Box/bloc/box_bloc.dart';
 import 'package:charity_project/blocForApp/OncePayment/bloc/once_payment_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
 import 'package:charity_project/model/CartItemModel.dart';
 import 'package:charity_project/model/OncePaymentModel.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/charity_fund_page.dart';
@@ -64,8 +66,10 @@ class _zakahPageState extends State<ZakahPage> {
               return Center(child: Text(state.ErrorMsg),);
             }
             else if(state is BoxLoaded){
-               final String imageUrl = state.box.image ?? '';
-    final String finalImage = Uri.parse(baseUrlImage).resolve(imageUrl).toString();
+               final String? imageUrl = state.box.image  ;
+   final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
+    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+    : null;
      return Form(
       
                 key: formkey,
@@ -103,11 +107,9 @@ class _zakahPageState extends State<ZakahPage> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image:
-                                         NetworkImage(finalImage)
-                                    ),
+                                    image: finalImage != null
+                                 ? DecorationImage(image: NetworkImage(finalImage),fit: BoxFit.cover)
+                                 : DecorationImage(image: AssetImage("assets/images/zakah.jpg"),fit: BoxFit.cover)
                                   ),
                                 ),
                                 Container(
@@ -160,7 +162,7 @@ class _zakahPageState extends State<ZakahPage> {
                                           int.tryParse(value ?? '') ?? 0;
                                     
                                       if (val <= 0)
-                                        return "Please enter a valid amount";
+                                        return "Please enter a valid amount".tr();
                                       
                                     },
                                     decoration: AppInputDecoration
@@ -208,8 +210,12 @@ class _zakahPageState extends State<ZakahPage> {
                                           horizontal: 50),
                                       child: ElevatedButton(
                                         onPressed: isValid
-                                            ? () {
-          if (formkey.currentState!.validate()&& amountin != null) {
+                                            ? () async {
+                                               final token = await SharedPrefs.getToken() ?? '';
+                                              if (token == null || token.isEmpty) {
+                                                return PaymentResultDialog.Guest(context);
+                                              } else{
+ if (formkey.currentState!.validate()&& amountin != null) {
                         final item = CartItemModel(
               id: state.box.id!,
               name: state.box.name,
@@ -221,14 +227,10 @@ class _zakahPageState extends State<ZakahPage> {
               periodic: "Once"
             );
    Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage(paydetails: item)));
-            // context.read<OncePaymentBloc>().add(
-            //   OncePayment([item]), 
-            // );
-
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(content: Text("تم الدفع بنجاح")),
-            // );
+            
           }
+                                              }
+         
         }
       : null,
                                             
@@ -257,9 +259,16 @@ class _zakahPageState extends State<ZakahPage> {
                                           const EdgeInsets.only(bottom: 20),
                                       child: ElevatedButton(
                                         onPressed: isValid
-                                            ? () {
+                                            ? () async {
+                                              final token = await SharedPrefs.getToken() ?? '';
+                                              if (token == null || token.isEmpty) {
+                                                return PaymentResultDialog.Guest(context);
+                                              } else {
                                                 if (formkey.currentState!
                                                     .validate() && amountin != null) {
+                                                        final phone = await SharedPrefs.getPhone();
+    
+                                                  
                                                                    final item = CartItemModel(
               id: state.box.id!,
               name: state.box.name,
@@ -271,6 +280,7 @@ class _zakahPageState extends State<ZakahPage> {
               periodic: "Once"
             );
                                                     context.read<BlocCartBloc>().add(AddToCart(item));
+                                                    context.read<BlocCartBloc>().add(SaveCart(phone));
                                                   final amount = amountin.text;
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
@@ -285,6 +295,8 @@ class _zakahPageState extends State<ZakahPage> {
                                                   );
 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
                                                 }
+                                              }
+                                                
                                               }
                                             : null,
                                         child: Row(

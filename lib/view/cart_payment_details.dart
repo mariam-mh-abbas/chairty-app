@@ -1,6 +1,8 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/OncePayment/bloc/once_payment_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/service_locater.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/model/CartItemModel.dart';
 import 'package:charity_project/model/OncePaymentModel.dart';
 import 'package:charity_project/view/PaymentResultDialog.dart';
@@ -11,6 +13,7 @@ import 'package:charity_project/view/input_decoraition.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartPaymentDetails extends StatefulWidget {
   const CartPaymentDetails({super.key, required this.paydetails});
@@ -27,10 +30,15 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
 
   Widget build(BuildContext context) {
     return BlocListener<OncePaymentBloc, OncePaymentState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is OncePaymentSuccess) {
             PaymentResultDialog.showSuccessDialog(context);
-            context.read<BlocCartBloc>().add(ClearCart());
+            final prefs = serviceLocater<SharedPreferences>();
+final userId = await SharedPrefs.getPhone();
+if (userId != null && userId.isNotEmpty) {
+  await prefs.remove('cart_items_user_$userId');
+}
+context.read<BlocCartBloc>().add(ClearCart());
         } else if (state is OncePaymentFailure) {
              PaymentResultDialog.showFailureDialog(context);
         }
@@ -120,7 +128,7 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
                             return ElevatedButton(
                               onPressed: cartBloc.cartItems.isEmpty
                                   ? null
-                                  : () {
+                                  : () async{
                                   final List<OncePaymentmodel> items = widget.paydetails.map((e) {
                 return OncePaymentmodel(
                   campaignId: e.Campainid,
@@ -129,6 +137,7 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
                 );
               }).toList();
               context.read<OncePaymentBloc>().add(OncePayment(items));
+              
                                     },
                               child: Text('Pay Now'.tr(),style: TextStyle(fontSize: 15),),
                               style: ElevatedButton.styleFrom(

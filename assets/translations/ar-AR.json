@@ -13,7 +13,7 @@
      "HumanitarianCases":"الحالات الإنسانية",
       "Kaffarat and Sadaqah":"كفارات وصدقات",
        "Sponsorships":"كفالات",
-        "General Donation":"التبرع العام",
+        "General Donation":"تبرع عام",
          "Donaition Categories":"مجالات التبرع ",
             "Do You Need Help?":"هل تحتاج إلى مساعدة",
          "We are here to support you.Whether you are facing financialhardshipor an urgent\nsituation,you can submit\na help request and our team\nwill review your case as soon as possible.":"نحن هنا لدعمك.\n سواء كنت تمر بضائقة مالية أو حالة طارئة،\nيمكنك إرسال طلب مساعدة وسنقوم\nبمراجعة حالتك في أقرب وقت ممكن.",
@@ -131,7 +131,7 @@
     "You must select living status":"من فضلك اختر حالة السكن",
    "Volunteer Request":"طلب التطوع",
 "More":"المزيد",
-"period":{
+"selectedperiodically":{
           "daily":"يومي",
           "monthly":"شهري",
           "weekly":"أسبوعي"
@@ -273,7 +273,8 @@
     "Theme" : "الثيم",
     "Activity" : "النشاط",
     "Donations" : "التبرعات",
-    "Sponsorships" : "الرعايات",
+    
+    "select type of general donation" : "اختر نوع التبرع العام" ,
     "Requests" : "الطلبات",
     "Volunteering" : "التطوع",
     "Benefits" : "الفوائد",
@@ -418,5 +419,20 @@
     "" : "" ,
     "" : "" ,
     "" : "" ,
-    "Please enter a valid amount":"من فضلك أدخل قيمة صحيحة"
+    "Please enter a valid amount":"من فضلك أدخل قيمة صحيحة",
+   
+    "Please sign in first to proceed.":"من فضلك سجّل الدخول أولًا لمتابعة العملية."  ,
+    "Thank you for your willingness to donate!" : "شكرًا لرغبتك في التبرع!",
+    "Go To LogIn Page" :  "الذهاب لصفحة تسجيل الدخول",
+    "We’re happy you’d like to volunteer with us!" : "يسعدنا أنك ترغب بالتطوع معنا!",
+    "We’re happy you’d like to benefit from our services!" : "يسعدنا أنك ترغب بالاستفادة من خدماتنا!",
+     "Failed sending your volunteer request" : "فشل في إرسال طلب التطوع الخاص بك",
+     "please enter your monthly income" : "من فضلك أدخل دخلك الشهري",
+     "Failed sending your help request" : "فشل في إرسال طلب المساعدة الخاص بك",
+       "Please enter" : "من فضلك أدخل",
+       "Please select" : "من فضلك اختر",
+    "All" : "الكل",
+    "please enter Recipient phone number" : "من فضلك أدخل رقم هاتف المستلم",
+    "please enter Recipient name" : "من فضلك أدخل اسم المستلم",
+    "Please enter amount to donate":"من فضلك أدخل قيمة للتبرع"
 }

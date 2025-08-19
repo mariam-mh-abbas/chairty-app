@@ -3,10 +3,12 @@ import 'package:charity_project/blocForApp/Box/bloc/box_bloc.dart';
 import 'package:charity_project/blocForApp/OncePayment/bloc/once_payment_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocForApp/kaffaratAndSadaqahCounter/bloc/kaffarat_and_sadaqah_counter_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
 import 'package:charity_project/model/BoxModel.dart';
 import 'package:charity_project/model/CartItemModel.dart';
 import 'package:charity_project/view/Kaffarat_and_Sadaqah_view.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/charity_fund_page.dart';
 import 'package:charity_project/view/donate_campaigns_page.dart';
@@ -23,9 +25,10 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
   final BoxModel box;
   @override
   Widget build(BuildContext context) {
-    final String imageUrl = box.image ?? '';
-    final String finalImage =
-        Uri.parse(baseUrlImage).resolve(imageUrl).toString();
+    final String? imageUrl = box.image ;
+    final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
+    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+    : null;
     return BlocProvider(
       create: (context) => KaffaratAndSadaqahCounterBloc(),
       child: BlocBuilder<KaffaratAndSadaqahCounterBloc, KaffaratAndSadaqahCounterState>(
@@ -51,9 +54,10 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                    image: NetworkImage(finalImage),
-                                    fit: BoxFit.cover)),
+                                image: finalImage != null
+                                 ? DecorationImage(image: NetworkImage(finalImage),fit: BoxFit.cover)
+                                 : DecorationImage(image: AssetImage("assets/images/general.png"),fit: BoxFit.cover)
+                                    ),
                           ),
                         ),
                         Text(
@@ -210,9 +214,13 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 50),
                               child: ElevatedButton(
                                 onPressed: state.totalAmount >0
-                                ? (){
-                                   
-                        final item = CartItemModel(
+                                ? ()async{
+                                   final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    }
+    else{
+final item = CartItemModel(
               id: box.id,
               name: box.name,
               Campainid: null,
@@ -224,6 +232,8 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
             );
    Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage(paydetails: item)));
             
+    }
+                        
           
                                 }
                                 : null,
@@ -249,8 +259,14 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 20),
                               child: ElevatedButton(
                                 onPressed: state.totalAmount >0.0
-                                ? (){
-          final newItem = CartItemModel(
+                                ? ()async{
+                                  final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    }
+    else{
+        final phone = await SharedPrefs.getPhone();
+final newItem = CartItemModel(
             id: box.id,
             name: box.name,
             Amount: state.totalAmount,
@@ -262,6 +278,7 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
             
           );
           context.read<BlocCartBloc>().add(AddToCart(newItem));
+          context.read<BlocCartBloc>().add(SaveCart(phone));
           ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
@@ -274,6 +291,8 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                                                     ),
                                                   );
 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
+    }
+          
         }
                                 : null,
                                 

@@ -1,4 +1,5 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/main.dart';
@@ -60,6 +61,21 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
       listener: (context, state) {
         if (state is RegisterLoading) {
         } else if (state is RegisterSuccess) {
+          () async {
+  
+    context.read<BlocCartBloc>().add(ClearCart());
+
+    // 2. خزّن بيانات المستخدم الجديد
+    await SharedPrefs.savePhone(widget.phone.trim());
+    
+
+    // 3. حمّل سلة الحساب الجديد
+    final phone = await SharedPrefs.getPhone();
+    context.read<BlocCartBloc>().add(LoadCart(phone));
+
+    // 4. روّح المستخدم على الرئيسية
+   
+  }();
           Navigator.of(context).pop(); // close loading dialog
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

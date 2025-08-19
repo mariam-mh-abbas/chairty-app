@@ -1,5 +1,7 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/main.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/inKind_donaition_request.dart';
@@ -30,8 +32,15 @@ class BeforeInkindDonaition extends StatelessWidget {
             textAlign: TextAlign.center,),
           ),
       SizedBox(height: 60,),
-      ElevatedButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> InkindDonaitionRequest()));
+      ElevatedButton(onPressed: ()async{
+                                                              
+  final token = await SharedPrefs.getToken() ?? '';
+  if (token == null || token.isEmpty) {
+    return PaymentResultDialog.Guest(context);
+  } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> InkindDonaitionRequest()));
+  }
+    
       }, child: Text('New Request'.tr()),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,

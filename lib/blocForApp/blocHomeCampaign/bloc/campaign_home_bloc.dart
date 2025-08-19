@@ -24,8 +24,9 @@ class CampaignHomeBloc extends Bloc<CampaignHomeEvent, CampaignHomeState> {
     for (var i = 0; i < result.length; i++) {
       CampaignHomeModel campaignHomedata = CampaignHomeModel.fromMap(result[i]);
       campaignhome.add(campaignHomedata);
-     emit(CampaignHomeLoaded(campaignhome));
+     
     }
+    emit(CampaignHomeLoaded(campaignhome));
   }
  else {
        emit(CampaignHomeError("Failed"));

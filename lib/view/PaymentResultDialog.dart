@@ -2,6 +2,7 @@ import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/homa_page.dart';
 import 'package:charity_project/view/main_navBar_page.dart';
+import 'package:charity_project/view/sign_in_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -140,8 +141,8 @@ class PaymentResultDialog {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Container(
-                      width: 500,
-                      height: 400,
+                      width: 530,
+                      height: 430,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -206,8 +207,8 @@ class PaymentResultDialog {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Container(
-                      width: 500,
-                      height: 400,
+                      width: 530,
+                      height: 430,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -276,8 +277,8 @@ class PaymentResultDialog {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Container(
-                      width: 500,
-                      height: 400,
+                      width: 530,
+                      height: 430,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -350,7 +351,8 @@ class PaymentResultDialog {
                       height: 400,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
+                        // Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -358,7 +360,7 @@ class PaymentResultDialog {
                         children: [
                           SizedBox(height: 20,),
                           Image.asset(
-                            "assets/images/not.png",
+                            "assets/images/gift3.png",
                             height: 150,
                           ),
                           SizedBox(
@@ -400,5 +402,138 @@ class PaymentResultDialog {
                   ),
                 );
  }
+ 
+
+
+  static void Guest(BuildContext context){
+  showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Container(
+                      width: 500,
+                      height: 400,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                       
+                        children: [
+                          SizedBox(height: 20,),
+                          Image.asset(
+                            "assets/images/login.png",
+                            height: 150,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          const Text("Thank you for your willingness to donate!",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.a).tr(),
+                              const Text("Please sign in first to proceed."
+
+,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.d).tr(),
+                          SizedBox(height: 30,),
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () =>  
+                       Navigator.of(context).pushAndRemoveUntil(
+  MaterialPageRoute(builder: (context) => sign_in_page()), 
+  (route) => false,
+),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.secondary,
+                                  fixedSize: Size(230, 30),
+                                  
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Text("Go To LogIn Page").tr(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+ }
+
+
+
+
+  static void VolunteerOrHelp(BuildContext context,String msg){
+  showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Container(
+                      width: 500,
+                      height: 400,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                       
+                        children: [
+                          SizedBox(height: 20,),
+                          Image.asset(
+                            "assets/images/login.png",
+                            height: 150,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                           Text( msg
+                            ,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.a).tr(),
+                              const Text("Please sign in first to proceed."
+
+,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.d).tr(),
+                          SizedBox(height: 30,),
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () =>  
+                       Navigator.of(context).pushAndRemoveUntil(
+  MaterialPageRoute(builder: (context) => sign_in_page()), 
+  (route) => false,
+),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.secondary,
+                                  fixedSize: Size(230, 30),
+                                  
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Text("Go To LogIn Page").tr(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+ }
+
 
 }

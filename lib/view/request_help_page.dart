@@ -1793,7 +1793,7 @@ Helprequestservice helprequestservice = Helprequestservice();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error submitting request: $e'),
+            content: Text('Failed sending your help request').tr(),
             backgroundColor: Colors.red,
           ),
         );
@@ -1821,7 +1821,7 @@ Helprequestservice helprequestservice = Helprequestservice();
                 decoration: AppInputDecoration.defaultDecoration,
                 validator: field['required'] ? (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter $localizedFieldName'.tr();
+                    return 'Please enter'.tr()+" "+'$localizedFieldName'.tr();
                   }
                   return null;
                 } : null,
@@ -1848,7 +1848,7 @@ Helprequestservice helprequestservice = Helprequestservice();
                 ),
                 validator: field['required'] ? (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please select $localizedFieldName'.tr();
+                    return 'Please select'.tr()+" "+'$localizedFieldName'.tr();
                   }
                   return null;
                 } : null,
@@ -1879,7 +1879,7 @@ Helprequestservice helprequestservice = Helprequestservice();
                 },
                 validator: field['required'] ? (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please select $localizedFieldName'.tr();
+                    return 'Please select'.tr()+" "+'$localizedFieldName'.tr();
                   }
                   return null;
                 } : null,
@@ -1979,8 +1979,8 @@ Helprequestservice helprequestservice = Helprequestservice();
       body: BackgroundWrapper(
         child: Column(
           children: [
-            SizedBox(
-              height: 700,
+            Expanded(
+              
               child: ListView(
                 scrollDirection: Axis.vertical,
                 children: [
@@ -2005,11 +2005,17 @@ Helprequestservice helprequestservice = Helprequestservice();
                                     label: Text("First Name".tr())
                                   ),
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'please enter your first name'.tr();
-                                    }
-                                    return null;
-                                  },
+                      if (value == null || value.isEmpty) {
+                        return 'please enter your first name'.tr();
+                      }
+                    if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                      ? "من فضلك اكتب الاسم الأول باللغة العربية"
+                      : "Please enter your first name in English";
+                }
+                     
+                      return null;
+                    },
                                 ),
                               ),
                               SizedBox(width: 20),
@@ -2020,12 +2026,18 @@ Helprequestservice helprequestservice = Helprequestservice();
                                   decoration: AppInputDecoration.defaultDecoration.copyWith(
                                     label: Text("Last Name".tr())
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'please enter your last name'.tr();
-                                    }
-                                    return null;
-                                  },
+                                 validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter your last name'.tr();
+                      }
+                      if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                      ?"من فضلك اكتب الاسم الآخر باللغة العربية"
+                      : "please enter your last name in English";
+                }
+                      
+                      return null;
+                    },
                                 ),
                               ),
                             ],
@@ -2049,12 +2061,18 @@ Helprequestservice helprequestservice = Helprequestservice();
                                       cursorColor: AppColors.primary,
                                       controller: mothername,
                                       decoration: AppInputDecoration.defaultDecoration,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'please enter your mother name'.tr();
-                                        }
-                                        return null;
-                                      },
+                                     validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter your mother name'.tr();
+                      }
+                      if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                      ?"من فضلك اكتب اسم الأم باللغة العربية"
+                      : "please enter your mother name in English";
+                }
+                      
+                      return null;
+                    },
                                     ),
                                   ),
                                 ],
@@ -2075,12 +2093,18 @@ Helprequestservice helprequestservice = Helprequestservice();
                                       cursorColor: AppColors.primary,
                                       controller: fathername,
                                       decoration: AppInputDecoration.defaultDecoration,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'please enter your father name'.tr();
-                                        }
-                                        return null;
-                                      },
+                                     validator: (value) {
+                      if (value == null || value.isEmpty) {
+                         return 'please enter your father name'.tr();
+                      }
+                    if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                      ? "من فضلك اكتب اسم الأب باللغة العربية"
+                      : "Please enter your father name in English";
+                }
+                     
+                      return null;
+                    },
                                     ),
                                   ),
                                 ],
@@ -2231,6 +2255,7 @@ Helprequestservice helprequestservice = Helprequestservice();
                         Padding(
                           padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
                             cursorColor: AppColors.primary,
                             controller: numberoffamilymember,
                             decoration: AppInputDecoration.defaultDecoration,
@@ -2383,10 +2408,18 @@ Helprequestservice helprequestservice = Helprequestservice();
                             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
                             child: TextFormField(
                               controller: incomeController,
-                              keyboardType: TextInputType.number,
+                              // keyboardType: TextInputType.number,
                               decoration: AppInputDecoration.defaultDecoration.copyWith(
                                 labelText: "Monthly Income".tr(),
                               ),
+                              validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter your monthly income'.tr();
+                      }
+                   
+                      
+                      return null;
+                    },
                             ),
                           ),
 
@@ -2404,12 +2437,18 @@ Helprequestservice helprequestservice = Helprequestservice();
                                 maxLines: 2,
                                 keyboardType: TextInputType.text,
                                 decoration: AppInputDecoration.defaultDecoration,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'please enter your address'.tr();
-                                  }
-                                  return null;
-                                },
+                                 validator: (value) {
+                           if (value == null || value.isEmpty) {
+                             return 'please enter your address'.tr();
+                           }
+
+                            if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                    ? "من فضلك اكتب العنوان باللغة العربية"
+                      : "please enter your address in English";
+                }
+                       
+                         },
                               ),
                             ),
                           ],
@@ -2490,19 +2529,25 @@ Helprequestservice helprequestservice = Helprequestservice();
                                 controller: details,
                                 maxLines: 2,
                                 decoration: AppInputDecoration.defaultDecoration,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'please write a simple explenaition about your ststus'.tr();
-                                  }
-                                  return null;
-                                },
+                                 validator: (value) {
+                           if (value == null || value.isEmpty) {
+                            return 'please write a simple explenaition about your ststus'.tr();
+                           }
+
+                            if (!LangHelper.isTextMatchingCurrentLanguage(value, context)) {
+                  return LangHelper.isArabic(context)
+                    ? "من فضلك اكتب شرح حالتك باللغة العربية"
+                      : "please enter your status explenaition in English";
+                }
+                       
+                         },
                               ),
                             ),
                           ],
                         ),
 
                         Padding(
-                          padding: EdgeInsets.only(left: 250, right: 20, top: 20),
+                          padding: EdgeInsets.only(left: 250, right: 20, top: 20,bottom: 10),
                           child: ElevatedButton(
                             onPressed: () {
                               submitForm();

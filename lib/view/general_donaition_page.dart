@@ -2,9 +2,11 @@ import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/Box/bloc/box_bloc.dart';
 import 'package:charity_project/blocForApp/OncePayment/bloc/once_payment_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/helpers/app_language.dart';
 import 'package:charity_project/model/BoxModel.dart';
 import 'package:charity_project/model/CartItemModel.dart';
+import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/charity_fund_page.dart';
@@ -86,7 +88,7 @@ return Column(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: DropdownButtonFormField<BoxModel>(
-                      decoration: AppInputDecoration.defaultDecoration.copyWith(label: Text("select type of general donation")),
+                      decoration: AppInputDecoration.defaultDecoration.copyWith(label: Text("select type of general donation").tr()),
   value: selectedDonation,
   
   items: allDonations.map((item) {
@@ -133,7 +135,7 @@ return Column(
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primary : AppColors.white,
+                        color: isSelected ? AppColors.primary : AppColors.input,
                         border: Border.all(color: AppColors.primary),
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -141,7 +143,7 @@ return Column(
                       child: Text(
                         "$amount \$",
                         style: TextStyle(
-                          color: isSelected ? Colors.white : AppColors.primary,
+                          color: isSelected ? AppColors.input : AppColors.primary,
                           fontSize: 16,
                         ),
                       ),
@@ -208,8 +210,13 @@ return Column(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: ElevatedButton(
             onPressed: isValid && formKey.currentState!.validate() && selectedDonation!=null
-                ? () {
-                    final amount = amountController.text;
+                ? () async{
+                  final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    }
+    else{
+ final amount = amountController.text;
                     final CartItemModel item = CartItemModel(
                        id: state.box.id,
               name: state.box.name,
@@ -221,6 +228,8 @@ return Column(
               periodic: "Once"
                     );
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage(paydetails: item)));
+    }
+                   
                   }
                 : null,
             style: ElevatedButton.styleFrom(
@@ -246,8 +255,16 @@ return Column(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: ElevatedButton(
             onPressed: isValid && formKey.currentState!.validate() && selectedDonation!=null
-                ? () {
-                    final amount = amountController.text;
+                ? () async{
+                  final token = await SharedPrefs.getToken() ?? '';
+    if (token == null || token.isEmpty) {
+      return PaymentResultDialog.Guest(context);
+    
+    }
+    else{
+
+ final amount = amountController.text;
+   final phone = await SharedPrefs.getPhone();
                      final CartItemModel item = CartItemModel(
                        id: selectedDonation!.id!,
               name: selectedDonation!.name!,
@@ -259,6 +276,7 @@ return Column(
               periodic: "Once"
                     );
                     context.read<BlocCartBloc>().add(AddToCart(item));
+                    context.read<BlocCartBloc>().add(SaveCart(phone));
                    ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
@@ -271,6 +289,8 @@ return Column(
                                                     ),
                                                   );
 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
+    }
+                   
                   }
                 : null,
             style: ElevatedButton.styleFrom(

@@ -12,4 +12,17 @@ class DeleteFromCart extends BlocCartEvent{
 
   DeleteFromCart(this.cartItemDeleted);
 }
+class SaveCart extends BlocCartEvent{
+  final String? userId;
+
+  SaveCart(this.userId);
+
+  
+}
+class LoadCart extends BlocCartEvent{
+  final String? userId;
+
+  LoadCart(this.userId);
+}
 class ClearCart extends BlocCartEvent{}
+class LoggedOut extends BlocCartEvent{}

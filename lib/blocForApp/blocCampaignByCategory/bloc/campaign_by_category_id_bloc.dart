@@ -24,9 +24,10 @@ try {
         for (var i = 0; i < result.length; i++) {
           Allcampaignmodel campaignsdata = Allcampaignmodel.fromMap(result[i]);
           campaigns.add(campaignsdata);
-          emit(CampaignByCategoryIdLoaded(campaigns));
+         
           print(" Campaigns by category Fetched Successfully !!!!!!!!");
         }
+         emit(CampaignByCategoryIdLoaded(campaigns));
         }
         else{
           emit(CampaignByCategoryIdError("unable to fetcch campaigns by id"));
