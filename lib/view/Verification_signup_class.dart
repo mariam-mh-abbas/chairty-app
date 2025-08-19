@@ -65,15 +65,13 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
   
     context.read<BlocCartBloc>().add(ClearCart());
 
-    // 2. خزّن بيانات المستخدم الجديد
     await SharedPrefs.savePhone(widget.phone.trim());
     
 
-    // 3. حمّل سلة الحساب الجديد
     final phone = await SharedPrefs.getPhone();
     context.read<BlocCartBloc>().add(LoadCart(phone));
 
-    // 4. روّح المستخدم على الرئيسية
+  
    
   }();
           Navigator.of(context).pop(); // close loading dialog
