@@ -361,7 +361,7 @@ if (formkey.currentState!
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
-                                                      backgroundColor: AppColors.primary,
+                                                      backgroundColor: Colors.green,
                                                       content: Text(
                                                         'added_to_cart'.tr(namedArgs: {'amount':amount.toString()})
                                                           // "Added $amount \$ to cart "
@@ -369,7 +369,11 @@ if (formkey.currentState!
                                                           
                                                     ),
                                                   );
-Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
+Navigator.pushAndRemoveUntil(
+  context,
+  MaterialPageRoute(builder: (context) => const CharityFundPage()),
+  (route) => route.isFirst,
+);
                                                 }                 
     }
                                             

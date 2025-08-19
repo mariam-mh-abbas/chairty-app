@@ -285,7 +285,7 @@ class _zakahPageState extends State<ZakahPage> {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
-                                                      backgroundColor: AppColors.primary,
+                                                      backgroundColor: Colors.green,
                                                       content: Text(
                                                         'added_to_cart'.tr(namedArgs: {'amount':amount.toString()})
                                                           // "Added $amount \$ to cart "
@@ -293,7 +293,11 @@ class _zakahPageState extends State<ZakahPage> {
                                                           
                                                     ),
                                                   );
-Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CharityFundPage()));
+Navigator.pushAndRemoveUntil(
+  context,
+  MaterialPageRoute(builder: (context) => const CharityFundPage()),
+  (route) => route.isFirst,
+);
                                                 }
                                               }
                                                 
