@@ -129,7 +129,9 @@ class volunteering_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      formatDate(detail.birthDate).toString(),
+                                      DateFormat('d/M/yyyy', 'en')
+                                          .format(detail.birthDate),
+                                      // formatDate(detail.birthDate).toString(),
                                       style: TextStyle(
                                           color: AppColors.black,
                                           fontWeight: FontWeight.w500,
@@ -323,7 +325,7 @@ class volunteering_details extends StatelessWidget {
                                     ),
                                     Text(
                                       detail.types
-                                          .map((e) => e.name)
+                                          .map((e) => e..name)
                                           .join(', '),
                                       style: TextStyle(
                                           color: AppColors.black,
@@ -372,7 +374,8 @@ class volunteering_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      detail.createdAt.toString(),
+                                      DateFormat('d/M/yyyy', 'en')
+                                          .format(detail.createdAt),
                                       style: TextStyle(
                                           color: AppColors.black,
                                           fontWeight: FontWeight.w500,

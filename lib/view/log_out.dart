@@ -33,8 +33,9 @@ class _change_languageState extends State<log_out> {
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text('Logged out'.tr()),
-                backgroundColor: Colors.green),
+              content: Text('Logged out'.tr()),
+              backgroundColor: AppColors.primary,
+            ),
           );
 
           Navigator.pushAndRemoveUntil(
@@ -47,7 +48,7 @@ class _change_languageState extends State<log_out> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('unable to log off'.tr()),
-              backgroundColor: Colors.red,
+              // backgroundColor: Colors.red,
             ),
           );
         }

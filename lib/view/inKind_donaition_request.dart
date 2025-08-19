@@ -30,35 +30,37 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
           selectedCategories.values.any((isSelected) => isSelected);
       if (!atLeastOne) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.red,
+            backgroundColor: Colors.red,
             content: Text("You have to select one of donaition kinds").tr()));
         return;
       }
       final selectedIds = selectedCategories.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
+          .where((entry) => entry.value)
+          .map((entry) => entry.key)
+          .toList();
 
-    print("Selected category IDs: $selectedIds");
+      print("Selected category IDs: $selectedIds");
       Navigator.push(
-        context, MaterialPageRoute(builder: (context) => OtpInkindPage(
-          address: address.text,
-          phone: phoneNumber.text,
-          categoryIds: selectedIds,
-        )));
+          context,
+          MaterialPageRoute(
+              builder: (context) => OtpInkindPage(
+                    address: address.text,
+                    phone: phoneNumber.text,
+                    categoryIds: selectedIds,
+                  )));
     }
-    
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CategorybymaincategoryBloc()..add(FetchCategoryByMainCategory("InKind")),
+      create: (context) => CategorybymaincategoryBloc()
+        ..add(FetchCategoryByMainCategory("InKind")),
       child: Scaffold(
         backgroundColor: AppColors.background,
-        body: Container(height: double.infinity,
-            width: double.infinity,
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
           child: BackgroundWrapper(
               child: Form(
             key: formkey,
@@ -86,24 +88,32 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                       style: AppTextStyle.helpReq,
                     ),
                   ),
-                  BlocBuilder<CategorybymaincategoryBloc, CategorybymaincategoryState>(
+                  BlocBuilder<CategorybymaincategoryBloc,
+                      CategorybymaincategoryState>(
                     builder: (context, state) {
                       if (state is CategorybymaincategoryLoading) {
-                        return Center( child:CircularProgressIndicator(color: AppColors.primary,),);
-                      }
-                      else if (state is CategorybymaincategoryError){
-                        return Center(child: Text(state.ErrorMsg),);
-                      }
-                      else if (state is CategorybymaincategoryLoaded){
-                        return  Column(
-                          children: state.categorybymaincategory.map((category) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
+                          ),
+                        );
+                      } else if (state is CategorybymaincategoryError) {
+                        return Center(
+                          child: Text(state.ErrorMsg),
+                        );
+                      } else if (state is CategorybymaincategoryLoaded) {
+                        return Column(
+                          children:
+                              state.categorybymaincategory.map((category) {
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               child: Row(
                                 children: [
                                   Checkbox(
                                     activeColor: AppColors.primary,
-                                    value: selectedCategories[category.id] ?? false,
+                                    value: selectedCategories[category.id] ??
+                                        false,
                                     onChanged: (val) {
                                       setState(() {
                                         selectedCategories[category.id] = val!;
@@ -111,7 +121,8 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                                     },
                                   ),
                                   SizedBox(width: 10),
-                                  Text(category.name, style: AppTextStyle.helpReq),
+                                  Text(category.name,
+                                      style: AppTextStyle.helpReq),
                                 ],
                               ),
                             );
@@ -120,8 +131,7 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                       }
                       return Container();
                     },
-                  )
-                  ,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -165,7 +175,8 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 20, top: 4),
                         child: Text(
-                          'please make sure of the phone number\nwehere you will be connected'.tr(),
+                          'please make sure of the phone number\nwehere you will be connected'
+                              .tr(),
                           style: AppTextStyle.helpReq,
                         ),
                       ),

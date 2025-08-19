@@ -63,8 +63,9 @@ class _VerificationDialogContentState
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                    content: Text("The password was changeded".tr()),
-                    backgroundColor: Colors.green),
+                  content: Text("The password was changeded".tr()),
+                  backgroundColor: AppColors.primary,
+                ),
               );
               Navigator.pushAndRemoveUntil(
                 context,
@@ -76,7 +77,7 @@ class _VerificationDialogContentState
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('The password could not be changeded'.tr()),
-                  backgroundColor: Colors.red,
+                  // backgroundColor: Colors.red,
                 ),
               );
             }

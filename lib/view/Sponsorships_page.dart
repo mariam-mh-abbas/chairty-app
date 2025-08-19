@@ -1,6 +1,7 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/sponsorships_bloc/bloc/sponsorships_bloc.dart';
 import 'package:charity_project/main.dart';
+import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/services/auth_service.dart';
 import 'package:charity_project/services/pdf_service.dart';
 import 'package:charity_project/view/app_text_style.dart';
@@ -10,13 +11,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+String constructImageUrl(String path) {
+  if (path.startsWith('http')) return path;
+  return '$baseUrl/storage/$path';
+}
+
 class sponsorships_page extends StatelessWidget {
   sponsorships_page({super.key});
-
-  String constructImageUrl(String path) {
-    if (path.startsWith('http')) return path;
-    return '$baseUrl/storage/$path';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +43,14 @@ class sponsorships_page extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Updated successfully'.tr()),
-                      backgroundColor: Colors.green,
+                      backgroundColor: AppColors.primary,
                     ),
                   );
                 } else if (state is SponsorshipError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Update failed'.tr()),
-                      backgroundColor: Colors.red,
+                      // backgroundColor: Colors.red,
                     ),
                   );
                 }
@@ -68,12 +69,12 @@ class sponsorships_page extends StatelessWidget {
                           final imageUrl = sponsorship.sponsorship.image != null
                               ? constructImageUrl(
                                   sponsorship.sponsorship.image!)
-                              : 'https://www.actionaid.org.uk/sites/default/files/styles/hero_large/public/storieshub/rs_143380.jpeg';
+                              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh7mV6wrTwSt3fM0uNZz8TXSzgqYRSQ3F0epjHuGTmQa3UPF2ZL0bgJC3GUusfKcoSw5E&usqp=CAU';
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 2),
                             child: Container(
-                              height: 270,
+                              height: 240,
                               // width: 200,
                               child: Card(
                                 elevation: 3,
@@ -92,8 +93,8 @@ class sponsorships_page extends StatelessWidget {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Container(
-                                            height: 95,
-                                            width: 95,
+                                            height: 130,
+                                            width: 120,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -104,13 +105,13 @@ class sponsorships_page extends StatelessWidget {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 20, right: 20),
+                                                left: 15, right: 15),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 SizedBox(
-                                                  width: 220,
+                                                  width: 205,
                                                   child: Text(
                                                     sponsorship
                                                         .sponsorship.title,
@@ -122,23 +123,69 @@ class sponsorships_page extends StatelessWidget {
                                                         fontSize: 16),
                                                   ),
                                                 ),
-                                                Text(
-                                                  sponsorship.recurrence
-                                                      .toString(),
-                                                  style: TextStyle(
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Icon(
+                                                      Icons
+                                                          .event_repeat_outlined,
                                                       color:
                                                           AppColors.secondary,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 17),
+                                                      size: 18,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      sponsorship.recurrence
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: AppColors
+                                                              .secondary,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 17),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Text(
-                                                  sponsorship.status.toString(),
-                                                  style: TextStyle(
-                                                      color: AppColors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 17),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Icon(
+                                                      sponsorship.status ==
+                                                                  "active" ||
+                                                              sponsorship.status ==
+                                                                  "نشطة"
+                                                          ? Icons
+                                                              .check_circle_outline
+                                                          : Icons
+                                                              .cancel_outlined,
+                                                      color: sponsorship
+                                                                      .status ==
+                                                                  "active" ||
+                                                              sponsorship
+                                                                      .status ==
+                                                                  "نشطة"
+                                                          ? Colors.green
+                                                          : Colors.red,
+                                                      size: 18,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      sponsorship.status
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.black,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 16),
+                                                    ),
+                                                  ],
                                                 ),
                                                 SizedBox(
                                                   height: 4,
@@ -162,7 +209,7 @@ class sponsorships_page extends StatelessWidget {
                                                           color:
                                                               AppColors.primary,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.w500,
                                                           fontSize: 14),
                                                     ),
                                                   ],
@@ -184,45 +231,71 @@ class sponsorships_page extends StatelessWidget {
                                                       width: 5,
                                                     ),
                                                     Text(
-                                                      sponsorship.startDate
-                                                          .toString(),
+                                                      DateFormat(
+                                                              'd/M/yyyy', 'en')
+                                                          .format(sponsorship
+                                                              .startDate),
+                                                      // sponsorship.startDate
+                                                      //     .toString(),
                                                       style: TextStyle(
                                                           color: AppColors
                                                               .unselected,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.w500,
                                                           fontSize: 14),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.query_builder,
-                                                      color:
-                                                          AppColors.unselected,
-                                                      size: 16,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 5,
                                                     ),
                                                     Text(
-                                                      sponsorship.endDate
-                                                          .toString(),
+                                                      " " +
+                                                          "-" +
+                                                          " " +
+                                                          DateFormat('d/M/yyyy',
+                                                                  'en')
+                                                              .format(
+                                                                  sponsorship
+                                                                      .endDate),
+                                                      // sponsorship.endDate
+                                                      //     .toString(),
                                                       style: TextStyle(
                                                           color: AppColors
                                                               .unselected,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.w500,
                                                           fontSize: 14),
                                                     ),
                                                   ],
                                                 ),
+                                                // SizedBox(
+                                                //   height: 4,
+                                                // ),
+                                                // Row(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment.start,
+                                                //   children: [
+                                                //     Icon(
+                                                //       Icons.query_builder,
+                                                //       color:
+                                                //           AppColors.unselected,
+                                                //       size: 16,
+                                                //     ),
+                                                //     SizedBox(
+                                                //       width: 5,
+                                                //     ),
+                                                //     Text(
+                                                //       DateFormat(
+                                                //               'd/M/yyyy', 'en')
+                                                //           .format(sponsorship
+                                                //               .endDate),
+                                                //       // sponsorship.endDate
+                                                //       //     .toString(),
+                                                //       style: TextStyle(
+                                                //           color: AppColors
+                                                //               .unselected,
+                                                //           fontWeight:
+                                                //               FontWeight.w600,
+                                                //           fontSize: 14),
+                                                //     ),
+                                                //   ],
+                                                // ),
                                               ],
                                             ),
                                           ),

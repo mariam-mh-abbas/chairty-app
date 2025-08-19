@@ -28,14 +28,14 @@ class _Request_VolunteringState extends State<periodically_Donations> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Updated successfully'.tr()),
-                    backgroundColor: Colors.green,
+                    backgroundColor: AppColors.primary,
                   ),
                 );
               } else if (state is DonationError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Update failed'.tr()),
-                    backgroundColor: Colors.red,
+                    // backgroundColor: Colors.red,
                   ),
                 );
               }
@@ -53,7 +53,7 @@ class _Request_VolunteringState extends State<periodically_Donations> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                         child: Container(
-                          height: 220,
+                          height: 195,
                           width: 200,
                           child: Card(
                             elevation: 3,
@@ -71,8 +71,8 @@ class _Request_VolunteringState extends State<periodically_Donations> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        height: 80,
-                                        width: 80,
+                                        height: 90,
+                                        width: 85,
                                         decoration: BoxDecoration(
                                             color: Colors.transparent,
                                             borderRadius:
@@ -94,24 +94,62 @@ class _Request_VolunteringState extends State<periodically_Donations> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              " " +
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Icon(
+                                                  Icons.event_repeat_outlined,
+                                                  color: AppColors.secondary,
+                                                  size: 18,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
                                                   plan.recurrenceLabel
                                                       .toString(),
-                                              style: TextStyle(
-                                                  color: AppColors.secondary,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16),
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppColors.secondary,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 16),
+                                                ),
+                                              ],
                                             ),
                                             // SizedBox(
                                             //   height: 4,
                                             // ),
-                                            Text(
-                                              " " + plan.status.toString(),
-                                              style: TextStyle(
-                                                  color: AppColors.black,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Icon(
+                                                  plan.status == "active" ||
+                                                          plan.status == "نشطة"
+                                                      ? Icons
+                                                          .check_circle_outline
+                                                      : Icons.cancel_outlined,
+                                                  color: plan.status ==
+                                                              "active" ||
+                                                          plan.status == "نشطة"
+                                                      ? Colors.green
+                                                      : Colors.red,
+                                                  size: 18,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  plan.status.toString(),
+                                                  style: TextStyle(
+                                                      color: AppColors.black,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 16),
+                                                ),
+                                              ],
                                             ),
                                             SizedBox(
                                               height: 4,
@@ -133,7 +171,7 @@ class _Request_VolunteringState extends State<periodically_Donations> {
                                                   style: TextStyle(
                                                       color: AppColors.primary,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w500,
                                                       fontSize: 14),
                                                 ),
                                               ],
@@ -154,42 +192,61 @@ class _Request_VolunteringState extends State<periodically_Donations> {
                                                   width: 5,
                                                 ),
                                                 Text(
-                                                  plan.startDate.toString(),
+                                                  DateFormat('d/M/yyyy', 'en')
+                                                      .format(plan.startDate),
+                                                  // plan.startDate.toString(),
                                                   style: TextStyle(
                                                       color:
                                                           AppColors.unselected,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w500,
                                                       fontSize: 14),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.query_builder,
-                                                  color: AppColors.unselected,
-                                                  size: 16,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
                                                 ),
                                                 Text(
-                                                  plan.endDate.toString(),
+                                                  " " +
+                                                      "-" +
+                                                      " " +
+                                                      DateFormat(
+                                                              'd/M/yyyy', 'en')
+                                                          .format(plan.endDate),
+                                                  // plan.endDate.toString(),
                                                   style: TextStyle(
                                                       color:
                                                           AppColors.unselected,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w500,
                                                       fontSize: 14),
                                                 ),
                                               ],
                                             ),
+                                            // SizedBox(
+                                            //   height: 4,
+                                            // ),
+                                            // Row(
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.start,
+                                            //   children: [
+                                            //     Icon(
+                                            //       Icons.query_builder,
+                                            //       color: AppColors.unselected,
+                                            //       size: 16,
+                                            //     ),
+                                            //     SizedBox(
+                                            //       width: 5,
+                                            //     ),
+                                            //     Text(
+                                            //       DateFormat('d/M/yyyy', 'en')
+                                            //           .format(plan.endDate),
+                                            //       // plan.endDate.toString(),
+                                            //       style: TextStyle(
+                                            //           color:
+                                            //               AppColors.unselected,
+                                            //           fontWeight:
+                                            //               FontWeight.w600,
+                                            //           fontSize: 14),
+                                            //     ),
+                                            //   ],
+                                            // ),
                                           ],
                                         ),
                                       ),

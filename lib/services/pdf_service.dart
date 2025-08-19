@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/services/auth_service.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';

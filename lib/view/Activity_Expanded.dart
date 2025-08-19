@@ -1,7 +1,10 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocs/benefits_bloc/bloc/benefits_bloc.dart';
 import 'package:charity_project/blocs/gift_bloc/bloc/gift_bloc.dart';
 import 'package:charity_project/blocs/recharge_bloc/bloc/recharge_bloc.dart';
+import 'package:charity_project/blocs/reports_bloc/bloc/reports_bloc.dart';
 import 'package:charity_project/blocs/sponsorships_bloc/bloc/sponsorships_bloc.dart';
+import 'package:charity_project/blocs/volunteering_bloc/bloc/volunteering_bloc.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/services/gift_service.dart';
 import 'package:charity_project/view/Donations_page.dart';
@@ -190,6 +193,9 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                 ),
                 InkWell(
                   onTap: () {
+                    context.read<VolunteeringBloc>().add(
+                          GetVolunteeringEvent(),
+                        );
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -227,6 +233,9 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                 ),
                 InkWell(
                   onTap: () {
+                    context.read<BenefitsBloc>().add(
+                          GetBenefitsEvent(),
+                        );
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -310,6 +319,9 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                 ),
                 InkWell(
                   onTap: () {
+                    context.read<ReportsBloc>().add(
+                          GetReportsEvent(),
+                        );
                     Navigator.push(
                         context,
                         MaterialPageRoute(

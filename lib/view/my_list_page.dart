@@ -197,19 +197,10 @@ class _MyListPageState extends State<MyListPage> {
                           InkWell(
                             onTap: () {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Archivedtabbarpage()));
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => Onboarding_Page()));
-
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             Transparency_file_page()));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Archivedtabbarpage()));
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
@@ -223,7 +214,7 @@ class _MyListPageState extends State<MyListPage> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text('Transparency file'.tr(),
+                                  Text('Archived'.tr(),
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,

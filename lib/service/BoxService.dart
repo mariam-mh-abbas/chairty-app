@@ -8,25 +8,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class Boxservice extends Baseservice {
-   Future<Map<String,dynamic>?> GetBox(String Type) async{
- 
-try {
-    final savedLang = await SharedPrefs.getLanguage() ?? 'en';
-  responce = await dio.get("$baseURL/${ApiResourses.Box(Type)}",options: Options(
-    headers: {
-      "Accept-Language": savedLang
+  Future<Map<String, dynamic>?> GetBox(String Type) async {
+    try {
+      final savedLang = await SharedPrefs.getLanguage() ?? 'en';
+      responce = await dio.get("$baseURL/${ApiResourses.Box(Type)}",
+          options: Options(headers: {"Accept-Language": savedLang}));
+      if (responce.statusCode == 200) {
+        return responce.data;
+      } else {
+        return null;
+      }
+    } on Exception catch (e) {
+      print(e);
+      return null;
     }
-  ));
-  if (responce.statusCode ==200) {
-    return responce.data;
-  }
-  else{
-    return null;
-  }
-} on Exception catch (e) {
- print(e);
- return null;
-}
-
   }
 }

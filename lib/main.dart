@@ -50,12 +50,9 @@
 //       child: const MyApp()));
 // }
 
-
-
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 
-  
 //   // final isLoggedIn;
 //   final Widget startPage;
 //   const MyApp({
@@ -65,9 +62,9 @@
 //   });
 
 //   @override
-   
+
 //   Widget build(BuildContext context) {
-   
+
 //     return MultiBlocProvider(
 //       providers: [
 //         BlocProvider(
@@ -94,20 +91,20 @@
 //        BlocProvider(
 //           create: (context) => AllHumanCasesBloc(),
 //         ),
-       
+
 //         BlocProvider(
 //           create: (context) => CampaignByCategoryIdBloc(),
 //         ),
-       
+
 //       ],
 //       child: MaterialApp(
 //         theme: ThemeData(
 //             fontFamily: context.locale.languageCode == 'en' ? 'ro' : 'tj'),
 //         localizationsDelegates: context.localizationDelegates,
 //         supportedLocales: context.supportedLocales,
-         
+
 //         locale: context.locale,
-       
+
 //         debugShowCheckedModeBanner: false,
 //         home: set_language_page(),
 //       ),
@@ -182,13 +179,15 @@
 //   ));
 // }
 
-
+import 'dart:io';
 
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
+import 'package:charity_project/blocs/benefits_bloc/bloc/benefits_bloc.dart';
 import 'package:charity_project/blocs/change_language_bloc/bloc/change_langauge_bloc.dart';
 import 'package:charity_project/blocs/donation_bloc/bloc/donation_bloc.dart';
 import 'package:charity_project/blocs/gift_bloc/bloc/gift_bloc.dart';
 import 'package:charity_project/blocs/recharge_bloc/bloc/recharge_bloc.dart';
+import 'package:charity_project/blocs/reports_bloc/bloc/reports_bloc.dart';
 import 'package:charity_project/blocs/request_bloc/bloc/request_bloc.dart';
 import 'package:charity_project/blocs/sponsorships_bloc/bloc/sponsorships_bloc.dart';
 
@@ -202,19 +201,24 @@ import 'package:charity_project/blocForApp/blocAllCampaign/bloc/all_campaign_blo
 import 'package:charity_project/blocForApp/blocAllHumanCases/bloc/all_human_cases_bloc.dart';
 import 'package:charity_project/blocForApp/blocCampaignByCategory/bloc/campaign_by_category_id_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
+import 'package:charity_project/blocs/volunteering_bloc/bloc/volunteering_bloc.dart';
 import 'package:charity_project/config/service_locater.dart' as service_locator;
 import 'package:charity_project/config/service_locater.dart';
 
 import 'package:charity_project/config/shared_prefs.dart' as prefs;
-
+import 'package:charity_project/firebase_options.dart';
 
 import 'package:charity_project/services/auth_service.dart';
+import 'package:charity_project/services/benefits_service.dart';
 import 'package:charity_project/services/change_language_service.dart';
 import 'package:charity_project/services/donation_service.dart';
 import 'package:charity_project/services/get_my_recharges_service.dart';
 import 'package:charity_project/services/gift_service.dart';
+import 'package:charity_project/services/notification_service.dart';
+import 'package:charity_project/services/reports_service.dart';
 import 'package:charity_project/services/request_service.dart';
 import 'package:charity_project/services/sponsorships_service.dart';
+import 'package:charity_project/services/volunteering_service.dart';
 
 import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:charity_project/view/onboarding_page.dart';
@@ -227,13 +231,19 @@ import 'package:charity_project/view/periodically_donaition.dart';
 import 'package:charity_project/view/request_help_page.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setup(); 
+  await setup();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // await NotificationService().initNotifications();
 
   final savedLang = await prefs.SharedPrefs.getLanguage() ?? 'en';
   final startLocale =
@@ -245,7 +255,7 @@ void main() async {
   if (token != null) {
     startPage = const MainNavbarPage();
   } else {
-    startPage =  set_language_page();
+    startPage = set_language_page();
   }
 
   runApp(EasyLocalization(
@@ -261,25 +271,29 @@ class MyApp extends StatelessWidget {
   final Widget startPage;
   const MyApp({super.key, required this.startPage});
 
-
-@override
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         // من فرع main
+        BlocProvider(create: (_) => ReportsBloc(ReportService())),
+        BlocProvider(create: (_) => VolunteeringBloc(VolunteeringService())),
+        BlocProvider(create: (_) => BenefitsBloc(BenefitsService())),
         BlocProvider(create: (_) => AuthBloc(AuthService())),
         BlocProvider(
           create: (context) => RequestBloc(RequestService())
             ..add(HelpRequestEvent())
             ..add(VolunteerRequestEvent()),
         ),
-        BlocProvider(create: (context) => DonationBloc(DonationService())),
+        BlocProvider(
+            create: (context) =>
+                DonationBloc(DonationService())..add(DonationRegularEvent())),
         BlocProvider(create: (context) => RechargeBloc(RechargeService())),
-        BlocProvider(create: (_) => GiftBloc(GiftService())),
-        BlocProvider(create: (_) => SponsorshipsBloc(SponsorshipsService())),
-        BlocProvider(create: (_) => LanguageBloc(LanguageService())),
+        BlocProvider(create: (context) => GiftBloc(GiftService())),
+        BlocProvider(
+            create: (context) => SponsorshipsBloc(SponsorshipsService())),
+        BlocProvider(create: (context) => LanguageBloc(LanguageService())),
 
-        
         BlocProvider(create: (context) => BlocCartBloc()),
         BlocProvider(create: (context) => GiftDonaitionBloc()),
         BlocProvider(create: (context) => OncePaymentBloc()),

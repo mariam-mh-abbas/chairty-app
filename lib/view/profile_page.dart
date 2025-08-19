@@ -68,14 +68,15 @@ class _profile_pageState extends State<profile_page> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Profile update failed'.tr()),
-                          backgroundColor: Colors.red,
+                          // backgroundColor: Colors.red,
                         ),
                       );
                     } else if (state is ProfileUpdateSuccess) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text('Profile updated successfully'.tr()),
-                            backgroundColor: Colors.green),
+                          content: Text('Profile updated successfully'.tr()),
+                          backgroundColor: AppColors.primary,
+                        ),
                       );
                     }
                   },
@@ -221,7 +222,7 @@ class _profile_pageState extends State<profile_page> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: isEditing
                                       ? AppColors.unselected
-                                      : AppColors.primary,
+                                      : AppColors.secondary,
                                   fixedSize: const Size(100, 40),
                                   foregroundColor: AppColors.white,
                                 ),
@@ -250,7 +251,7 @@ class _profile_pageState extends State<profile_page> {
                                 child: Text('Confirm'.tr()),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: isEditing
-                                      ? AppColors.primary
+                                      ? AppColors.secondary
                                       : AppColors.unselected,
                                   fixedSize: const Size(100, 40),
                                   foregroundColor: AppColors.white,

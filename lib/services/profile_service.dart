@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/services/auth_service.dart';
 import 'package:dio/dio.dart';
 import 'package:charity_project/models/profile_model.dart';

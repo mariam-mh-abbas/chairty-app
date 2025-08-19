@@ -2,7 +2,7 @@ class RequestModel {
   final int id;
   final String name;
   final String status;
-  final String createdAt;
+  final DateTime createdAt;
 
   RequestModel({
     required this.id,
@@ -16,7 +16,8 @@ class RequestModel {
       id: json['id'],
       name: json['name'] ?? '',
       status: json['status'] ?? '',
-      createdAt: json['created_at'] ?? '',
+      createdAt: DateTime.tryParse(json["created_at"] ?? '') ?? DateTime.now(),
+      // json['created_at'] ?? '',
     );
   }
 }

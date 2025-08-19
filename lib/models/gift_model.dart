@@ -1,7 +1,7 @@
 class GiftModel {
   final int amount;
   final String recipient_name;
-  final String donated_at;
+  final DateTime donated_at;
 
   GiftModel({
     required this.amount,
@@ -13,7 +13,8 @@ class GiftModel {
     return GiftModel(
       amount: json['amount'] ?? 0,
       recipient_name: json['recipient_name'] ?? 'recipient_name',
-      donated_at: json['donated_at'] ?? '2025',
+      donated_at: DateTime.tryParse(json["donated_at"] ?? '') ?? DateTime.now(),
+      //  json['donated_at'] ?? '2025',
     );
   }
 }

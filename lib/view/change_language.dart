@@ -44,7 +44,7 @@ class _change_languageState extends State<change_language> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Failed to change language'.tr()),
-              backgroundColor: Colors.red,
+              // backgroundColor: Colors.red,
             ),
           );
         } else if (state is LanguageLoaded) {
@@ -57,8 +57,9 @@ class _change_languageState extends State<change_language> {
             await context.setLocale(locale);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text('Language changed successfully'.tr()),
-                  backgroundColor: Colors.green),
+                content: Text('Language changed successfully'.tr()),
+                backgroundColor: AppColors.primary,
+              ),
             );
             Navigator.pushAndRemoveUntil(
               context,

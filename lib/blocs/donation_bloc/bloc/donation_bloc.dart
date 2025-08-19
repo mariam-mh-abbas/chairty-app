@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:charity_project/models/in_kind_model.dart';
 import 'package:charity_project/models/periodically_model.dart';
+import 'package:charity_project/models/regular_model.dart';
 import 'package:charity_project/services/donation_service.dart';
 import 'package:meta/meta.dart';
 
@@ -21,7 +22,20 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
         emit(DonationError(e.toString()));
       }
     });
+
+    on<DonationRegularEvent>((event, emit) async {
+      try {
+        final regulars = await donationService.GetRugularDonations();
+        if (regulars == null || regulars.isEmpty) {
+          emit(DonationEmpty());
+        } else
+          emit(DonationRegularSuccess(regulars));
+      } catch (e) {
+        emit(DonationError(e.toString()));
+      }
+    });
     on<DonationPeriodicallyEvent>((event, emit) async {
+      emit(DonationLoading());
       try {
         final plans = await donationService.GetPeriodacllyDonations();
         if (plans == null || plans.isEmpty) {
@@ -37,7 +51,7 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
       emit(DonationLoading());
       try {
         final updated = await donationService.deactivatePlan(event.planId);
-        emit(PlanActionSuccess(updated));
+        emit(PlanActionSuccess(updated!));
 
         final plans = await donationService.GetPeriodacllyDonations();
         emit(DonationPeriodicallySuccess(plans ?? []));
@@ -50,7 +64,7 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
       emit(DonationLoading());
       try {
         final updated = await donationService.reactivatePlan(event.planId);
-        emit(PlanActionSuccess(updated));
+        emit(PlanActionSuccess(updated!));
         final plans = await donationService.GetPeriodacllyDonations();
         emit(DonationPeriodicallySuccess(plans ?? []));
       } catch (e) {

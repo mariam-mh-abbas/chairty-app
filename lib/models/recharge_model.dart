@@ -1,6 +1,6 @@
 class RechargeModel {
   final int amount;
-  final String date;
+  final DateTime date;
 
   RechargeModel({
     required this.amount,
@@ -10,7 +10,7 @@ class RechargeModel {
   factory RechargeModel.fromJson(Map<String, dynamic> json) {
     return RechargeModel(
       amount: json['amount'] ?? 0,
-      date: json['date'] ?? 2025,
+      date: DateTime.tryParse(json["date"] ?? '') ?? DateTime.now(),
     );
   }
 }

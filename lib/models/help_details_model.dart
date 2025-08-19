@@ -37,7 +37,7 @@ class HelpRequestDetailModel {
   final String? fatherName;
   final String? motherName;
   final String? gender;
-  final DateTime? birthDate;
+  final DateTime birthDate;
   final String? maritalStatus;
   final int? numOfMembers;
   final String? study;
@@ -53,7 +53,7 @@ class HelpRequestDetailModel {
   final String? notes;
   final String status;
   final String? reasonOfRejection;
-  final DateTime? createdAt;
+  final DateTime createdAt;
   final List<DetailItem> details;
 
   HelpRequestDetailModel({
@@ -64,7 +64,7 @@ class HelpRequestDetailModel {
     this.fatherName,
     this.motherName,
     this.gender,
-    this.birthDate,
+    required this.birthDate,
     this.maritalStatus,
     this.numOfMembers,
     this.study,
@@ -80,7 +80,7 @@ class HelpRequestDetailModel {
     this.notes,
     required this.status,
     this.reasonOfRejection,
-    this.createdAt,
+    required this.createdAt,
     required this.details,
   });
 
@@ -93,9 +93,10 @@ class HelpRequestDetailModel {
       fatherName: json['father_name'] ?? 'father_name',
       motherName: json['mother_name'] ?? 'mother_name',
       gender: json['gender'] ?? 'gender',
-      birthDate: json.containsKey('birth_date') && json['birth_date'] != null
-          ? DateTime.parse(json['birth_date'])
-          : null,
+      birthDate: DateTime.tryParse(json["birth_date"] ?? '') ?? DateTime.now(),
+      // json.containsKey('birth_date') && json['birth_date'] != null
+      //   ? DateTime.parse(json['birth_date'])
+      //   : null,
       maritalStatus: json['marital_status'] ?? '',
       numOfMembers: json['num_of_members'] ?? 0,
       study: json['study'] ?? 'study',
@@ -115,9 +116,10 @@ class HelpRequestDetailModel {
       notes: json['notes'] ?? '-',
       status: (json['status']) ?? 'status',
       reasonOfRejection: json['reason_of_rejection'],
-      createdAt: json.containsKey('created_at') && json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
+      createdAt: DateTime.tryParse(json["created_at"] ?? '') ?? DateTime.now(),
+      // json.containsKey('created_at') && json['created_at'] != null
+      //     ? DateTime.parse(json['created_at'])
+      //     : null,
       details: (json['details'] as List<dynamic>?)
               ?.map((e) => DetailItem.fromJson(e as Map<String, dynamic>))
               .toList() ??

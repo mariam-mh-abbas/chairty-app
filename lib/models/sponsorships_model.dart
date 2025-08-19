@@ -87,8 +87,8 @@ class PlanModel {
   final String? recurrence;
   final String? status;
   final bool isActivated;
-  final DateTime? startDate;
-  final DateTime? endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final SponsorshipModel sponsorship;
   final List<TransactionModel> transactions;
 
@@ -98,8 +98,8 @@ class PlanModel {
     this.recurrence,
     required this.status,
     required this.isActivated,
-    this.startDate,
-    this.endDate,
+    required this.startDate,
+    required this.endDate,
     required this.sponsorship,
     required this.transactions,
   });
@@ -115,12 +115,14 @@ class PlanModel {
       recurrence: json['recurrence'] ?? '',
       status: (json['status']) ?? '',
       isActivated: json['is_activated'] ?? false,
-      startDate: json.containsKey('start_date') && json['start_date'] != null
-          ? DateTime.parse(json['start_date'])
-          : null,
-      endDate: json.containsKey('end_date') && json['end_date'] != null
-          ? DateTime.parse(json['end_date'])
-          : null,
+      startDate: DateTime.tryParse(json["start_date"] ?? '') ?? DateTime.now(),
+      // json.containsKey('start_date') && json['start_date'] != null
+      //     ? DateTime.parse(json['start_date'])
+      //     : null,
+      endDate: DateTime.tryParse(json["end_date"] ?? '') ?? DateTime.now(),
+      //  json.containsKey('end_date') && json['end_date'] != null
+      //     ? DateTime.parse(json['end_date'])
+      //     : null,
       sponsorship: SponsorshipModel.fromJson(json['sponsorship']),
       transactions: (json['transactions'] as List<dynamic>?)
               ?.map((e) => TransactionModel.fromJson(e as Map<String, dynamic>))

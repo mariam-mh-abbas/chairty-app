@@ -1,9 +1,8 @@
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/models/auth_model.dart';
+import 'package:charity_project/service/BaseService.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-String baseUrl = 'http://' + '127.0.0.1' + ':8000';
 
 class AuthService {
   final Dio _dio = Dio();
@@ -69,7 +68,8 @@ class AuthService {
     }
   }
 
-  Future<void> logout(String token) async {
+  Future<void> logout() async {
+    final token = await SharedPrefs.getToken();
     try {
       final response = await Dio().post(
         '$baseUrl/api/user/logout',

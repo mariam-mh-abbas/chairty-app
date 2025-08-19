@@ -24,7 +24,8 @@ class PlanActionSuccess extends DonationState {
 }
 
 class DonationRegularSuccess extends DonationState {
-  DonationRegularSuccess();
+  final List<RegularModel> regulars;
+  DonationRegularSuccess(this.regulars);
 }
 
 class DonationError extends DonationState {

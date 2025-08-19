@@ -49,8 +49,9 @@ class _sign_in_pageState extends State<sign_in_page> {
           } else if (state is LoginSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text("Logged in".tr()),
-                  backgroundColor: Colors.green),
+                content: Text("Logged in".tr()),
+                backgroundColor: AppColors.primary,
+              ),
             );
             Navigator.pushAndRemoveUntil(
               context,
@@ -61,7 +62,7 @@ class _sign_in_pageState extends State<sign_in_page> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Unable to log on'.tr()),
-                backgroundColor: Colors.red,
+                // backgroundColor: Colors.red,
               ),
             );
           }

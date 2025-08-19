@@ -72,37 +72,29 @@ class _in_kind_DonationsState extends State<in_kind_Donations> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            inkind.category.name,
-                                            style: TextStyle(
-                                                color: AppColors.secondary,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 17),
-                                          ),
-                                          SizedBox(
-                                            height: 4,
-                                          ),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
                                               Icon(
-                                                Icons.location_on_outlined,
-                                                color: AppColors.primary,
+                                                Icons
+                                                    .volunteer_activism_outlined,
+                                                color: AppColors.secondary,
                                                 size: 18,
                                               ),
                                               SizedBox(
                                                 width: 5,
                                               ),
                                               Text(
-                                                inkind.address,
+                                                inkind.category.name,
                                                 style: TextStyle(
-                                                    color: AppColors.primary,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 14),
+                                                    color: AppColors.secondary,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
                                               ),
                                             ],
                                           ),
+
                                           SizedBox(
                                             height: 4,
                                           ),
@@ -130,12 +122,63 @@ class _in_kind_DonationsState extends State<in_kind_Donations> {
                                           //     ),
                                           //   ],
                                           // ),
-                                          Text(
-                                            inkind.campaign.status,
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                inkind.campaign.status ==
+                                                        "accepted"
+                                                    ? Icons.check_circle_outline
+                                                    : inkind.campaign.status ==
+                                                            "rejected"
+                                                        ? Icons.cancel_outlined
+                                                        : Icons
+                                                            .pause_circle_outline,
+                                                color: inkind.campaign.status ==
+                                                        "accepted"
+                                                    ? Colors.green
+                                                    : inkind.campaign.status ==
+                                                            "rejected"
+                                                        ? Colors.red
+                                                        : Colors.black,
+                                                size: 17,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                inkind.campaign.status,
+                                                style: TextStyle(
+                                                    color: AppColors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 4,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                Icons.location_on_outlined,
+                                                color: AppColors.primary,
+                                                size: 18,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                inkind.address,
+                                                style: TextStyle(
+                                                    color: AppColors.primary,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),

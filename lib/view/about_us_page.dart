@@ -40,8 +40,8 @@ class About_us_page extends StatelessWidget {
                             .tr(),
                         style: TextStyle(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
                         )),
                   )),
             ),

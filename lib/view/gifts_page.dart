@@ -63,8 +63,8 @@ class gifts_page extends StatelessWidget {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          height: 60,
-                                          width: 60,
+                                          height: 65,
+                                          width: 65,
                                           decoration: BoxDecoration(
                                               color: Colors.transparent,
                                               borderRadius:
@@ -79,19 +79,35 @@ class gifts_page extends StatelessWidget {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 20, right: 20),
+                                              left: 15, right: 15),
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                gift.recipient_name,
-                                                style: TextStyle(
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                    Icons.person,
                                                     color: AppColors.secondary,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 16),
+                                                    size: 18,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    gift.recipient_name,
+                                                    style: TextStyle(
+                                                        color:
+                                                            AppColors.secondary,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16),
+                                                  ),
+                                                ],
                                               ),
                                               SizedBox(
                                                 height: 4,
@@ -115,7 +131,7 @@ class gifts_page extends StatelessWidget {
                                                         color:
                                                             AppColors.primary,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.w500,
                                                         fontSize: 14),
                                                   ),
                                                 ],
@@ -136,12 +152,14 @@ class gifts_page extends StatelessWidget {
                                                     width: 5,
                                                   ),
                                                   Text(
-                                                    gift.donated_at,
+                                                    DateFormat('d/M/yyyy', 'en')
+                                                        .format(
+                                                            gift.donated_at),
                                                     style: TextStyle(
                                                         color: AppColors
                                                             .unselected,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.w500,
                                                         fontSize: 14),
                                                   ),
                                                 ],

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/blocEmergencyHumanCases/bloc/bloc_emergency_human_cases_bloc.dart';
 import 'package:charity_project/blocForApp/blocHomeCampaign/bloc/campaign_home_bloc.dart';
+import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/view/ArchivedTabbarPage.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/before_gift.dart';
@@ -20,9 +21,8 @@ import 'package:charity_project/view/zakah_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
- final String baseUrlImage = "http://localhost:8000/storage/";
 
-
+final String baseUrlImage = "$baseUrl/storage/";
 
 class HomaPage extends StatelessWidget {
   const HomaPage({super.key});
@@ -34,10 +34,10 @@ class HomaPage extends StatelessWidget {
         BlocProvider<CampaignHomeBloc>(
           create: (context) => CampaignHomeBloc()..add(FetchedCampaign()),
         ),
-BlocProvider<BlocEmergencyHumanCasesBloc>(
-          create: (context) => BlocEmergencyHumanCasesBloc()..add(FetchEmergencyHumanCases()),
+        BlocProvider<BlocEmergencyHumanCasesBloc>(
+          create: (context) =>
+              BlocEmergencyHumanCasesBloc()..add(FetchEmergencyHumanCases()),
         ),
-        
       ],
       child: Scaffold(
         backgroundColor: AppColors.background,
@@ -61,9 +61,7 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
 
                     actions: [
                       IconButton(
-                          onPressed: () {
-                     
-                          },
+                          onPressed: () {},
                           icon: Icon(
                             Icons.notifications,
                             color: AppColors.secondary,
@@ -95,9 +93,8 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                 SizedBox(
                   height: 5,
                 ),
-
                 Image.asset(
-                   'assets/images/home.jpg',
+                  'assets/images/home.jpg',
                   //  'assets/images/1231.jpg',
                   // 'assets/images/fgg.jpg',
                   // 'assets/images/1212.png',
@@ -108,8 +105,9 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Ongoing Campaigns'.tr(),
@@ -117,9 +115,15 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                             color: AppColors.primary),
-                      ), InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DonaitionCategoryTabbar(category: "Campaign", title: "Campaigns")));
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DonaitionCategoryTabbar(
+                                      category: "Campaign",
+                                      title: "Campaigns")));
                         },
                         child: Text(
                           'More'.tr(),
@@ -132,104 +136,119 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                     ],
                   ),
                 ),
-
                 BlocBuilder<CampaignHomeBloc, CampaignHomeState>(
                   builder: (context, state) {
                     if (state is CampaignHomeLoading) {
-                      return Center(child: CircularProgressIndicator(color: AppColors.primary,));
-                    }
-                    else if (state is CampaignHomeError){
-                      return Center(child: Text(state.ErrorMsg),);
-                    }
-                       else if (state is CampaignHomeLoaded){
-                        
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ));
+                    } else if (state is CampaignHomeError) {
+                      return Center(
+                        child: Text(state.ErrorMsg),
+                      );
+                    } else if (state is CampaignHomeLoaded) {
                       return SizedBox(
-                      height: 170,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                              height: 190,
-                              enlargeCenterPage: true,
-                              viewportFraction: 0.6,
-                              autoPlay: true),
-                          items: List.generate(state.Campaigns.length, (index) {
-                            final String imageUrl=state.Campaigns[index].image!;
-                          final String finalImage =Uri.parse("$baseUrlImage").resolve(imageUrl).toString();
-                            return Builder(builder: (BuildContext context) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OneCampaignPage(id: state.Campaigns[index].id!)));
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  height: 50,
-                                  width: 200,
-                                  child: Card(
-                                    elevation: 10,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                finalImage
-                                              //  "$baseUrlImage${state.Campaigns[index].image!}"
+                        height: 170,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                                height: 190,
+                                enlargeCenterPage: true,
+                                viewportFraction: 0.6,
+                                autoPlay: true),
+                            items:
+                                List.generate(state.Campaigns.length, (index) {
+                              final String imageUrl =
+                                  state.Campaigns[index].image!;
+                              final String finalImage =
+                                  Uri.parse("$baseUrlImage")
+                                      .resolve(imageUrl)
+                                      .toString();
+                              return Builder(builder: (BuildContext context) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                OneCampaignPage(
+                                                    id: state.Campaigns[index]
+                                                        .id!)));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    height: 50,
+                                    width: 200,
+                                    child: Card(
+                                      elevation: 10,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            image: DecorationImage(
+                                                image: NetworkImage(finalImage
+                                                    //  "$baseUrlImage${state.Campaigns[index].image!}"
+                                                    ),
+                                                fit: BoxFit.cover)),
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              child: Container(
+                                                height: 200,
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    gradient: LinearGradient(
+                                                        begin: Alignment
+                                                            .bottomCenter,
+                                                        end:
+                                                            Alignment.topCenter,
+                                                        colors: [
+                                                          AppColors.primary
+                                                              .withOpacity(0.9),
+                                                          Colors.transparent
+                                                        ])),
                                               ),
-                                              fit: BoxFit.cover)),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            child: Container(
-                                              height: 200,
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  gradient: LinearGradient(
-                                                      begin:
-                                                          Alignment.bottomCenter,
-                                                      end: Alignment.topCenter,
-                                                      colors: [
-                                                        AppColors.primary
-                                                            .withOpacity(0.9),
-                                                        Colors.transparent
-                                                      ])),
                                             ),
-                                          ),
-                                          Positioned(
-                                            top: 120,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                state.Campaigns[index].title,
-                                                style: TextStyle(
-                                                    color: AppColors.white,
-                                                    fontWeight: FontWeight.w700),
+                                            Positioned(
+                                              top: 120,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  state.Campaigns[index].title,
+                                                  style: TextStyle(
+                                                      color: AppColors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            });
-                          }),
+                                );
+                              });
+                            }),
+                          ),
                         ),
-                      ),
-                    );
+                      );
                     }
-                  return Text("");
+                    return Text("");
                   },
-                )
-
-                
-                ,
-                 Padding(
-                  padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Emergency Cases'.tr(),
@@ -237,9 +256,15 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                             color: AppColors.primary),
-                      ), InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DonaitionCategoryTabbar(category: "HumanCase", title: "HumanitarianCases")));
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DonaitionCategoryTabbar(
+                                      category: "HumanCase",
+                                      title: "HumanitarianCases")));
                         },
                         child: Text(
                           'More'.tr(),
@@ -252,18 +277,12 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                     ],
                   ),
                 ),
-
                 SizedBox(
                   height: 200,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: EmergencyCasesPage()
-                  ),
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: EmergencyCasesPage()),
                 ),
-
-              
-
-
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
                   child: Text(
@@ -274,7 +293,6 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                         color: AppColors.primary),
                   ),
                 ),
-
                 SizedBox(
                   height: 180,
                   child: Padding(
@@ -296,7 +314,7 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                                 },
                                 child: Card(
                                   elevation: 10,
-                                  color:  Color(0xffeaf8f9),
+                                  color: Color(0xffeaf8f9),
                                   child: Column(
                                     children: [
                                       Image.asset(
@@ -338,8 +356,7 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                                 },
                                 child: Card(
                                   elevation: 10,
-                                  color: 
-                                  Color(0xffeaf8f9),
+                                  color: Color(0xffeaf8f9),
                                   child: Column(
                                     children: [
                                       Padding(
@@ -348,9 +365,10 @@ BlocProvider<BlocEmergencyHumanCasesBloc>(
                                             'assets/images/l.png',
                                             height: 80,
                                             width: 80,
-                                            color: 
-                                            // AppColors.teal)
-                                            const Color.fromARGB(255, 219, 90, 163)),
+                                            color:
+                                                // AppColors.teal)
+                                                const Color.fromARGB(
+                                                    255, 219, 90, 163)),
                                       ),
                                       SizedBox(
                                         height: 10,

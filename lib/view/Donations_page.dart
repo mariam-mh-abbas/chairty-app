@@ -30,6 +30,7 @@ class _donations_pageState extends State<donations_page>
       if (_tabController.indexIsChanging) return;
       final bloc = context.read<DonationBloc>();
       if (_tabController.index == 0) {
+        bloc.add(DonationRegularEvent());
       } else if (_tabController.index == 1) {
         bloc.add(DonationInKindEvent());
       } else if (_tabController.index == 2) {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "925355269264",
+    "project_id": "chairty-app-3dd34",
+    "storage_bucket": "chairty-app-3dd34.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925355269264:android:8ed91d4f65cc8053048c15",
+        "android_client_info": {
+          "package_name": "com.example.charity_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhTiEOi-VGkeI-LQntCfBj2_ZkHJHmevA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

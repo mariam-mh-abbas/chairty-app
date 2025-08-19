@@ -97,7 +97,7 @@ class receipts_page extends StatelessWidget {
                                                     ' \$',
                                                 style: TextStyle(
                                                     color: AppColors.primary,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w500,
                                                     fontSize: 16),
                                               ),
                                             ],
@@ -118,10 +118,11 @@ class receipts_page extends StatelessWidget {
                                                 width: 5,
                                               ),
                                               Text(
-                                                recharge.date,
+                                                DateFormat('d/M/yyyy', 'en')
+                                                    .format(recharge.date),
                                                 style: TextStyle(
                                                     color: AppColors.unselected,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w500,
                                                     fontSize: 16),
                                               ),
                                             ],

@@ -2,6 +2,7 @@ import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/request_bloc/bloc/request_bloc.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/volunteering_details.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -60,8 +61,8 @@ class _Request_VolunteringState extends State<Request_Voluntering> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      height: 60,
-                                      width: 60,
+                                      height: 65,
+                                      width: 65,
                                       decoration: BoxDecoration(
                                           color: Colors.transparent,
                                           borderRadius:
@@ -83,19 +84,59 @@ class _Request_VolunteringState extends State<Request_Voluntering> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            request.name,
-                                            style: TextStyle(
-                                                color: AppColors.primary,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 16),
-                                          ),
-                                          Text(
-                                            request.status,
-                                            style: TextStyle(
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                Icons.person_outline,
                                                 color: AppColors.secondary,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16),
+                                                size: 18,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                request.name,
+                                                style: TextStyle(
+                                                    color: AppColors.secondary,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                request.status == "accepted"
+                                                    ? Icons.check_circle_outline
+                                                    : request.status ==
+                                                            "rejected"
+                                                        ? Icons.cancel_outlined
+                                                        : Icons
+                                                            .pause_circle_outline,
+                                                color:
+                                                    request.status == "accepted"
+                                                        ? Colors.green
+                                                        : request.status ==
+                                                                "rejected"
+                                                            ? Colors.red
+                                                            : Colors.black,
+                                                size: 17,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                request.status,
+                                                style: TextStyle(
+                                                    color: AppColors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(
                                             height: 5,
@@ -113,10 +154,11 @@ class _Request_VolunteringState extends State<Request_Voluntering> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                request.createdAt,
+                                                DateFormat('d/M/yyyy', 'en')
+                                                    .format(request.createdAt),
                                                 style: TextStyle(
                                                     color: AppColors.unselected,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w500,
                                                     fontSize: 14),
                                               ),
                                             ],

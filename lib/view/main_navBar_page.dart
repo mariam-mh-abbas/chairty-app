@@ -67,9 +67,13 @@ class _MainNavbarPageState extends State<MainNavbarPage> {
                 ),
                 NavigationDestination(
                     icon: badges.Badge(
-                      showBadge: context.read<BlocCartBloc>().cartItems.length > 0,
-               badgeContent: Text("${context.read<BlocCartBloc>().cartItems.length}",style: TextStyle(color: AppColors.white,fontSize: 10),),
-               position: badges.BadgePosition.topEnd(top: -8, end: -8),
+                      showBadge:
+                          context.read<BlocCartBloc>().cartItems.length > 0,
+                      badgeContent: Text(
+                        "${context.read<BlocCartBloc>().cartItems.length}",
+                        style: TextStyle(color: AppColors.white, fontSize: 10),
+                      ),
+                      position: badges.BadgePosition.topEnd(top: -8, end: -8),
                       child: Image.asset(
                         'assets/images/fund.png',
                         height: 30,
@@ -78,9 +82,13 @@ class _MainNavbarPageState extends State<MainNavbarPage> {
                       ),
                     ),
                     selectedIcon: badges.Badge(
-                       showBadge: context.read<BlocCartBloc>().cartItems.length > 0,
-               badgeContent: Text("${context.read<BlocCartBloc>().cartItems.length}",style: TextStyle(color: AppColors.white,fontSize: 10),),
-               position: badges.BadgePosition.topEnd(top: -8, end: -8),
+                      showBadge:
+                          context.read<BlocCartBloc>().cartItems.length > 0,
+                      badgeContent: Text(
+                        "${context.read<BlocCartBloc>().cartItems.length}",
+                        style: TextStyle(color: AppColors.white, fontSize: 10),
+                      ),
+                      position: badges.BadgePosition.topEnd(top: -8, end: -8),
                       child: Image.asset('assets/images/fund.png',
                           height: 30, width: 30, color: AppColors.primary),
                     ),
@@ -108,4 +116,3 @@ class _MainNavbarPageState extends State<MainNavbarPage> {
     );
   }
 }
-

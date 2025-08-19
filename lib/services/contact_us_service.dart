@@ -1,4 +1,5 @@
 // lib/services/message_service.dart
+import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/services/auth_service.dart';
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:dio/dio.dart';

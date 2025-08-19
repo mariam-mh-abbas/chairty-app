@@ -55,7 +55,7 @@ class PeriodicallyModel {
   final String? recurrenceLabel;
   final String? status;
   final bool isActivated;
-  final DateTime? startDate;
+  final DateTime startDate;
   final DateTime endDate;
   final List<TransactionModel> transactions;
 
@@ -66,7 +66,7 @@ class PeriodicallyModel {
     this.recurrenceLabel,
     required this.status,
     required this.isActivated,
-    this.startDate,
+    required this.startDate,
     required this.endDate,
     required this.transactions,
   });
@@ -83,10 +83,12 @@ class PeriodicallyModel {
       recurrenceLabel: json['recurrence_label'],
       status: (json['status']),
       isActivated: json['is_activated'] ?? false,
-      startDate: json.containsKey('start_date') && json['start_date'] != null
-          ? DateTime.parse(json['start_date'])
-          : null,
-      endDate: DateTime.parse(json['end_date']),
+      startDate: DateTime.tryParse(json["start_date"] ?? '') ?? DateTime.now(),
+      //  json.containsKey('start_date') && json['start_date'] != null
+      //     ? DateTime.parse(json['start_date'])
+      //     : null,
+      endDate: DateTime.tryParse(json["end_date"] ?? '') ?? DateTime.now(),
+      //  DateTime.parse(json['end_date']),
       transactions: (json['transactions'] as List<dynamic>?)
               ?.map((e) => TransactionModel.fromJson(e as Map<String, dynamic>))
               .toList() ??

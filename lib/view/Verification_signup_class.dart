@@ -63,8 +63,9 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
           Navigator.of(context).pop(); // close loading dialog
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text("The account was created".tr()),
-                backgroundColor: Colors.green),
+              content: Text("The account was created".tr()),
+              backgroundColor: AppColors.primary,
+            ),
           );
           Navigator.pushAndRemoveUntil(
             context,
@@ -76,7 +77,7 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("The account could not be created".tr()),
-              backgroundColor: Colors.red,
+              // backgroundColor: Colors.red,
             ),
           );
         }

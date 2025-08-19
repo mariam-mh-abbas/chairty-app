@@ -20,7 +20,7 @@ class VolunteerRequestDetailModel {
   final int? adminId;
   final String? name;
   final String? gender;
-  final DateTime? birthDate;
+  final DateTime birthDate;
   final String? address;
   final String? studyQualification;
   final String? job;
@@ -33,7 +33,7 @@ class VolunteerRequestDetailModel {
   final String? reasonOfRejection;
   final List<DayModel> days;
   final List<TypeModel> types;
-  final DateTime? createdAt;
+  final DateTime createdAt;
 
   VolunteerRequestDetailModel({
     required this.id,
@@ -54,7 +54,7 @@ class VolunteerRequestDetailModel {
     this.reasonOfRejection,
     required this.days,
     required this.types,
-    this.createdAt,
+    required this.createdAt,
   });
 
   factory VolunteerRequestDetailModel.fromJson(Map<String, dynamic> json) {
@@ -64,9 +64,10 @@ class VolunteerRequestDetailModel {
       adminId: json['admin_id'],
       name: json['name'] ?? '',
       gender: json['gender'] ?? '',
-      birthDate: json['birth_date'] != null
-          ? DateTime.parse(json['birth_date'])
-          : null,
+      birthDate: DateTime.tryParse(json["birth_date"] ?? '') ?? DateTime.now(),
+      //  json['birth_date'] != null
+      //     ? DateTime.parse(json['birth_date'])
+      //     : null,
       address: json['address'] ?? '',
       studyQualification: json['study_qualification'] ?? '',
       job: json['job'] ?? '',
@@ -85,9 +86,10 @@ class VolunteerRequestDetailModel {
               ?.map((e) => TypeModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      createdAt: json.containsKey('created_at') && json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
+      createdAt: DateTime.tryParse(json["created_at"] ?? '') ?? DateTime.now(),
+      //  json.containsKey('created_at') && json['created_at'] != null
+      //     ? DateTime.parse(json['created_at'])
+      //     : null,
     );
   }
 }

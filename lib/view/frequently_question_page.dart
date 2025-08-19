@@ -104,20 +104,25 @@ class _Frequently_questions_pageState extends State<Frequently_questions_page> {
                       item.question,
                       style: TextStyle(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w600),
+                          fontWeight: FontWeight.w500),
                     ),
-                    childrenPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
+                    childrenPadding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
                     ),
                     children: [
+                      Divider(),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           item.answer,
                           style: TextStyle(
                               color: AppColors.unselected,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               height: 1.4),
                         ),
                       ),

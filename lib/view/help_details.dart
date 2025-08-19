@@ -175,7 +175,9 @@ class help_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      formatDate(detail.birthDate).toString(),
+                                      DateFormat('d/M/yyyy', 'en')
+                                          .format(detail.birthDate),
+                                      // formatDate(detail.birthDate).toString(),
                                       style: TextStyle(
                                           color: AppColors.black,
                                           fontWeight: FontWeight.w500,
@@ -367,7 +369,7 @@ class help_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     SizedBox(
-                                      width: 300,
+                                      width: 270,
                                       child: Text(
                                         detail.notes.toString(),
                                         style: TextStyle(
@@ -466,7 +468,8 @@ class help_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      detail.createdAt.toString(),
+                                      DateFormat('d/M/yyyy', 'en')
+                                          .format(detail.createdAt),
                                       style: TextStyle(
                                           color: AppColors.black,
                                           fontWeight: FontWeight.w500,
