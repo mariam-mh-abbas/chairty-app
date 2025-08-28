@@ -1,13 +1,38 @@
+// class User {
+//   final String name;
+//   final String phone;
+//   final int id;
+
+//   User({
+//     required this.name,
+//     required this.phone,
+//     required this.id,
+//   });
+
+//   factory User.fromJson(Map<String, dynamic> json) {
+//     return User(
+//       id: json['id'],
+//       name: json['name'],
+//       phone: json['phone'],
+//     );
+//   }
+// }
 class User {
   final String name;
-  final String phone;
+  final String? phone; // كان String
+  final int id;
 
-  User({required this.name, required this.phone});
+  User({
+    required this.name,
+    this.phone,
+    required this.id,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      name: json['name'],
-      phone: json['phone'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "",
+      phone: json['phone'], // nullable
     );
   }
 }
@@ -36,6 +61,96 @@ class Auth_model1 {
     return Auth_model1(
       accessToken: json['token'],
       user: User.fromJson(json['user']),
+    );
+  }
+}
+
+// class UserModel {
+//   final int id;
+//   final String name;
+//   final String? phone;
+//   final String email;
+//   final String? googleId;
+//   final String? profileImage;
+//   final String preferredLanguage;
+//   final int balance;
+
+//   UserModel({
+//     required this.id,
+//     required this.name,
+//     this.phone,
+//     required this.email,
+//     this.googleId,
+//     this.profileImage,
+//     required this.preferredLanguage,
+//     required this.balance,
+//   });
+
+//   factory UserModel.fromJson(Map<String, dynamic> json) {
+//     return UserModel(
+//       id: json['id'],
+//       name: json['name'],
+//       phone: json['phone'],
+//       email: json['email'],
+//       googleId: json['google_id'],
+//       profileImage: json['profile_image'],
+//       preferredLanguage: json['preferred_language'],
+//       balance: json['balance'],
+//     );
+//   }
+// }
+class UserModel {
+  final int id;
+  final String name;
+  final String? phone;
+  final String email;
+  final String? googleId;
+  final String? profileImage;
+  final String preferredLanguage;
+  final int balance;
+
+  UserModel({
+    required this.id,
+    required this.name,
+    this.phone,
+    required this.email,
+    this.googleId,
+    this.profileImage,
+    required this.preferredLanguage,
+    required this.balance,
+  });
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "",
+      phone: json['phone'], // nullable
+      email: json['email'] ?? "",
+      googleId: json['google_id'], // nullable
+      profileImage: json['profile_image'], // nullable
+      preferredLanguage: json['preferred_language'] ?? "en",
+      balance:
+          int.tryParse(json['balance']?.toString() ?? "0") ?? 0, // safe parse
+    );
+  }
+}
+
+class GoogleLoginResponse {
+  final String message;
+  final String accessToken;
+  final UserModel user;
+
+  GoogleLoginResponse({
+    required this.message,
+    required this.accessToken,
+    required this.user,
+  });
+
+  factory GoogleLoginResponse.fromJson(Map<String, dynamic> json) {
+    return GoogleLoginResponse(
+      message: json['message'],
+      accessToken: json['access_token'],
+      user: UserModel.fromJson(json['user']),
     );
   }
 }

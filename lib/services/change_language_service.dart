@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class LanguageService {
   final Dio _dio = Dio();
 
-  Future<void> ChangeLanguage(String languageCode) async {
+  Future<void> ChangeLanguage(languageCode) async {
     final token = await SharedPrefs.getToken();
     if (token == null) return;
 

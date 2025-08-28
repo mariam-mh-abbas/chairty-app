@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 
 class Sponsorshipplanservice extends Baseservice {
   Future<bool> sponsorshipdonate(int id, int amount) async {
-    final token = await SharedPrefs.getToken();
+    final token = await SharedPrefs.getToken() ?? '';
     try {
       responce = await dio.post("$baseURL/${ApiResourses.PlanSponsorship(id)}",
           data: {"amount": amount},

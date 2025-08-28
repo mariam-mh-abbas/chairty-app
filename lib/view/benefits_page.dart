@@ -29,7 +29,13 @@ class benefits_page extends StatelessWidget {
           Expanded(
             child: BlocBuilder<BenefitsBloc, BenefitsState>(
               builder: (context, state) {
-                if (state is BenefitsSuccess) {
+                if (state is BenefitsLoading) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    // backgroundColor: AppColors.secondary,
+                    color: AppColors.secondary,
+                  ));
+                } else if (state is BenefitsSuccess) {
                   final benefits = state.benefits;
                   return Padding(
                     padding: EdgeInsets.all(8),
@@ -45,7 +51,7 @@ class benefits_page extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 2),
                             child: Container(
-                              height: 150,
+                              height: 160,
                               width: 200,
                               child: Card(
                                 elevation: 3,
@@ -107,15 +113,15 @@ class benefits_page extends StatelessWidget {
                                                   benefit.category,
                                               style: TextStyle(
                                                   color: AppColors.black,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w500,
                                                   fontSize: 16),
                                             ),
                                             Text(
                                               benefit.title,
                                               style: TextStyle(
                                                   color: AppColors.secondary,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16),
                                             ),
                                             SizedBox(
                                               height: 3,
@@ -139,8 +145,8 @@ class benefits_page extends StatelessWidget {
                                                       color:
                                                           AppColors.unselected,
                                                       fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 14),
+                                                          FontWeight.w500,
+                                                      fontSize: 16),
                                                 ),
                                               ],
                                             ),

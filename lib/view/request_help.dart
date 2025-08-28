@@ -23,7 +23,10 @@ class _Request_HelpState extends State<Request_Help> {
           child: BlocBuilder<RequestBloc, RequestState>(
             builder: (context, state) {
               if (state is RequestLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.secondary,
+                ));
               } else if (state is RequestSuccess) {
                 final requests = state.requests;
                 return ListView.builder(
@@ -110,20 +113,28 @@ class _Request_HelpState extends State<Request_Help> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               Icon(
-                                                request.status == "accepted"
+                                                request.status == "accepted" ||
+                                                        request.status ==
+                                                            "مقبول"
                                                     ? Icons.check_circle_outline
                                                     : request.status ==
-                                                            "rejected"
+                                                                "rejected" ||
+                                                            request.status ==
+                                                                "مرفوض"
                                                         ? Icons.cancel_outlined
                                                         : Icons
                                                             .pause_circle_outline,
-                                                color:
-                                                    request.status == "accepted"
-                                                        ? Colors.green
-                                                        : request.status ==
-                                                                "rejected"
-                                                            ? Colors.red
-                                                            : Colors.black,
+                                                color: request.status ==
+                                                            "accepted" ||
+                                                        request.status ==
+                                                            "مقبول"
+                                                    ? Colors.green
+                                                    : request.status ==
+                                                                "rejected" ||
+                                                            request.status ==
+                                                                "مرفوض"
+                                                        ? Colors.red
+                                                        : Colors.black,
                                                 size: 17,
                                               ),
                                               SizedBox(

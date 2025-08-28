@@ -77,8 +77,15 @@ class _change_password_pageState extends State<change_password_page> {
                     //       color: AppColors.primary, fontWeight: FontWeight.w700),
                     // ),
                   ),
+                  // SizedBox(
+                  //   height: 200,
+                  // ),
+                  Image.asset(
+                    'assets/images/password.png',
+                    fit: BoxFit.fill,
+                  ),
                   SizedBox(
-                    height: 200,
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -150,7 +157,7 @@ class _change_password_pageState extends State<change_password_page> {
                     ),
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -166,7 +173,7 @@ class _change_password_pageState extends State<change_password_page> {
                     },
                     child: Text('Confirm'.tr()),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: AppColors.secondary,
                         fixedSize: Size(100, 40),
                         foregroundColor: AppColors.white),
                   ),

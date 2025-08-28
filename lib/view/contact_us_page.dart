@@ -4,6 +4,7 @@ import 'package:charity_project/main.dart';
 import 'package:charity_project/services/contact_us_service.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/input_decoraition.dart';
+import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,11 @@ class contact_us_page extends StatelessWidget {
                   content: Text('Message sent'.tr()),
                   backgroundColor: AppColors.primary,
                 ),
+              );
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const MainNavbarPage()),
+                (route) => false,
               );
             } else if (state is MessageFailure) {
               ScaffoldMessenger.of(context).showSnackBar(

@@ -1,5 +1,6 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/benefits_bloc/bloc/benefits_bloc.dart';
+import 'package:charity_project/blocs/donation_bloc/bloc/donation_bloc.dart';
 import 'package:charity_project/blocs/gift_bloc/bloc/gift_bloc.dart';
 import 'package:charity_project/blocs/recharge_bloc/bloc/recharge_bloc.dart';
 import 'package:charity_project/blocs/reports_bloc/bloc/reports_bloc.dart';
@@ -79,6 +80,10 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                 ),
                 InkWell(
                   onTap: () {
+                    context.read<DonationBloc>().add(
+                          DonationRegularEvent(),
+                        );
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

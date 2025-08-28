@@ -32,9 +32,9 @@ Future<ProfileModel?> ShowProfile() async {
 }
 
 Future<ProfileModel> updateProfile({
-  required String name,
+  required name,
   File? image,
-  required String token,
+  required token,
 }) async {
   final dio = Dio();
 

@@ -2,30 +2,30 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class ArchivedCampaignsModel {
-    final int id;
+    final int? id;
     final String? title;
     final String? description;
     final int? categoryId;
-    final int goalAmount;
-    final int collectedAmount;
-    final DateTime startDate;
-    final DateTime endDate;
+    final int? goalAmount;
+    final int? collectedAmount;
+    final DateTime? startDate;
+    final DateTime? endDate;
     final String? status;
     final String? statusLabel;
     final String? image;
 
     ArchivedCampaignsModel({
-        required this.id,
-        required this.title,
-        required this.description,
-        required this.categoryId,
-        required this.goalAmount,
-        required this.collectedAmount,
-        required this.startDate,
-        required this.endDate,
-        required this.status,
-        required this.statusLabel,
-        required this.image,
+         this.id,
+         this.title,
+         this.description,
+         this.categoryId,
+         this.goalAmount,
+         this.collectedAmount,
+         this.startDate,
+         this.endDate,
+         this.status,
+         this.statusLabel,
+         this.image,
     });
 
     factory ArchivedCampaignsModel.fromJson(String str) => ArchivedCampaignsModel.fromMap(json.decode(str));
@@ -33,17 +33,21 @@ class ArchivedCampaignsModel {
     String toJson() => json.encode(toMap());
 
     factory ArchivedCampaignsModel.fromMap(Map<String, dynamic> json) => ArchivedCampaignsModel(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        categoryId: json["category_id"],
-        goalAmount: json["goal_amount"],
-        collectedAmount: json["collected_amount"],
-        startDate: DateTime.parse(json["start_date"]),
-        endDate: DateTime.parse(json["end_date"]),
-        status: json["status"],
-        statusLabel: json["status_label"],
-        image: json["image"],
+        id: json["id"] as int?,
+        title: json["title"] as String?,
+        description: json["description"] as String?,
+        categoryId: json["category_id"] as int?,
+        goalAmount: json["goal_amount"] as int?,
+        collectedAmount: json["collected_amount"] as int?,
+        startDate: json["start_date"] != null
+          ? DateTime.tryParse(json["start_date"])
+          : null,
+      endDate: json["end_date"] != null
+          ? DateTime.tryParse(json["end_date"])
+          : null,
+        status: json["status"] as String?,
+        statusLabel: json["status_label"] as String?,
+        image: json["image"] as String?,
     );
 
     Map<String, dynamic> toMap() => {
@@ -53,8 +57,8 @@ class ArchivedCampaignsModel {
         "category_id": categoryId,
         "goal_amount": goalAmount,
         "collected_amount": collectedAmount,
-        "start_date": startDate.toIso8601String(),
-        "end_date": endDate.toIso8601String(),
+        "start_date": startDate?.toIso8601String(),
+        "end_date": endDate?.toIso8601String(),
         "status": status,
         "status_label": statusLabel,
         "image": image,

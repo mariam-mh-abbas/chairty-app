@@ -33,11 +33,6 @@ class LoginUser extends AuthBlocEvent {
 class LogoutUser extends AuthBlocEvent {}
 
 class LoginWithGoogle extends AuthBlocEvent {
-  final String accessToken;
   final String preferredLanguage;
-
-  LoginWithGoogle({
-    required this.accessToken,
-    required this.preferredLanguage,
-  });
+  LoginWithGoogle({required this.preferredLanguage});
 }

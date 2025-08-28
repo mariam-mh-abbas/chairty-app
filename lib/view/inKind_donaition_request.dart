@@ -7,6 +7,7 @@ import 'package:charity_project/view/charity_fund_page.dart';
 import 'package:charity_project/view/input_decoraition.dart';
 import 'package:charity_project/view/otp_inKind_page.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -210,6 +211,30 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                     child: ElevatedButton(
                       onPressed: () {
                         submitForm();
+                        showFlash(
+                          context: context,
+                          duration: Duration(seconds: 10),
+                          builder: (_, controller) {
+                            return FlashBar(
+                              controller: controller,
+                              position: FlashPosition.top,
+                              backgroundColor: AppColors.secondary,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 60, vertical: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              content: Text(
+                                "The otp code is 312297",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.white),
+                              ),
+                            );
+                          },
+                        );
                       },
                       child: Text('Next').tr(),
                       style: ElevatedButton.styleFrom(

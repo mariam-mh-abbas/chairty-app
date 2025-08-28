@@ -36,11 +36,10 @@ class _GiftRequestState extends State<GiftRequest> {
       final gift = Giftmodel(
           amount: selectedAmount!,
           recipientName: name.text,
-          recipientPhone: "0+${phoneNumber.text}",
+          recipientPhone: "0${phoneNumber.text}",
           message: letter.text,
           isHide: hideAmount);
       context.read<GiftDonaitionBloc>().add(DonateAsGift(gift));
-     
     }
   }
 
@@ -54,8 +53,7 @@ class _GiftRequestState extends State<GiftRequest> {
   void onTextChanged(String value) {
     final entered = int.tryParse(value);
     setState(() {
-      selectedAmount =
-          (entered != null && entered > 0 ) ? entered : null;
+      selectedAmount = (entered != null && entered > 0) ? entered : null;
     });
   }
 
@@ -76,10 +74,9 @@ class _GiftRequestState extends State<GiftRequest> {
     return BlocListener<GiftDonaitionBloc, GiftDonaitionState>(
       listener: (context, state) {
         if (state is GiftDonaitionSuccess) {
-      PaymentResultDialog.showSuccessGiftRequest(context);
-          
+          PaymentResultDialog.showSuccessGiftRequest(context);
         } else if (state is GiftDonaitionError) {
-           PaymentResultDialog.showFailureDialog(context);
+          PaymentResultDialog.showFailureDialog(context);
         }
       },
       child: Scaffold(
@@ -115,8 +112,8 @@ class _GiftRequestState extends State<GiftRequest> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
-                    child:
-                        Text("Set Your Gift Amount".tr(), style: AppTextStyle.a),
+                    child: Text("Set Your Gift Amount".tr(),
+                        style: AppTextStyle.a),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -127,8 +124,7 @@ class _GiftRequestState extends State<GiftRequest> {
                         final isSelected = selectedAmount == amount;
                         return Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4),
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: GestureDetector(
                               onTap: () => updateAmount(amount),
                               child: Container(
@@ -136,9 +132,8 @@ class _GiftRequestState extends State<GiftRequest> {
                                 decoration: BoxDecoration(
                                   color: isSelected
                                       ? AppColors.primary
-                                      : AppColors.white,
-                                  border:
-                                      Border.all(color: AppColors.primary),
+                                      : AppColors.input,
+                                  border: Border.all(color: AppColors.primary),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 alignment: Alignment.center,
@@ -146,7 +141,7 @@ class _GiftRequestState extends State<GiftRequest> {
                                   "$amount \$",
                                   style: TextStyle(
                                     color: isSelected
-                                        ? Colors.white
+                                        ? AppColors.input
                                         : AppColors.primary,
                                     fontSize: 16,
                                   ),
@@ -158,7 +153,7 @@ class _GiftRequestState extends State<GiftRequest> {
                       }).toList(),
                     ),
                   ),
-    
+
                   // إدخال يدوي للمبلغ
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -168,33 +163,26 @@ class _GiftRequestState extends State<GiftRequest> {
                       onChanged: onTextChanged,
                       cursorColor: AppColors.primary,
                       validator: (value) {
-                        if (value == null) {
-                           return "please enter amount to donate";
-                           
+                        if (value == null || value.trim().isEmpty) {
+                          return "Please enter amount to donate".tr();
+                        } else {
+                          final val = int.tryParse(value) ?? 0;
+                          if (val <= 0) {
+                            return "Please enter a valid amount".tr();
+                          }
                         }
-                       else{
-                        final val = int.tryParse(value ?? '') ?? 0;
-                        if (val <= 0 ) return "Please enter a valid amount";
-                       } 
-                        
+                        return null;
                       },
-                      decoration: InputDecoration(
+                      decoration: AppInputDecoration.paymentInput.copyWith(
                         labelText: "Another amount".tr(),
                         suffix: const Text("\$"),
                         labelStyle: TextStyle(color: AppColors.primary),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: AppColors.primary),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
                       ),
                     ),
                   ),
-    
+
                   const SizedBox(height: 30),
-    
+
                   // عرض المبلغ الإجمالي
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -214,26 +202,26 @@ class _GiftRequestState extends State<GiftRequest> {
                       )
                     ],
                   ),
-    
+
                   SizedBox(height: 20),
                   Divider(endIndent: 20, indent: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
-                    child: Text("Recipient details".tr(), style: AppTextStyle.a),
+                    child:
+                        Text("Recipient details".tr(), style: AppTextStyle.a),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       controller: name,
                       keyboardType: TextInputType.text,
-                      decoration:
-                          AppInputDecoration.defaultDecoration.copyWith(
+                      decoration: AppInputDecoration.defaultDecoration.copyWith(
                         label: Text('Recipient name').tr(),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'please enter Recipient name';
+                          return 'please enter Recipient name'.tr();
                         }
                         return null;
                       },
@@ -245,19 +233,18 @@ class _GiftRequestState extends State<GiftRequest> {
                     child: TextFormField(
                       controller: phoneNumber,
                       keyboardType: TextInputType.number,
-                      decoration:
-                          AppInputDecoration.defaultDecoration.copyWith(
+                      decoration: AppInputDecoration.defaultDecoration.copyWith(
                         label: Text("Recipient phone number").tr(),
                         prefixIcon: Icon(Icons.phone),
                         prefix: Text('+963'),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'please enter Recipient phone number';
+                          return 'please enter Recipient phone number'.tr();
                         } else if (value.length != 9) {
-                          return 'it must be 9 numbers';
+                          return 'it must be 9 numbers'.tr();
                         } else if (!RegExp(r'^\d{9}$').hasMatch(value)) {
-                          return 'Only digits are allowed';
+                          return 'Only digits are allowed'.tr();
                         }
                         return null;
                       },
@@ -270,8 +257,7 @@ class _GiftRequestState extends State<GiftRequest> {
                       controller: letter,
                       keyboardType: TextInputType.text,
                       maxLines: 3,
-                      decoration:
-                          AppInputDecoration.defaultDecoration.copyWith(
+                      decoration: AppInputDecoration.defaultDecoration.copyWith(
                         label: Text('Your letter to Recipient').tr(),
                         prefixIcon: Icon(Icons.message),
                       ),
@@ -279,7 +265,7 @@ class _GiftRequestState extends State<GiftRequest> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 15, right: 15, top: 20),
                     child: Row(
                       children: [
                         Checkbox(
@@ -300,7 +286,8 @@ class _GiftRequestState extends State<GiftRequest> {
                               style: AppTextStyle.helpReq,
                             ),
                             Text(
-                              "select this if you don't want to show the gift's value".tr(),
+                              "select this if you don't want to show the gift's value"
+                                  .tr(),
                               style: AppTextStyle.c,
                             ),
                           ],
@@ -315,8 +302,13 @@ class _GiftRequestState extends State<GiftRequest> {
                     child: BlocBuilder<GiftDonaitionBloc, GiftDonaitionState>(
                       builder: (context, state) {
                         return ElevatedButton(
-                          onPressed:state is GiftDonaitionProcess ? null : submitForm,
-                          child:state is GiftDonaitionProcess ? CircularProgressIndicator(color: AppColors.white,) : Text('Submit').tr(),
+                          onPressed:
+                              state is GiftDonaitionProcess ? null : submitForm,
+                          child: state is GiftDonaitionProcess
+                              ? CircularProgressIndicator(
+                                  color: AppColors.white,
+                                )
+                              : Text('Submit').tr(),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             fixedSize: Size(100, 40),

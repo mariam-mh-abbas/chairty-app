@@ -19,8 +19,9 @@ class AllHumanCasesBloc extends Bloc<AllHumanCasesEvent, AllHumanCasesState> {
         for (var i = 0; i < result.length; i++) {
           AllHumancasesmodel humancase = AllHumancasesmodel.fromMap(result[i]);
           humancases.add(humancase);
-          emit(AllHumanCasesLoaded(humancases));
+         
         }
+         emit(AllHumanCasesLoaded(humancases));
         }
         else{
           emit(AllHumanCasesError("unable to fetcch all humanCases"));

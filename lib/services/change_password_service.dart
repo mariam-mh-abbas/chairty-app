@@ -3,10 +3,10 @@ import 'package:charity_project/services/auth_service.dart';
 import 'package:dio/dio.dart';
 
 Future<void> changePassword({
-  required String token,
-  required String oldPassword,
-  required String newPassword,
-  required String newPasswordConfirmation,
+  required token,
+  required oldPassword,
+  required newPassword,
+  required newPasswordConfirmation,
 }) async {
   final Dio dio = Dio();
   try {
@@ -25,7 +25,7 @@ Future<void> changePassword({
     );
 
     if (response.statusCode == 200) {
-      if (response.data is Map<String, dynamic>) {
+      if (response.data is Map<dynamic, dynamic>) {
         return response.data['message'];
       } else {
         return response.data();

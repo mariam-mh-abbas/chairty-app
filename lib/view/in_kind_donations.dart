@@ -18,12 +18,15 @@ class _in_kind_DonationsState extends State<in_kind_Donations> {
       backgroundColor: AppColors.background,
       body: BackgroundWrapper(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(0),
           child: Expanded(
             child: BlocBuilder<DonationBloc, DonationState>(
               builder: (context, state) {
                 if (state is DonationLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.secondary,
+                  ));
                 } else if (state is DonationInKindSuccess) {
                   final inkinds = state.inkinds;
                   return ListView.builder(
@@ -34,8 +37,8 @@ class _in_kind_DonationsState extends State<in_kind_Donations> {
                           padding:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                           child: Container(
-                            height: 145,
-                            width: 200,
+                            height: 125,
+                            // width: 200,
                             child: Card(
                               elevation: 3,
                               color: AppColors.white,

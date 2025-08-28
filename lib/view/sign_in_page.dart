@@ -1,4 +1,5 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/main.dart';
@@ -12,6 +13,7 @@ import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:charity_project/view/reset_password_page.dart';
 import 'package:charity_project/view/set_language_page.dart';
 import 'package:charity_project/view/sign_up_page.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +36,7 @@ class _sign_in_pageState extends State<sign_in_page> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: BlocConsumer<AuthBloc, AuthBlocState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is LoginLoading) {
             // showDialog(
             //   context: context,
@@ -47,6 +49,86 @@ class _sign_in_pageState extends State<sign_in_page> {
             //   ),
             // );
           } else if (state is LoginSuccess) {
+            () async {
+              context.read<BlocCartBloc>().add(ClearCart());
+
+              final token = await SharedPrefs.getToken();
+              await SharedPrefs.savePhone(phoneNumber.text.trim());
+
+              // final phone = await SharedPrefs.getPhone();
+              final userid = await SharedPrefs.getUserId();
+              // context.read<BlocCartBloc>().add(LoadCart(phone));
+              context.read<BlocCartBloc>().add(LoadCart(userid.toString()));
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Logged in".tr()),
+                  backgroundColor: AppColors.primary,
+                ),
+              );
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => MainNavbarPage()),
+                (route) => false,
+              );
+            }();
+          }
+          // else if (state is LoginSuccess) {
+          //   () async {
+          //     context.read<BlocCartBloc>().add(ClearCart());
+
+          //     final token = await SharedPrefs.getToken();
+          //     await SharedPrefs.savePhone(phoneNumber.text.trim());
+
+          //     final phone = await SharedPrefs.getPhone();
+          //     context.read<BlocCartBloc>().add(LoadCart(phone));
+
+          //     ScaffoldMessenger.of(context).showSnackBar(
+          //       SnackBar(
+          //         content: Text("Logged in".tr()),
+          //         backgroundColor: AppColors.primary,
+          //       ),
+          //     );
+
+          //     Navigator.pushAndRemoveUntil(
+          //       context,
+          //       MaterialPageRoute(builder: (_) => MainNavbarPage()),
+          //       (route) => false,
+          //     );
+          //   }();
+          // }
+          // else if (state is LoginSuccess) {
+
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //         content: Text("Logged in".tr()),
+          //         backgroundColor: Colors.green),
+          //   );
+          //   Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(builder: (_) => MainNavbarPage()),
+          //     (route) => false,
+          //   );
+
+          // }
+          else if (state is LoginFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Unable to log on'.tr()),
+                // backgroundColor: Colors.red,
+              ),
+            );
+          } else if (state is GoogleSuccess) {
+            final token = await SharedPrefs.getToken();
+            context.read<BlocCartBloc>().add(ClearCart());
+
+            await SharedPrefs.savePhone(phoneNumber.text.trim());
+
+            // final phone = await SharedPrefs.getPhone();
+            final userid = await SharedPrefs.getUserId();
+            // context.read<BlocCartBloc>().add(LoadCart(phone));
+            context.read<BlocCartBloc>().add(LoadCart(userid.toString()));
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Logged in".tr()),
@@ -58,12 +140,9 @@ class _sign_in_pageState extends State<sign_in_page> {
               MaterialPageRoute(builder: (_) => MainNavbarPage()),
               (route) => false,
             );
-          } else if (state is LoginFailure) {
+          } else if (state is GoogleFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Unable to log on'.tr()),
-                // backgroundColor: Colors.red,
-              ),
+              SnackBar(content: Text(state.message)),
             );
           }
         },
@@ -150,7 +229,7 @@ class _sign_in_pageState extends State<sign_in_page> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 190,
+                          width: 120,
                         ),
                         TextButton(
                           onPressed: () {
@@ -176,21 +255,32 @@ class _sign_in_pageState extends State<sign_in_page> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            final loginmodel = LoginModel(
-                              phone: phoneNumber.text,
-                              password: password.text,
-                            );
-                            BlocProvider.of<AuthBloc>(context).add(
-                              LoginUser(
-                                phone: phoneNumber.text.trim(),
-                                password: password.text,
-                              ),
-                            );
-                          }
-                        },
-                        child: Text('Sign in'.tr()),
+                        onPressed: state is LoginLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  final loginmodel = LoginModel(
+                                    phone: phoneNumber.text,
+                                    password: password.text,
+                                  );
+                                  BlocProvider.of<AuthBloc>(context).add(
+                                    LoginUser(
+                                      phone: phoneNumber.text.trim(),
+                                      password: password.text,
+                                    ),
+                                  );
+                                }
+                              },
+                        child: state is LoginLoading
+                            ? SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  color: AppColors.white,
+                                ),
+                              )
+                            : Text('Sign in'.tr()),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             fixedSize: Size(400, 40),
@@ -228,35 +318,50 @@ class _sign_in_pageState extends State<sign_in_page> {
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: ElevatedButton(
                         onPressed: () async {
-                          final googleAuthService = GoogleAuthService();
                           final savedLang =
                               await SharedPrefs.getLanguage() ?? 'en';
-
-                          try {
-                            final account =
-                                await googleAuthService.signInWithGoogle();
-
-                            if (account != null) {
-                              final accessToken = await googleAuthService
-                                  .getAccessToken(account);
-
-                              if (accessToken != null) {
-                                print('✅ Google Access Token: $accessToken');
-                                BlocProvider.of<AuthBloc>(context).add(
-                                  LoginWithGoogle(
-                                      accessToken: accessToken,
-                                      preferredLanguage: savedLang),
-                                );
-                              } else {
-                                print('❌ Failed to get access token');
-                              }
-                            } else {
-                              print('❌ User cancelled Google sign-in');
-                            }
-                          } catch (e) {
-                            print('❌ Google Sign-in error: $e');
-                          }
+                          context.read<AuthBloc>().add(
+                              LoginWithGoogle(preferredLanguage: savedLang));
                         },
+                        //  state is LoginLoading
+                        //     ? null
+                        //     : () async {
+                        //         final googleAuthService = GoogleAuthService();
+                        //         final savedLang =
+                        //             await SharedPrefs.getLanguage() ?? 'en';
+
+                        //         try {
+                        //           final account = await googleAuthService
+                        //               .signInWithGoogle();
+
+                        //           if (account != null) {
+                        //             final accessToken = await googleAuthService
+                        //                 .getAccessToken(account);
+
+                        //             if (accessToken != null) {
+                        //               print(
+                        //                   '✅ Google Access Token: $accessToken');
+                        //               if (accessToken != null) {
+                        //                 context.read<AuthBloc>().add(
+                        //                       LoginWithGoogle(
+                        //                         accessToken: accessToken,
+                        //                         preferredLanguage: savedLang,
+                        //                       ),
+                        //                     );
+                        //               } else {
+                        //                 print(
+                        //                     '❌ Both accessToken and idToken are null');
+                        //               }
+                        //             } else {
+                        //               print('❌ Failed to get access token');
+                        //             }
+                        //           } else {
+                        //             print('❌ User cancelled Google sign-in');
+                        //           }
+                        //         } catch (e) {
+                        //           print('❌ Google Sign-in error: $e');
+                        //         }
+                        //       },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,

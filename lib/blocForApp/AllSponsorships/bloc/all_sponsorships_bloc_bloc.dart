@@ -22,8 +22,9 @@ class AllSponsorshipsBlocBloc extends Bloc<AllSponsorshipsBlocEvent, AllSponsors
           for (var i = 0; i < result.length; i++) {
             SponsorshipModel allSponsorshipsmodel = SponsorshipModel.fromMap(result[i]);
             allsponsorships.add(allSponsorshipsmodel);
-            emit(AllSponsorshipsBlocLoaded(allsponsorships));
+          
           }
+            emit(AllSponsorshipsBlocLoaded(allsponsorships));
         }
         else {
           emit (AllSponsorshipsBlocError(e.toString()));

@@ -39,7 +39,7 @@ class set_language_page extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 200,
+                  width: 220,
                   child: Text(
                     'Please select the application language'.tr(),
                     style: TextStyle(

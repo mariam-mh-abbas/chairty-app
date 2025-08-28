@@ -47,7 +47,11 @@ class volunteering_details extends StatelessWidget {
             child: BlocBuilder<RequestBloc, RequestState>(
               builder: (context, state) {
                 if (state is RequestLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                      child: CircularProgressIndicator(
+                    // backgroundColor: AppColors.secondary,
+                    color: AppColors.secondary,
+                  ));
                 } else if (state is VolunteerRequestDetailSuccess) {
                   final detail = state.detail;
                   return SingleChildScrollView(
@@ -299,12 +303,17 @@ class volunteering_details extends StatelessWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
-                                      detail.days.map((e) => e.name).join(', '),
-                                      style: TextStyle(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        detail.days
+                                            .map((e) => e.name)
+                                            .join(', '),
+                                        style: TextStyle(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -323,14 +332,17 @@ class volunteering_details extends StatelessWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
-                                      detail.types
-                                          .map((e) => e..name)
-                                          .join(', '),
-                                      style: TextStyle(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
+                                    SizedBox(
+                                      width: 140,
+                                      child: Text(
+                                        detail.types
+                                            .map((e) => e.name)
+                                            .join(', '),
+                                        style: TextStyle(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
                                     )
                                   ],
                                 ),

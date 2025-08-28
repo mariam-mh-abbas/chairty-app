@@ -22,8 +22,9 @@ class SponsorshipsByCategoryBlocBloc extends Bloc<SponsorshipsByCategoryBlocEven
           for (var i = 0; i < result.length; i++) {
             SponsorshipModel sponsorshipsbycategorydata = SponsorshipModel.fromMap(result[i]);
             sponsorshipsbycategory.add(sponsorshipsbycategorydata);
-            emit(SponsorshipsByCategoryBlocLoaded(sponsorshipsbycategory));
+            
           }
+          emit(SponsorshipsByCategoryBlocLoaded(sponsorshipsbycategory));
         }
         else {
           emit (SponsorshipsByCategoryBlocError(e.toString()));

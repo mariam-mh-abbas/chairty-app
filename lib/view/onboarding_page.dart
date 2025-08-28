@@ -43,15 +43,18 @@ class FirstPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 80),
                 child: SizedBox(
-                  width: 280,
-                  height: 350,
+                  // width: 350,
+                  height: 230,
                   child: Image.asset(
-                    'assets/images/pay2.png',
-                    fit: BoxFit.fill,
+                    'assets/images/page3.png',
+                    fit: BoxFit.cover,
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               SizedBox(
                 height: 50,
@@ -72,7 +75,7 @@ class FirstPage extends StatelessWidget {
                   children: [
                     Text(
                       'Give the way you prefer:'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -80,7 +83,7 @@ class FirstPage extends StatelessWidget {
                     ),
                     Text(
                       'Recurring donation, Zakat, Sadaqah, or a gift.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -88,7 +91,7 @@ class FirstPage extends StatelessWidget {
                     ),
                     Text(
                       'Save your donations in the “Goodness Box”.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -96,7 +99,7 @@ class FirstPage extends StatelessWidget {
                     ),
                     Text(
                       'Track your impact with clear reports.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -167,18 +170,18 @@ class SecondPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 90),
+                padding: const EdgeInsets.only(top: 100),
                 child: SizedBox(
                   width: 350,
-                  height: 250,
+                  height: 230,
                   child: Image.asset(
-                    'assets/images/a.png',
+                    'assets/images/page1.png',
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               SizedBox(
                 height: 50,
@@ -199,7 +202,7 @@ class SecondPage extends StatelessWidget {
                   children: [
                     Text(
                       'You don’t need money to help!'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -207,7 +210,7 @@ class SecondPage extends StatelessWidget {
                     ),
                     Text(
                       'Donate items like clothes, furniture, toys..'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -215,7 +218,7 @@ class SecondPage extends StatelessWidget {
                     ),
                     Text(
                       'Every donation reaches those who need it most.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -233,7 +236,7 @@ class SecondPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 115,
+                height: 100,
               ),
               OutlinedButton(
                 onPressed: () {
@@ -296,16 +299,16 @@ class ThirdPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 95),
                 child: SizedBox(
-                  width: 370,
-                  height: 250,
+                  // width: 370,
+                  // height: 250,
                   child: Image.asset(
-                    'assets/images/volunteer.png'.tr(),
+                    'assets/images/page2.png'.tr(),
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 15,
               ),
               SizedBox(
                 height: 70,
@@ -326,7 +329,7 @@ class ThirdPage extends StatelessWidget {
                   children: [
                     Text(
                       'Apply to volunteer based on your time and skills.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -334,7 +337,7 @@ class ThirdPage extends StatelessWidget {
                     ),
                     Text(
                       'Request support confidentially and securely.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -342,7 +345,7 @@ class ThirdPage extends StatelessWidget {
                     ),
                     Text(
                       'Track your donations with full transparency.'.tr(),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.unselected,
                           fontWeight: FontWeight.w500,
@@ -360,7 +363,7 @@ class ThirdPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 140,
+                height: 130,
               ),
               ElevatedButton(
                 onPressed: () async {

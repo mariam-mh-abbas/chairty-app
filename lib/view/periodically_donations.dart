@@ -42,7 +42,10 @@ class _Request_VolunteringState extends State<periodically_Donations> {
             },
             builder: (context, state) {
               if (state is DonationLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.secondary,
+                ));
               } else if (state is DonationPeriodicallySuccess) {
                 final plans = state.plans;
                 return ListView.builder(

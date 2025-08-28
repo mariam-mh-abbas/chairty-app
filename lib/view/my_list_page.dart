@@ -89,7 +89,8 @@ class _MyListPageState extends State<MyListPage> {
                               //         builder: (context) => profile_page()));
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -162,7 +163,8 @@ class _MyListPageState extends State<MyListPage> {
                                       builder: (context) => About_us_page()));
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -203,7 +205,8 @@ class _MyListPageState extends State<MyListPage> {
                                           Archivedtabbarpage()));
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -244,7 +247,8 @@ class _MyListPageState extends State<MyListPage> {
                                           Frequently_questions_page()));
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -284,7 +288,8 @@ class _MyListPageState extends State<MyListPage> {
                                       builder: (context) => contact_us_page()));
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -341,7 +346,8 @@ class _MyListPageState extends State<MyListPage> {
                               );
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
                                   Icon(

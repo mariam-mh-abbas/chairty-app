@@ -8,12 +8,12 @@ class AuthService {
   final Dio _dio = Dio();
 
   Future<Auth_model> registerUser({
-    required String name,
-    required String phone,
-    required String password,
-    required String passwordConfirmation,
-    required String otp,
-    required String preferredLanguage,
+    required name,
+    required phone,
+    required password,
+    required passwordConfirmation,
+    required otp,
+    required preferredLanguage,
   }) async {
     final language = await SharedPrefs.getLanguage();
     try {
@@ -46,8 +46,8 @@ class AuthService {
   }
 
   Future<Auth_model1> loginUser({
-    required String phone,
-    required String password,
+    required phone,
+    required password,
   }) async {
     try {
       final response = await _dio.post(
@@ -88,20 +88,21 @@ class AuthService {
     }
   }
 
-  Future<Auth_model> loginWithGoogle({
+  Future<GoogleLoginResponse> loginWithGoogle({
     required String accessToken,
-    required String preferredLanguage,
+    required preferredLanguage,
   }) async {
+    final language = await SharedPrefs.getLanguage();
     try {
       final response = await _dio.post(
         '$baseUrl/api/user/google',
         data: {
           'access_token': accessToken,
-          'preferred_language': preferredLanguage,
+          'preferred_language': language,
         },
       );
 
-      return Auth_model.fromJson(response.data);
+      return GoogleLoginResponse.fromJson(response.data);
     } on DioException catch (e) {
       if (e.response != null) {
         print('Google login error: ${e.response!.data}');
@@ -112,26 +113,3 @@ class AuthService {
     }
   }
 }
-
-  // Future<Map<String, dynamic>> loginWithGoogle(
-  //     String accessToken, String preferredLanguage) async {
-  //   try {
-  //     final response = await _dio.post(
-  //       'http://127.0.0.1:8000/api/user/google',
-  //       data: {
-  //         'access_token': accessToken,
-  //         'preferred_language': preferredLanguage,
-  //       },
-  //     );
-
-  //     return {
-  //       'success': true,
-  //       'data': response.data,
-  //     };
-  //   } on DioException catch (e) {
-  //     return {
-  //       'success': false,
-  //       'message': e.response?.data ?? 'Unknown error',
-  //     };
-  //   }
-  // }

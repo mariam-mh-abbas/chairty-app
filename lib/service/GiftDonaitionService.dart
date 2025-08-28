@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 
 class Giftdonaitionservice extends Baseservice {
   Future<bool> GiftDonaition(Giftmodel gift) async {
-    final token = await SharedPrefs.getToken();
+    final token = await SharedPrefs.getToken() ?? '';
     try {
       responce = await dio.post("$baseURL/${ApiResourses.GiftDonaition}",
           data: gift.toMap(),

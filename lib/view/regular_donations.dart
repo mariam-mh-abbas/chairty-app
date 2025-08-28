@@ -1,8 +1,10 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/donation_bloc/bloc/donation_bloc.dart';
 import 'package:charity_project/service/BaseService.dart';
+import 'package:charity_project/services/pdf_service.dart';
 import 'package:charity_project/view/Sponsorships_page.dart';
 import 'package:charity_project/view/background.dart';
+import 'package:charity_project/view/pdf_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,11 +23,17 @@ class _Regular_DonationsState extends State<Regular_Donations> {
       backgroundColor: AppColors.background,
       body: BackgroundWrapper(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(0),
           child: Expanded(
             child: BlocBuilder<DonationBloc, DonationState>(
               builder: (context, state) {
-                if (state is DonationRegularSuccess) {
+                if (state is DonationLoading) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    // backgroundColor: AppColors.secondary,
+                    color: AppColors.secondary,
+                  ));
+                } else if (state is DonationRegularSuccess) {
                   final regulars = state.regulars;
                   return ListView.builder(
                       itemCount: regulars.length,
@@ -84,7 +92,7 @@ class _Regular_DonationsState extends State<Regular_Donations> {
                                               width: 5,
                                             ),
                                             SizedBox(
-                                              width: 250,
+                                              width: 175,
                                               child: Text(
                                                 regular.title,
                                                 style: TextStyle(
@@ -155,6 +163,61 @@ class _Regular_DonationsState extends State<Regular_Donations> {
                                           ],
                                         ),
                                       ],
+                                    ),
+
+                                    InkWell(
+                                      onTap: () {
+                                        if (regular.pdfUrl!.isNotEmpty) {
+                                          final rawPdfUrl = regular.pdfUrl;
+                                          if (rawPdfUrl!.isNotEmpty) {
+                                            final url =
+                                                constructPdfUrl(rawPdfUrl!);
+                                            print(
+                                                'Final PDF URL: $url'); // تتأكد شو الرابط اللي عم يتبني
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    PdfViewerPage(pdfUrl: url),
+                                              ),
+                                            );
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                  content:
+                                                      Text('Not Found'.tr())),
+                                            );
+                                          }
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content:
+                                                    Text('Not Found'.tr())),
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                          height: 35,
+                                          width: 35,
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  width: 2,
+                                                  color: AppColors.primary)),
+                                          child: Icon(
+                                            Icons.receipt_long_outlined,
+                                            color: AppColors.secondary,
+                                            size: 24,
+                                          )
+                                          //  Image.asset(
+                                          //   'assets/images/6.png',
+                                          //   color: AppColors.secondary,
+                                          // ),
+                                          ),
                                     ),
                                     // SizedBox(
                                     //   width: 15,

@@ -1,4 +1,5 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/auth_bloc/bloc/auth_bloc_bloc.dart';
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/main.dart';
@@ -60,12 +61,21 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
       listener: (context, state) {
         if (state is RegisterLoading) {
         } else if (state is RegisterSuccess) {
+          () async {
+            context.read<BlocCartBloc>().add(ClearCart());
+
+            // await SharedPrefs.savePhone(widget.phone.trim());
+
+            // final phone = await SharedPrefs.getPhone();
+            // context.read<BlocCartBloc>().add(LoadCart(phone));
+            final userid = await SharedPrefs.getUserId();
+            context.read<BlocCartBloc>().add(LoadCart(userid.toString()));
+          }();
           Navigator.of(context).pop(); // close loading dialog
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("The account was created".tr()),
-              backgroundColor: AppColors.primary,
-            ),
+                content: Text("The account was created".tr()),
+                backgroundColor: AppColors.primary),
           );
           Navigator.pushAndRemoveUntil(
             context,
@@ -77,10 +87,42 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("The account could not be created".tr()),
-              // backgroundColor: Colors.red,
+              backgroundColor: Colors.red,
             ),
           );
         }
+        // if (state is RegisterLoading) {
+        // }
+        // else if (state is RegisterSuccess) {
+        //   () async {
+        //     context.read<BlocCartBloc>().add(ClearCart());
+
+        //     await SharedPrefs.savePhone(widget.phone.trim());
+
+        //     final phone = await SharedPrefs.getPhone();
+        //     context.read<BlocCartBloc>().add(LoadCart(phone));
+        //   }();
+        //   Navigator.of(context).pop(); // close loading dialog
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text("The account was created".tr()),
+        //       backgroundColor: AppColors.primary,
+        //     ),
+        //   );
+        //   Navigator.pushAndRemoveUntil(
+        //     context,
+        //     MaterialPageRoute(builder: (_) => MainNavbarPage()),
+        //     (route) => false,
+        //   );
+        // } else if (state is RegisterFailure) {
+        //   Navigator.of(context).pop();
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text("The account could not be created".tr()),
+        //       // backgroundColor: Colors.red,
+        //     ),
+        //   );
+        // }
       },
       builder: (context, state) {
         return Padding(
@@ -142,29 +184,32 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
               ),
               SizedBox(height: 25),
               ElevatedButton(
-                onPressed: isCodeComplete
-                    ? () async {
-                        final otpCode = _controllers.map((c) => c.text).join();
-                        final savedLang =
-                            await SharedPrefs.getLanguage() ?? 'en';
-                        // final registerUser = RegisterUser(
-                        //     name: widget.name,
-                        //     phone: widget.phone,
-                        //     password: widget.password,
-                        //     confirmPassword: widget.confirmPassword,
-                        //     otp: otpCode,
-                        //     preferredLanguage: );
-                        BlocProvider.of<AuthBloc>(context).add(
-                          RegisterUser(
-                              name: widget.name,
-                              phone: widget.phone,
-                              password: widget.password,
-                              confirmPassword: widget.confirmPassword,
-                              otp: otpCode,
-                              preferredLanguage: savedLang),
-                        );
-                      }
-                    : null,
+                onPressed: state is LoginLoading
+                    ? null
+                    : isCodeComplete
+                        ? () async {
+                            final otpCode =
+                                _controllers.map((c) => c.text).join();
+                            final savedLang =
+                                await SharedPrefs.getLanguage() ?? 'en';
+                            // final registerUser = RegisterUser(
+                            //     name: widget.name,
+                            //     phone: widget.phone,
+                            //     password: widget.password,
+                            //     confirmPassword: widget.confirmPassword,
+                            //     otp: otpCode,
+                            //     preferredLanguage: );
+                            BlocProvider.of<AuthBloc>(context).add(
+                              RegisterUser(
+                                  name: widget.name,
+                                  phone: widget.phone,
+                                  password: widget.password,
+                                  confirmPassword: widget.confirmPassword,
+                                  otp: otpCode,
+                                  preferredLanguage: savedLang),
+                            );
+                          }
+                        : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isCodeComplete
                       ? AppColors.secondary
@@ -174,13 +219,22 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                child: Text(
-                  'Verify'.tr(),
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.white),
-                ),
+                child: state is LoginLoading
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: AppColors.white,
+                        ),
+                      )
+                    : Text(
+                        'Verify'.tr(),
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.white),
+                      ),
               ),
               SizedBox(height: 20),
             ],

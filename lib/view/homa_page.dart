@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/blocEmergencyHumanCases/bloc/bloc_emergency_human_cases_bloc.dart';
 import 'package:charity_project/blocForApp/blocHomeCampaign/bloc/campaign_home_bloc.dart';
+import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/view/ArchivedTabbarPage.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/before_gift.dart';
@@ -11,6 +12,7 @@ import 'package:charity_project/view/campaign_view_page.dart';
 import 'package:charity_project/view/d.dart';
 import 'package:charity_project/view/donaition_category_tabbar.dart';
 import 'package:charity_project/view/emergency_cases_page.dart';
+import 'package:charity_project/view/notification_page.dart';
 import 'package:charity_project/view/one_campaign_page.dart';
 import 'package:charity_project/view/pay_details_page.dart';
 import 'package:charity_project/view/periodically_donaition.dart';
@@ -21,7 +23,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final String baseUrlImage = "http://localhost:8000/storage/";
+final String baseUrlImage = "$baseUrl/storage/";
 
 class HomaPage extends StatelessWidget {
   const HomaPage({super.key});
@@ -54,7 +56,7 @@ class HomaPage extends StatelessWidget {
             color: AppColors.primary,
             onRefresh: () => refreshData(context),
             child: SizedBox(
-              height: 700,
+              // height: 700,
               child: ListView(
                 children: [
                   AppBar(
@@ -69,18 +71,25 @@ class HomaPage extends StatelessWidget {
                       // shadowColor: AppColors.unselected,
 
                       actions: [
-                        Image.asset(
-                          "assets/images/logo2.png",
-                          height: 70,
-                        ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          notification_page()));
+                            },
                             icon: Icon(
                               Icons.notifications,
                               color: AppColors.secondary,
                             )),
-                        SizedBox(
-                          width: 8,
+
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, left: 10),
+                          child: Image.asset(
+                            "assets/images/logo2.png",
+                            height: 70,
+                          ),
                         ),
 
                         // IconButton(

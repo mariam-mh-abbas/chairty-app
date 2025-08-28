@@ -28,7 +28,13 @@ class receipts_page extends StatelessWidget {
           Expanded(
             child: BlocBuilder<RechargeBloc, RechargeState>(
               builder: (context, state) {
-                if (state is RechargeSuccess) {
+                if (state is RechargeLoading) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    // backgroundColor: AppColors.secondary,
+                    color: AppColors.secondary,
+                  ));
+                } else if (state is RechargeSuccess) {
                   final recharges = state.recharges;
                   return ListView.builder(
                       itemCount: recharges.length,

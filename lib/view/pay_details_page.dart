@@ -239,8 +239,8 @@ class PayDetailsPage extends StatelessWidget {
               children: [
                 const SizedBox(height: 20),
                  Image.asset(
-                  "assets/images/payment.jpg",
-                  height: 200,
+                  "assets/images/pay11.jpg",
+                  height: 210,
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -256,7 +256,7 @@ class PayDetailsPage extends StatelessWidget {
                 const Divider(),
 
         if (paydetails.donationType == "Recurring Donation")
-  _buildDetailRow("Donation Frequency", LangHelper.getTranslatedPeriod(paydetails.periodic), skipValueTranslation: true),
+  _buildDetailRow("Donation Frequency:", LangHelper.getTranslatedPeriod(paydetails.periodic), skipValueTranslation: true),
                 
                 if(paydetails.donationType != "Recurring Donation") 
                 _buildDetailRow("Donation Frequency:", paydetails.periodic ?? ""),

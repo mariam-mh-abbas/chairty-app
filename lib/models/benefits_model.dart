@@ -24,12 +24,12 @@ class BenefitsModel {
   factory BenefitsModel.fromJson(Map<String, dynamic> json) {
     return BenefitsModel(
       // id: json["id"],
-      type: json["type"],
+      type: json["type"] ?? '',
       // beneficiaryId: json["beneficiary_id"],
-      beneficiaryName: json["beneficiary_name"],
-      title: json["title"],
-      image: json["image"],
-      category: json["category"],
+      beneficiaryName: json["beneficiary_name"] ?? '',
+      title: json["title"] ?? '',
+      image: json["image"] ?? '',
+      category: json["category"] ?? '',
       // adminId: json["admin_id"],
       date: DateTime.tryParse(json["date"] ?? '') ?? DateTime.now(),
     );

@@ -153,36 +153,36 @@ class _SettingsExpandableState extends State<SettingsExpandable> {
                 //         color: AppColors.black),
                 //   ),
                 // ),
-                SizedBox(
-                  height: 10,
-                ),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          // title: Center(child: Text('رمز التحقق')),
-                          content: change_theme(),
-                        );
-                      },
-                    );
-                  },
-                  child: SizedBox(
-                    height: 25,
-                    width: 270,
-                    child: Text(
-                      'Theme'.tr(),
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.black),
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // InkWell(
+                //   onTap: () {
+                //     showDialog(
+                //       context: context,
+                //       builder: (context) {
+                //         return AlertDialog(
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(15),
+                //           ),
+                //           // title: Center(child: Text('رمز التحقق')),
+                //           content: change_theme(),
+                //         );
+                //       },
+                //     );
+                //   },
+                //   child: SizedBox(
+                //     height: 25,
+                //     width: 270,
+                //     child: Text(
+                //       'Theme'.tr(),
+                //       style: TextStyle(
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.w600,
+                //           color: AppColors.black),
+                //     ),
+                //   ),
+                // ),
                 // TextButton(
                 //   onPressed: () {
                 //     showDialog(

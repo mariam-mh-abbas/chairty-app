@@ -45,7 +45,10 @@ class help_details extends StatelessWidget {
             child: BlocBuilder<RequestBloc, RequestState>(
               builder: (context, state) {
                 if (state is RequestLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.secondary,
+                  ));
                 } else if (state is HelpRequestDetailSuccess) {
                   final detail = state.detail;
                   return SingleChildScrollView(
@@ -419,12 +422,15 @@ class help_details extends StatelessWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
-                                      detail.job.toString() ?? "-",
-                                      style: TextStyle(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
+                                    SizedBox(
+                                      width: 280,
+                                      child: Text(
+                                        detail.job.toString() ?? "-",
+                                        style: TextStyle(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
                                     )
                                   ],
                                 ),

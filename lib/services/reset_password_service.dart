@@ -1,13 +1,15 @@
+import 'dart:core';
+
 import 'package:charity_project/models/reset_password_model.dart';
 import 'package:charity_project/service/BaseService.dart';
 import 'package:charity_project/services/auth_service.dart';
 import 'package:dio/dio.dart';
 
 Future<ResetPasswordModel> resetPassword({
-  required String phone,
-  required String password,
-  required String passwordConfirmation,
-  required String otp,
+  required phone,
+  required password,
+  required passwordConfirmation,
+  required otp,
 }) async {
   try {
     final response = await Dio().post(

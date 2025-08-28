@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/sponsorships_bloc/bloc/sponsorships_bloc.dart';
 import 'package:charity_project/main.dart';
@@ -11,7 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-String constructImageUrl(String path) {
+constructImageUrl(path) {
   if (path.startsWith('http')) return path;
   return '$baseUrl/storage/$path';
 }
@@ -57,7 +59,10 @@ class sponsorships_page extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is SponsorshipLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.secondary,
+                  ));
                 } else if (state is SponsorshipSuccess) {
                   final sponsorships = state.sponorships;
                   return Padding(
@@ -111,7 +116,7 @@ class sponsorships_page extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 SizedBox(
-                                                  width: 205,
+                                                  width: 190,
                                                   child: Text(
                                                     sponsorship
                                                         .sponsorship.title,
@@ -145,7 +150,7 @@ class sponsorships_page extends StatelessWidget {
                                                               .secondary,
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          fontSize: 17),
+                                                          fontSize: 16),
                                                     ),
                                                   ],
                                                 ),

@@ -9,8 +9,8 @@ class ContactUsService {
   final Dio dio = Dio();
 
   Future<Response> SendMessage({
-    required String phone,
-    required String message,
+    required phone,
+    required message,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final token = await SharedPrefs.getToken() ?? '';

@@ -30,7 +30,13 @@ class voluntering_page extends StatelessWidget {
           Expanded(
             child: BlocBuilder<VolunteeringBloc, VolunteeringState>(
               builder: (context, state) {
-                if (state is VolunteeringSuccess) {
+                if (state is VolunteeringLoading) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    // backgroundColor: AppColors.secondary,
+                    color: AppColors.secondary,
+                  ));
+                } else if (state is VolunteeringSuccess) {
                   final volunteerings = state.volunteerings;
                   return Padding(
                     padding: EdgeInsets.all(8),
@@ -77,22 +83,22 @@ class voluntering_page extends StatelessWidget {
                                         style: TextStyle(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 17),
+                                            fontSize: 16),
                                       ),
                                       Text(
                                         volunteering.campaignTitle,
                                         style: TextStyle(
                                             color: AppColors.black,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 17),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
                                       ),
                                       Text(
                                         volunteering.volunteeringType
                                             .toString(),
                                         style: TextStyle(
                                             color: AppColors.secondary,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
                                       ),
                                       SizedBox(
                                         height: 2,
@@ -114,8 +120,8 @@ class voluntering_page extends StatelessWidget {
                                                 volunteering.campaignDate),
                                             style: TextStyle(
                                                 color: AppColors.unselected,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 14),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16),
                                           ),
                                         ],
                                       ),

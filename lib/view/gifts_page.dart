@@ -2,8 +2,10 @@ import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/gift_bloc/bloc/gift_bloc.dart';
 import 'package:charity_project/main.dart';
 import 'package:charity_project/services/gift_service.dart';
+import 'package:charity_project/services/pdf_service.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
+import 'package:charity_project/view/pdf_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +21,10 @@ class gifts_page extends StatelessWidget {
         body: BackgroundWrapper(child: BlocBuilder<GiftBloc, GiftState>(
           builder: (context, state) {
             if (state is GiftLoading) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.secondary,
+              ));
             } else if (state is GiftSuccess) {
               final gifts = state.gifts;
               return Column(
@@ -164,6 +169,7 @@ class gifts_page extends StatelessWidget {
                                                   ),
                                                 ],
                                               ),
+
                                               // Text(
                                               //   '100 ' + '\$',
                                               //   style: TextStyle(
@@ -180,7 +186,66 @@ class gifts_page extends StatelessWidget {
                                               // ),
                                             ],
                                           ),
-                                        )
+                                        ),
+                                        SizedBox(
+                                          width: 100,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            if (gift.pdfUrl!.isNotEmpty) {
+                                              final rawPdfUrl = gift.pdfUrl;
+                                              if (rawPdfUrl!.isNotEmpty) {
+                                                final url =
+                                                    constructPdfUrl(rawPdfUrl!);
+                                                print(
+                                                    'Final PDF URL: $url'); // تتأكد شو الرابط اللي عم يتبني
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        PdfViewerPage(
+                                                            pdfUrl: url),
+                                                  ),
+                                                );
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                      content: Text(
+                                                          'Not Found'.tr())),
+                                                );
+                                              }
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                    content:
+                                                        Text('Not Found'.tr())),
+                                              );
+                                            }
+                                          },
+                                          child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.transparent,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  border: Border.all(
+                                                      width: 2,
+                                                      color:
+                                                          AppColors.primary)),
+                                              child: Icon(
+                                                Icons.receipt_long_outlined,
+                                                color: AppColors.secondary,
+                                                size: 24,
+                                              )
+                                              //  Image.asset(
+                                              //   'assets/images/6.png',
+                                              //   color: AppColors.secondary,
+                                              // ),
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),

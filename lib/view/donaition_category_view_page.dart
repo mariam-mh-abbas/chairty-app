@@ -1,4 +1,10 @@
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/blocForApp/AllSponsorships/bloc/all_sponsorships_bloc_bloc.dart';
+import 'package:charity_project/blocForApp/SponsorshipsByCategory/bloc/sponsorships_by_category_bloc_bloc.dart';
+import 'package:charity_project/blocForApp/blocAllCampaign/bloc/all_campaign_bloc.dart';
+import 'package:charity_project/blocForApp/blocAllHumanCases/bloc/all_human_cases_bloc.dart';
+import 'package:charity_project/blocForApp/blocCampaignByCategory/bloc/campaign_by_category_id_bloc.dart';
+import 'package:charity_project/blocForApp/blocHumanCaseByCategory/bloc/humancase_by_category_bloc.dart';
 import 'package:charity_project/view/HumanitarianCases_view_page.dart';
 import 'package:charity_project/view/Sponsorships_view_page.dart';
 import 'package:charity_project/view/app_text_style.dart';

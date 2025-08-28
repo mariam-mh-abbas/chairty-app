@@ -5,7 +5,7 @@ import 'package:charity_project/services/auth_service.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Uint8List> fetchPdfBytes(String relativePath) async {
+Future<Uint8List> fetchPdfBytes(relativePath) async {
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('access_token');
 
@@ -34,7 +34,7 @@ Future<Uint8List> fetchPdfBytes(String relativePath) async {
   }
 }
 
-String constructPdfUrl(String relativePath) {
+String constructPdfUrl(relativePath) {
   if (relativePath.startsWith('http')) return relativePath;
   if (relativePath.startsWith('storage/')) {
     return '$baseUrl/$relativePath';

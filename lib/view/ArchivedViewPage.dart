@@ -59,10 +59,12 @@ class _ArchivedviewpageState extends State<Archivedviewpage> {
                           itemCount: state.ArchivedCampaigns.length,
                           itemBuilder: (context, index) {
                             final campaign = state.ArchivedCampaigns[index];
-                            final String imageUrl = campaign.image!;
-                            final String finalImage = Uri.parse("$baseUrlImage").resolve(imageUrl).toString();
-                            final collected = campaign.collectedAmount;
-                            final goal = campaign.goalAmount;
+                            final String? imageUrl = campaign.image ;
+                            final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
+    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+    : null;
+                            final collected = campaign.collectedAmount ?? 0;
+                            final goal = campaign.goalAmount ?? 0;
 
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -79,10 +81,9 @@ class _ArchivedviewpageState extends State<Archivedviewpage> {
                                         width: 100,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(finalImage),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          image:finalImage != null
+                               ? DecorationImage(image: NetworkImage(finalImage),fit: BoxFit.cover)
+                               : DecorationImage(image: AssetImage("assets/images/general.png"),fit: BoxFit.cover)
                                         ),
                                       ),
                                     ),
@@ -120,8 +121,9 @@ class _ArchivedviewpageState extends State<Archivedviewpage> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  DateFormat('d/M/yyyy', 'en').format(campaign.startDate),
+                                Text( campaign.startDate !=null
+                                 ? DateFormat('d/M/yyyy', 'en').format(campaign.startDate!)
+                                 : "",
                                   style: AppTextStyle.c,
                                 )
                               ],
@@ -147,8 +149,9 @@ class _ArchivedviewpageState extends State<Archivedviewpage> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text( DateFormat('d/M/yyyy', 'en').format(campaign.endDate),
-                                  
+                                Text( campaign.endDate !=null
+                                  ? DateFormat('d/M/yyyy', 'en').format(campaign.endDate!)
+                                  : "",
                                   style: AppTextStyle.c,
                                 )
                               ],
@@ -210,10 +213,12 @@ class _ArchivedviewpageState extends State<Archivedviewpage> {
                           itemCount: state.ArchivedHumanCases.length,
                           itemBuilder: (context, index) {
                             final caseData = state.ArchivedHumanCases[index];
-                            final String imageUrl = caseData.image!;
-                            final String finalImage = Uri.parse("$baseUrlImage").resolve(imageUrl).toString();
-                            final collected = caseData.collectedAmount;
-                            final goal = caseData.goalAmount;
+                            final String? imageUrl = caseData.image;
+                           final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
+    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+    : null;
+                            final collected = caseData.collectedAmount ?? 0;
+                            final goal = caseData.goalAmount ?? 0;
 
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -230,10 +235,9 @@ class _ArchivedviewpageState extends State<Archivedviewpage> {
                                         width: 100,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(finalImage),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          image: finalImage != null
+                               ? DecorationImage(image: NetworkImage(finalImage),fit: BoxFit.cover)
+                               : DecorationImage(image: AssetImage("assets/images/general.png"),fit: BoxFit.cover)
                                         ),
                                       ),
                                     ),

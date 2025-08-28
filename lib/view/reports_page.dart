@@ -31,7 +31,13 @@ class Reports_Page extends StatelessWidget {
           Expanded(
             child: BlocBuilder<ReportsBloc, ReportsState>(
               builder: (context, state) {
-                if (state is ReportsSuccess) {
+                if (state is ReportsLoading) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    // backgroundColor: AppColors.secondary,
+                    color: AppColors.secondary,
+                  ));
+                } else if (state is ReportsSuccess) {
                   final reports = state.reports;
                   return Padding(
                     padding: EdgeInsets.all(8),
@@ -69,7 +75,7 @@ class Reports_Page extends StatelessWidget {
                                 }
                               },
                               child: Container(
-                                height: 110,
+                                height: 125,
                                 width: 200,
                                 child: Card(
                                   elevation: 3,
@@ -114,12 +120,16 @@ class Reports_Page extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                report.campaign!.title,
-                                                style: TextStyle(
-                                                    color: AppColors.primary,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 17),
+                                              SizedBox(
+                                                width: 250,
+                                                child: Text(
+                                                  report.campaign!.title,
+                                                  style: TextStyle(
+                                                      color: AppColors.primary,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 17),
+                                                ),
                                               ),
                                               SizedBox(
                                                 height: 3,

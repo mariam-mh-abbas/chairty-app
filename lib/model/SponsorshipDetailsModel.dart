@@ -2,8 +2,8 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class SponsorshipDetailsmodel {
-    final int id;
-    final int categoryId;
+    final int? id;
+    final int? categoryId;
     final String? categoryName;
     final String? title;
     final String? description;
@@ -12,22 +12,22 @@ class SponsorshipDetailsmodel {
     final int? collectedAmount;
     final String? image;
     final String? beneficiaryGender;
-     final int? campaignId;
+    final int? campaignId;
     final DateTime? beneficiaryBirthDate;
 
     SponsorshipDetailsmodel({
-        required this.id,
-        required this.categoryId,
-        required this.categoryName,
-        required this.title,
-        required this.description,
-        required this.monthlyAmount,
-        required this.remainingAmount,
-         required this.collectedAmount,
-        required this.image,
-        required this.campaignId,
-        required this.beneficiaryGender,
-        required this.beneficiaryBirthDate,
+         this.id,
+         this.categoryId,
+         this.categoryName,
+         this.title,
+         this.description,
+         this.monthlyAmount,
+         this.remainingAmount,
+         this.collectedAmount,
+         this.image,
+         this.campaignId,
+         this.beneficiaryGender,
+         this.beneficiaryBirthDate,
     });
 
     factory SponsorshipDetailsmodel.fromJson(String str) => SponsorshipDetailsmodel.fromMap(json.decode(str));
@@ -35,16 +35,16 @@ class SponsorshipDetailsmodel {
     String toJson() => json.encode(toMap());
 
     factory SponsorshipDetailsmodel.fromMap(Map<String, dynamic> json) => SponsorshipDetailsmodel(
-  id: json["id"],
-  categoryId: json["beneficiary_id"], // حسب البيانات الجديدة
-  categoryName: json["type"],
-  title: json["title"],
-  description: json["description"],
-  monthlyAmount: json["goal_amount"],
-  remainingAmount: json["remaining_amount"],
-  collectedAmount: json["collected_amount"],
-  image: json["image"],
-  campaignId: json["campaign_id"],
+  id: json["id"] as int?,
+  categoryId: json["beneficiary_id"] as int?, // حسب البيانات الجديدة
+  categoryName: json["type"] as String?,
+  title: json["title"] as String?,
+  description: json["description"]as String?,
+  monthlyAmount: json["goal_amount"]as int?,
+  remainingAmount: json["remaining_amount"]as int?,
+  collectedAmount: json["collected_amount"]as int?,
+  image: json["image"]as String?,
+  campaignId: json["campaign_id"]as int?,
   beneficiaryGender: json["gender"] != null && json["gender"] != "" ? json["gender"] : null,
   beneficiaryBirthDate: json["birth_date"] != null ? DateTime.tryParse(json["birth_date"]) : null,
 );

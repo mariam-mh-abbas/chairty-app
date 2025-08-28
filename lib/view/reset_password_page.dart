@@ -1,11 +1,12 @@
 import 'package:charity_project/app_colors.dart';
-import 'package:charity_project/main.dart';
+
 import 'package:charity_project/view/Verification_password_class.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/change_password_page.dart';
 import 'package:charity_project/view/input_decoraition.dart';
-import 'package:charity_project/view/sign_up_page.dart';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 
 class reset_password_page extends StatefulWidget {
@@ -52,8 +53,18 @@ class _reset_password_pageState extends State<reset_password_page> {
                 //       color: AppColors.primary, fontWeight: FontWeight.w700),
                 // ),
               ),
+              Image.asset(
+                'assets/images/password.png',
+                fit: BoxFit.fill,
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 200),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
                 child: TextFormField(
                   controller: phoneNumber,
                   keyboardType: TextInputType.number,
@@ -126,7 +137,7 @@ class _reset_password_pageState extends State<reset_password_page> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 50,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
@@ -148,11 +159,35 @@ class _reset_password_pageState extends State<reset_password_page> {
                           );
                         },
                       );
+                      showFlash(
+                        context: context,
+                        duration: Duration(seconds: 10),
+                        builder: (_, controller) {
+                          return FlashBar(
+                            controller: controller,
+                            position: FlashPosition.top,
+                            backgroundColor: AppColors.secondary,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 60, vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            content: Text(
+                              "The otp code is 759412",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.white),
+                            ),
+                          );
+                        },
+                      );
                     }
                   },
                   child: Text('Confirm'.tr()),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: AppColors.secondary,
                       fixedSize: Size(100, 40),
                       foregroundColor: AppColors.white),
                 ),

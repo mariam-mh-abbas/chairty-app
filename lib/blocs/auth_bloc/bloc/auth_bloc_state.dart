@@ -49,7 +49,10 @@ class GoogleInitial extends AuthBlocState {}
 
 class GoogleLoading extends AuthBlocState {}
 
-class GoogleSuccess extends AuthBlocState {}
+class GoogleSuccess extends AuthBlocState {
+  final UserModel user;
+  GoogleSuccess(this.user);
+}
 
 class GoogleFailure extends AuthBlocState {
   final String message;

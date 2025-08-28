@@ -6,6 +6,7 @@ import 'package:charity_project/main.dart';
 
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/input_decoraition.dart';
+import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:charity_project/view/sign_in_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
@@ -71,6 +72,12 @@ class _profile_pageState extends State<profile_page> {
                           // backgroundColor: Colors.red,
                         ),
                       );
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const MainNavbarPage()),
+                        (route) => false,
+                      );
                     } else if (state is ProfileUpdateSuccess) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -82,7 +89,10 @@ class _profile_pageState extends State<profile_page> {
                   },
                   builder: (context, state) {
                     if (state is ProfileLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.secondary,
+                      ));
                     } else if (state is ShowProfileLoaded) {
                       final profile = state.profile;
                       if (username.text.isEmpty)
@@ -278,11 +288,15 @@ class _profile_pageState extends State<profile_page> {
                               ),
                             ),
                             SizedBox(
-                              height: 240,
+                              height: 200,
                             ),
-                            Icon(Icons.lock_outline,
-                                size: 75, color: AppColors.primary),
-                            const SizedBox(height: 20),
+                            Image.asset(
+                              "assets/images/login.png",
+                              height: 200,
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
                             Text(
                               "To show your profile".tr(),
                               style: TextStyle(
@@ -290,22 +304,52 @@ class _profile_pageState extends State<profile_page> {
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.primary),
                             ),
-                            const SizedBox(height: 10),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => sign_in_page()));
-                              },
-                              child: Text(
-                                'Sign in'.tr(),
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.secondary),
-                              ),
+                            SizedBox(
+                              height: 20,
                             ),
+                            ElevatedButton(
+                              onPressed: () =>
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => sign_in_page()),
+                                (route) => false,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.secondary,
+                                fixedSize: Size(230, 30),
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const Text("Go To LogIn Page").tr(),
+                            ),
+                            // Icon(Icons.lock_outline,
+                            //     size: 75, color: AppColors.primary),
+                            // const SizedBox(height: 20),
+                            // Text(
+                            //   "To show your profile".tr(),
+                            //   style: TextStyle(
+                            //       fontSize: 18,
+                            //       fontWeight: FontWeight.w600,
+                            //       color: AppColors.primary),
+                            // ),
+                            // const SizedBox(height: 10),
+                            // TextButton(
+                            //   onPressed: () {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) => sign_in_page()));
+                            //   },
+                            //   child: Text(
+                            //     'Sign in'.tr(),
+                            //     style: TextStyle(
+                            //         fontSize: 18,
+                            //         fontWeight: FontWeight.w600,
+                            //         color: AppColors.secondary),
+                            //   ),
+                            // ),
                             // Padding(
                             //   padding:
                             //       const EdgeInsets.only(left: 20, right: 20),

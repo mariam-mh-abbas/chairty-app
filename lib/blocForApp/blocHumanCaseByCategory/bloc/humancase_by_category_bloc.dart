@@ -26,8 +26,9 @@ class HumancaseByCategoryBloc extends Bloc<HumancaseByCategoryEvent, HumancaseBy
     for (var i = 0; i < result.length; i++) {
       Humancasebycategorymodel humancasebycategorymodeldata = Humancasebycategorymodel.fromMap(result[i]);
       humancasebycategory.add(humancasebycategorymodeldata);
-     emit(HumancaseByCategoryLoaded(humancasebycategory));
+    
     }
+     emit(HumancaseByCategoryLoaded(humancasebycategory));
   } else {
     
     emit(HumancaseByCategoryError(e.toString()));

@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 class Periodicallydonaitionservice extends Baseservice {
   Future<bool> periodicallydonaition(
       Periodicallydonaitionmodel periodicallydonaitionitem) async {
-    final token = await SharedPrefs.getToken();
+    final token = await SharedPrefs.getToken() ?? '';
     try {
       responce = await dio.post(
           "$baseURL/${ApiResourses.PeriodicallyDonaition}",

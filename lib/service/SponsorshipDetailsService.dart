@@ -5,18 +5,15 @@ import 'package:charity_project/service/BaseService.dart';
 import 'package:dio/dio.dart';
 
 class Sponsorshipdetailsservice extends Baseservice {
-  Future<Map<String,dynamic>?>getSponsorshipDetails(int id) async{
+  Future<Map<String, dynamic>?> getSponsorshipDetails(int id) async {
     try {
-     final savedLang = await SharedPrefs.getLanguage() ?? 'en';
-      responce = await dio.get("$baseURL/${ApiResourses.SponsorshipDetails(id)}",options: Options(
-        headers: {
-      "Accept-Language": savedLang
-    }
-      ));
+      final savedLang = await SharedPrefs.getLanguage() ?? 'en';
+      responce = await dio.get(
+          "$baseURL/${ApiResourses.SponsorshipDetails(id)}",
+          options: Options(headers: {"Accept-Language": savedLang}));
       if (responce.statusCode == 200 || responce.statusCode == 201) {
         return responce.data["data"];
-      }
-      else{
+      } else {
         throw Exception(responce.data["message"]);
       }
     } catch (e) {
