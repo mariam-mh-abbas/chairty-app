@@ -27,7 +27,9 @@
 // }
 import 'dart:async';
 import 'package:charity_project/app_colors.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/view/background.dart';
+import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:charity_project/view/set_language_page.dart';
 import 'package:flutter/material.dart';
 
@@ -74,11 +76,23 @@ class _Splash_ScreenState extends State<Splash_Screen> with TickerProviderStateM
     _controller.forward();
 
     // الانتقال التلقائي بعد 3 ثواني
-    Timer(const Duration(seconds: 6), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const set_language_page()),
-      );
+    Timer(const Duration(seconds: 6), ()async {
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const set_language_page()),
+      // );
+      final token = await SharedPrefs.getToken();
+      if (token != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainNavbarPage()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const set_language_page()),
+        );
+      }
     });
   }
 

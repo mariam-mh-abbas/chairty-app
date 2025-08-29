@@ -22,7 +22,7 @@ class BeforeInkindDonaition extends StatelessWidget {
       body: BackgroundWrapper(child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('assets/images/a.png',height: 300,),
+          Image.asset('assets/images/in.png',height: 300,),
           SizedBox(height: 10,),
           Text('What you no longer use, could be\n someone else greatest wish'.tr(),textAlign: TextAlign.center,style: AppTextStyle.a,),
           SizedBox(height: 20,),

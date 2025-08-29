@@ -148,10 +148,27 @@ class BlocCartBloc extends Bloc<BlocCartEvent, BlocCartState> {
     emit(AddedToCart());
   }
 
+  // Future<void> _onDeleteFromCart(DeleteFromCart event, Emitter<BlocCartState> emit) async {
+  //   cartItems.removeWhere((element) => element.id == event.cartItemDeleted);
+  //   emit(DeletedFromCart());
+  // }
   Future<void> _onDeleteFromCart(DeleteFromCart event, Emitter<BlocCartState> emit) async {
-    cartItems.removeWhere((element) => element.id == event.cartItemDeleted);
-    emit(DeletedFromCart());
-  }
+  // احذف العنصر المطلوب من المصفوفة
+  cartItems.removeWhere((element) => element.id == event.cartItemDeleted);
+
+  // احفظ التغييرات مباشرة في SharedPreferences
+  final prefs = serviceLocater<SharedPreferences>();
+
+  // لازم يكون عندك userId حالي (من السيشن أو من bloc)
+  final key = _getCartKey(event.userId ?? "");  
+
+  // حول العناصر المتبقية إلى JSON وخزنها
+  final jsonList = cartItems.map((item) => item.toJson()).toList();
+  await prefs.setStringList(key, jsonList);
+
+  // Emit حالة نجاح الحذف
+  emit(DeletedFromCart());
+}
 
   Future<void> _onClearCart(ClearCart event, Emitter<BlocCartState> emit) async {
     cartItems.clear();

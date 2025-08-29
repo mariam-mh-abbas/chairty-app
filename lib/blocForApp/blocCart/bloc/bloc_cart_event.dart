@@ -9,8 +9,9 @@ class AddToCart extends BlocCartEvent{
 }
 class DeleteFromCart extends BlocCartEvent{
   final int cartItemDeleted;
+  final String userId;
 
-  DeleteFromCart(this.cartItemDeleted);
+  DeleteFromCart(this.cartItemDeleted,this.userId);
 }
 class SaveCart extends BlocCartEvent{
   final String? userId;

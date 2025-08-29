@@ -34,8 +34,9 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
         if (state is OncePaymentSuccess) {
             PaymentResultDialog.showSuccessDialog(context);
             final prefs = serviceLocater<SharedPreferences>();
-final userId = await SharedPrefs.getPhone();
-if (userId != null && userId.isNotEmpty) {
+final userId  = await SharedPrefs.getUserId();
+     final String useridstring = userId.toString();
+if (useridstring != null && useridstring.isNotEmpty) {
   await prefs.remove('cart_items_user_$userId');
 }
 context.read<BlocCartBloc>().add(ClearCart());

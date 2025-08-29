@@ -14,7 +14,7 @@ class LangHelper {
   }
 
   static bool isArabic(BuildContext context) {
-    try {
+    try {   
       return context.locale.languageCode == "ar";
     } catch (e) {
       print('LangHelper Error (locale access): $e');

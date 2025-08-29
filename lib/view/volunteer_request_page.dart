@@ -185,22 +185,45 @@ String getLocalizedTime(bool isArabic) {
       return;
     }
     
-
+String getSelectedStudy(bool isArabic) {
+  switch (selectedEducation) {
+    case "طالب مدرسة":
+    case "School Student":
+      return isArabic ? "طالب مدرسة" : "School Student";
+    case "طالب جامعة":
+    case "University Student":
+      return isArabic ?"طالب جامعة" : "University Student";
+    case "دبلوم":
+    case "Diploma":
+      return isArabic ? "دبلوم" : "Diploma";
+      case "بكالوريوس":
+    case "Bachelor's Degree":
+      return isArabic ? "بكالوريوس" : "Bachelor's Degree";
+      case "ماستر":
+    case "Master's Degree":
+      return isArabic ? "ماستر" : "Master's Degree";
+      case "أخرى":
+    case "None":
+      return isArabic ? "أخرى" : "None";
+    default:
+      return selectedEducation ?? '';
+  }
+}
     final model = VolunteerRequestModel(
       fullName: "${firstname.text} ${lastname.text}",
-      gender: getLocalizedGender(LangHelper.isArabic(context)),
+      gender: getLocalizedGender(await LangHelper.isArabic(context)),
       birthDate: birthDate.text,
       address: address.text,
-      studyQualification: selectedEducation!,
+      studyQualification: getSelectedStudy(await LangHelper.isArabic(context)),
       job: job.text.isNotEmpty ? job.text : null,
-      preferredTimes: getLocalizedTime(LangHelper.isArabic(context)),
+      preferredTimes: getLocalizedTime(await LangHelper.isArabic(context)),
       hasPreviousVolunteer: hasPreviousExperience,
       previousVolunteer:
           hasPreviousExperience ? experiencedetails.text : null,
       phone: "0${phoneNumber.text}",
       notes: details.text.isNotEmpty ? details.text : null,
       days: _getSelectedDays(LangHelper.isArabic(context)),
-      types: _getSelectedVolunteerTypes(LangHelper.isArabic(context)),
+      types: _getSelectedVolunteerTypes(await LangHelper.isArabic(context)),
     );
 
     try {

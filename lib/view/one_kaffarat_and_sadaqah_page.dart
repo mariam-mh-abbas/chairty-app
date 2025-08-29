@@ -25,13 +25,14 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
   final BoxModel box;
   @override
   Widget build(BuildContext context) {
-    final String? imageUrl = box.image ;
+    final String? imageUrl = box.image;
     final String? finalImage = imageUrl != null && imageUrl.isNotEmpty
-    ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
-    : null;
+        ? Uri.parse(baseUrlImage).resolve(imageUrl).toString()
+        : null;
     return BlocProvider(
       create: (context) => KaffaratAndSadaqahCounterBloc(),
-      child: BlocBuilder<KaffaratAndSadaqahCounterBloc, KaffaratAndSadaqahCounterState>(
+      child: BlocBuilder<KaffaratAndSadaqahCounterBloc,
+          KaffaratAndSadaqahCounterState>(
         builder: (context, state) {
           return Scaffold(
               backgroundColor: AppColors.background,
@@ -55,9 +56,13 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 image: finalImage != null
-                                 ? DecorationImage(image: NetworkImage(finalImage),fit: BoxFit.cover)
-                                 : DecorationImage(image: AssetImage("assets/images/general.png"),fit: BoxFit.cover)
-                                    ),
+                                    ? DecorationImage(
+                                        image: NetworkImage(finalImage),
+                                        fit: BoxFit.cover)
+                                    : DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/general.png"),
+                                        fit: BoxFit.cover)),
                           ),
                         ),
                         Text(
@@ -123,7 +128,10 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                context.read<KaffaratAndSadaqahCounterBloc>().add(IncrementCounter(int.tryParse(box.price ?? '') ?? 0));
+                                context
+                                    .read<KaffaratAndSadaqahCounterBloc>()
+                                    .add(IncrementCounter(
+                                        int.tryParse(box.price ?? '') ?? 0));
                               },
                               child: Container(
                                 height: 40,
@@ -154,8 +162,10 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                               
-                                context.read<KaffaratAndSadaqahCounterBloc>().add(DecrementCounter(int.tryParse(box.price ?? '') ?? 0));
+                                context
+                                    .read<KaffaratAndSadaqahCounterBloc>()
+                                    .add(DecrementCounter(
+                                        int.tryParse(box.price ?? '') ?? 0));
                               },
                               child: Container(
                                 height: 40,
@@ -213,30 +223,33 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 50),
                               child: ElevatedButton(
-                                onPressed: state.totalAmount >0
-                                ? ()async{
-                                   final token = await SharedPrefs.getToken() ?? '';
-    if (token == null || token.isEmpty) {
-      return PaymentResultDialog.Guest(context);
-    }
-    else{
-final item = CartItemModel(
-              id: box.id,
-              name: box.name,
-              Campainid: null,
-              boxId: box.id,
-              image: finalImage,
-              Amount: state.totalAmount,
-               donationType: "Kaffarat and Sadaqah",
-              periodic: "Once"
-            );
-   Navigator.push(context, MaterialPageRoute(builder: (context)=> PayDetailsPage(paydetails: item)));
-            
-    }
-                        
-          
-                                }
-                                : null,
+                                onPressed: state.totalAmount > 0
+                                    ? () async {
+                                        final token =
+                                            await SharedPrefs.getToken() ?? '';
+                                        if (token == null || token.isEmpty) {
+                                          return PaymentResultDialog.Guest(
+                                              context);
+                                        } else {
+                                          final item = CartItemModel(
+                                              id: box.id,
+                                              name: box.name,
+                                              Campainid: null,
+                                              boxId: box.id,
+                                              image: finalImage,
+                                              Amount: state.totalAmount,
+                                              donationType:
+                                                  "Kaffarat and Sadaqah",
+                                              periodic: "Once");
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PayDetailsPage(
+                                                          paydetails: item)));
+                                        }
+                                      }
+                                    : null,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -258,48 +271,57 @@ final item = CartItemModel(
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: ElevatedButton(
-                                onPressed: state.totalAmount >0.0
-                                ? ()async{
-                                  final token = await SharedPrefs.getToken() ?? '';
-    if (token == null || token.isEmpty) {
-      return PaymentResultDialog.Guest(context);
-    }
-    else{
-        final phone = await SharedPrefs.getPhone();
-final newItem = CartItemModel(
-            id: box.id,
-            name: box.name,
-            Amount: state.totalAmount,
-            image: finalImage,
-            Campainid: null,
-            boxId:box.id,
-            donationType: "Kaffarat and Sadaqah",
-              periodic: "Once"
-            
-          );
-          context.read<BlocCartBloc>().add(AddToCart(newItem));
-          context.read<BlocCartBloc>().add(SaveCart(phone));
-          ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      backgroundColor: Colors.green,
-                                                      content: Text(
-                                                        'added_to_cart'.tr(namedArgs: {'amount':state.totalAmount.toString()})
-                                                          // "Added $amount \$ to cart "
-                                                          ),
-                                                          
-                                                    ),
-                                                  );
-Navigator.pushAndRemoveUntil(
-  context,
-  MaterialPageRoute(builder: (context) => const CharityFundPage()),
-  (route) => route.isFirst,
-);
-    }
-          
-        }
-                                : null,
-                                
+                                onPressed: state.totalAmount > 0.0
+                                    ? () async {
+                                        final token =
+                                            await SharedPrefs.getToken() ?? '';
+                                        if (token == null || token.isEmpty) {
+                                          return PaymentResultDialog.Guest(
+                                              context);
+                                        } else {
+                                          // final phone = await SharedPrefs.getPhone();
+                                          final userid =
+                                              await SharedPrefs.getUserId();
+                                          final newItem = CartItemModel(
+                                              id: box.id,
+                                              name: box.name,
+                                              Amount: state.totalAmount,
+                                              image: finalImage,
+                                              Campainid: null,
+                                              boxId: box.id,
+                                              donationType:
+                                                  "Kaffarat and Sadaqah",
+                                              periodic: "Once");
+                                          context
+                                              .read<BlocCartBloc>()
+                                              .add(AddToCart(newItem));
+                                          // context.read<BlocCartBloc>().add(SaveCart(phone));
+                                          context
+                                              .read<BlocCartBloc>()
+                                              .add(SaveCart(userid.toString()));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: Colors.green,
+                                              content: Text('added_to_cart'
+                                                      .tr(namedArgs: {
+                                                'amount':
+                                                    state.totalAmount.toString()
+                                              })
+                                                  // "Added $amount \$ to cart "
+                                                  ),
+                                            ),
+                                          );
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const CharityFundPage()),
+                                            (route) => route.isFirst,
+                                          );
+                                        }
+                                      }
+                                    : null,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

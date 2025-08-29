@@ -253,11 +253,12 @@ void main() async {
   final token = await prefs.SharedPrefs.getToken();
 
   Widget startPage;
-  if (token != null) {
-    startPage = const MainNavbarPage();
-  } else {
-    startPage =  set_language_page();
-  }
+   startPage = Splash_Screen();
+  // if (token != null) {
+  //   startPage = const MainNavbarPage();
+  // } else {
+  //   startPage =  set_language_page();
+  // }
 
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en', 'US'), Locale('ar', 'AR')],

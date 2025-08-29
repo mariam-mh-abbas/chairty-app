@@ -241,7 +241,8 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
             onPressed: isValid && selectedAmount! <=widget.detailsCampaignModel.remainingAmount! && formKey.currentState!.validate()
                 ? () async{
                     final amount = amountController.text;
-                      final phone = await SharedPrefs.getPhone();
+                      // final phone = await SharedPrefs.getPhone();
+                       final userid = await SharedPrefs.getUserId();
                      final item = CartItemModel(
                        id: widget.detailsCampaignModel.id,
               name: widget.detailsCampaignModel.title,
@@ -255,7 +256,8 @@ class _DonateCampaignsPageState extends State<DonateCampaignsPage> {
                     
                      
                      context.read<BlocCartBloc>().add(AddToCart(item));
-                   context.read<BlocCartBloc>().add(SaveCart(phone));
+                  //  context.read<BlocCartBloc>().add(SaveCart(phone));
+                  context.read<BlocCartBloc>().add(SaveCart(userid.toString()));
                        ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(

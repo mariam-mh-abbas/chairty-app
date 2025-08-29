@@ -59,8 +59,10 @@ class _sign_in_pageState extends State<sign_in_page> {
     await SharedPrefs.savePhone(phoneNumber.text.trim());
 
     
-    final phone = await SharedPrefs.getPhone();
-    context.read<BlocCartBloc>().add(LoadCart(phone));
+    // final phone = await SharedPrefs.getPhone();
+     final userid = await SharedPrefs.getUserId();
+    // context.read<BlocCartBloc>().add(LoadCart(phone));
+    context.read<BlocCartBloc>().add(LoadCart(userid.toString()));
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

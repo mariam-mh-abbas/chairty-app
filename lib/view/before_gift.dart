@@ -21,7 +21,7 @@ class BeforeGift extends StatelessWidget {
         children: [AppBar(
           backgroundColor: AppColors.white,
         ),
-          Image.asset('assets/images/mv.png',height: 340,),
+          Image.asset('assets/images/gift123.png',height: 340,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

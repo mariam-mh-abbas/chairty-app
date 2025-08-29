@@ -36,7 +36,7 @@ class _GiftRequestState extends State<GiftRequest> {
       final gift = Giftmodel(
           amount: selectedAmount!,
           recipientName: name.text,
-          recipientPhone: "0+${phoneNumber.text}",
+          recipientPhone: "0${phoneNumber.text}",
           message: letter.text,
           isHide: hideAmount);
       context.read<GiftDonaitionBloc>().add(DonateAsGift(gift));

@@ -240,11 +240,14 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
             onPressed: isValid && selectedAmount! <=widget.detailshumanncasesmodel.remainingAmount! && formKey.currentState!.validate()
                 ? ()async {
                     final amount = amountController.text;
-                      final phone = await SharedPrefs.getPhone();
+                      // final phone = await SharedPrefs.getPhone();
+                       final userid = await SharedPrefs.getUserId();
                       final item = CartItemModel(
-                       id: widget.detailshumanncasesmodel.id,
+                       id:  widget.detailshumanncasesmodel.campaignId,
+
               name: widget.detailshumanncasesmodel.title,
-              Campainid: widget.detailshumanncasesmodel.id,
+                            Campainid: widget.detailshumanncasesmodel.campaignId,
+
               boxId: null,
               image: "http://localhost:8000/storage/${widget.detailshumanncasesmodel.image}",
               Amount: selectedAmount,
@@ -252,7 +255,8 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
               periodic: "Once"
                     );
                      context.read<BlocCartBloc>().add(AddToCart(item));
-                     context.read<BlocCartBloc>().add(SaveCart(phone));
+                    //  context.read<BlocCartBloc>().add(SaveCart(phone));
+                    context.read<BlocCartBloc>().add(SaveCart(userid.toString()));
                      ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(

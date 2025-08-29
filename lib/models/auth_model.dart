@@ -1,11 +1,17 @@
 class User {
+  final int id;
   final String name;
   final String phone;
 
-  User({required this.name, required this.phone});
+  User({
+    required this.id,
+    required this.name,
+    required this.phone,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      id: json['id'], // يجب أن يكون السيرفر يرجع id
       name: json['name'],
       phone: json['phone'],
     );

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class ArchivedHumanCasesModel {
     final int? id;
-    final bool? isEmergency;
+    final int? isEmergency;
     final String? title;
     final String? description;
     final int? categoryId;
@@ -28,7 +28,7 @@ class ArchivedHumanCasesModel {
 
     factory ArchivedHumanCasesModel.fromMap(Map<String, dynamic> json) => ArchivedHumanCasesModel(
         id: json["id"] as int?,
-        isEmergency: json["is_emergency"] as bool?,
+        isEmergency: json["is_emergency"] as int?,
         title: json["title"]as String?,
         description: json["description"] as String?,
         categoryId: json["category_id"] as int?,

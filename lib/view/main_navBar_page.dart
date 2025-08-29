@@ -36,10 +36,12 @@ class _MainNavbarPageState extends State<MainNavbarPage> {
   }
 
   void _loadCartAfterRestart() async {
-    final userId = await SharedPrefs.getPhone();
+    // final userId = await SharedPrefs.getPhone();
+     final userId  = await SharedPrefs.getUserId();
+     final String useridstring = userId.toString();
     final token = await SharedPrefs.getToken();
-    if (userId != null && userId.isNotEmpty && token !=null ) {
-      context.read<BlocCartBloc>().add(LoadCart(userId));
+    if (useridstring != null && useridstring.isNotEmpty && token !=null ) {
+      context.read<BlocCartBloc>().add(LoadCart(useridstring));
     }
     else{
        context.read<BlocCartBloc>().add(ClearCart());

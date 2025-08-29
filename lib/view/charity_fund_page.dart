@@ -1,6 +1,7 @@
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/Box/bloc/box_bloc.dart';
 import 'package:charity_project/blocForApp/blocAllCampaign/bloc/all_campaign_bloc.dart';
+import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/cart_payment_details.dart';
 import 'package:flutter/material.dart';
@@ -62,10 +63,12 @@ class CharityFundPage extends StatelessWidget {
                 }
                 return  SizedBox(height: 530,
              child: ListView.builder(itemCount: context.read<BlocCartBloc>().cartItems.length,
+             
              scrollDirection: Axis.vertical,
               itemBuilder: (context,index){
              
-  
+   final item = context.read<BlocCartBloc>().cartItems[index];
+  print("Item ID: ${item.id}");
 
 
   
@@ -123,8 +126,11 @@ class CharityFundPage extends StatelessWidget {
                        ),
                   SizedBox(width: 40,),
 
-                  IconButton(onPressed: (){
-                    context.read<BlocCartBloc>().add(DeleteFromCart(context.read<BlocCartBloc>().cartItems[index].id ?? 0));
+                  IconButton(onPressed: ()async{
+                    // final phone = await SharedPrefs.getPhone();
+                     final userid = await SharedPrefs.getUserId();
+                    // context.read<BlocCartBloc>().add(DeleteFromCart(context.read<BlocCartBloc>().cartItems[index].id ?? 0,phone!));
+                    context.read<BlocCartBloc>().add(DeleteFromCart(context.read<BlocCartBloc>().cartItems[index].id ?? 0,userid.toString()!));
                       ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(backgroundColor: Colors.green,
                         content: Text('Item Has Been Deleted Successfully').tr()),
@@ -176,6 +182,9 @@ class CharityFundPage extends StatelessWidget {
                                   ? null
                                   : () {
                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPaymentDetails(paydetails: context.read<BlocCartBloc>().cartItems)));
+                                     for (var item in cartBloc.cartItems) {
+            print("Item ID: ${item.id}");
+          }
                                     },
                               child: Text('Proceed to Checkout',style: TextStyle(fontSize: 16),).tr(),
                               style: ElevatedButton.styleFrom(

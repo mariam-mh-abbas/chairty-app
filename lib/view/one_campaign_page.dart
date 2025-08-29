@@ -196,6 +196,7 @@ class _OneCampaignPageState extends State<OneCampaignPage> {
                                   SizedBox(
                                     height: 5,
                                   ),
+                                  
                                   Text(
                                     "${state.campaignsDetails.beneficiariesCount.toString()}"+"person".tr(),
                                     style: AppTextStyle.helpReq,

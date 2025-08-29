@@ -4,6 +4,7 @@ class SharedPrefs {
   static const _langKey = 'language';
   static const _tokenKey = 'access_token';
   static const _onboardingKey = 'onboarding_seen';
+   static const String userIdKey = "user_id";
 
   static Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
@@ -54,5 +55,16 @@ class SharedPrefs {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString("phone");
   }
-  
+
+
+  static Future<void> saveUserId(int userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(userIdKey, userId);
+  }
+
+  // استرجاع معرف المستخدم
+  static Future<int?> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(userIdKey);
+  }
 }

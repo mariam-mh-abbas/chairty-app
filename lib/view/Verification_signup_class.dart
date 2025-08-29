@@ -65,11 +65,13 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
   
     context.read<BlocCartBloc>().add(ClearCart());
 
-    await SharedPrefs.savePhone(widget.phone.trim());
+    // await SharedPrefs.savePhone(widget.phone.trim());
     
 
-    final phone = await SharedPrefs.getPhone();
-    context.read<BlocCartBloc>().add(LoadCart(phone));
+    // final phone = await SharedPrefs.getPhone();
+    // context.read<BlocCartBloc>().add(LoadCart(phone));
+     final userid = await SharedPrefs.getUserId();
+    context.read<BlocCartBloc>().add(LoadCart(userid.toString()));
 
   
    
