@@ -8,9 +8,9 @@ final class NotificationInitial extends NotificationState {}
 class NotificationLoading extends NotificationState {}
 
 class NotificationSuccess extends NotificationState {
-  final List<VolunteeringModel> notification;
+  final List<NotificationModel> notifications;
 
-  NotificationSuccess(this.notification);
+  NotificationSuccess(this.notifications);
 }
 
 class NotificationError extends NotificationState {
@@ -19,4 +19,18 @@ class NotificationError extends NotificationState {
   NotificationError(this.message);
 }
 
+class NotificationDeleteSuccess extends NotificationState {
+  final String message;
+
+  NotificationDeleteSuccess(this.message);
+}
+
 class NotificationEmpty extends NotificationState {}
+
+class NotificationBadgeState extends NotificationState {
+  final int currentCount;
+  final int lastSeenCount;
+
+  NotificationBadgeState(
+      {required this.currentCount, required this.lastSeenCount});
+}

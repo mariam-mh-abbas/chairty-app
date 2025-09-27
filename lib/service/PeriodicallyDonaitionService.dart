@@ -14,7 +14,7 @@ class Periodicallydonaitionservice extends Baseservice {
           "$baseURL/${ApiResourses.PeriodicallyDonaition}",
           data: periodicallydonaitionitem.toMap(),
           options: Options(headers: {"Authorization": "Bearer $token"}));
-      if (responce.statusCode == 200) {
+      if (responce.statusCode == 200 || responce.statusCode == 201) {
         return true;
       } else {
         print('Response status: ${responce.statusCode}');

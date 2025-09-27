@@ -54,6 +54,8 @@ dependencies:
   syncfusion_flutter_pdfviewer: 26.2.14
   flash: ^3.1.1
   flutter_launcher_icons: ^0.14.4
+  flutter_screenutil: ^5.9.3
+  connectivity_plus: ^7.0.0
 
 
 
@@ -74,7 +76,10 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/logoo.jpg"
+  image_path: "assets/images/log.png"
+  adaptive_icon_background: "#F4F0EC"               
+  # adaptive_icon_foreground: "assets/images/log.png" # ← الشعار (الطبقة الأمامية)
+  # adaptive_icon_background: "assets/images/back1.jpg" # ← الزخرفة (خلفية شفافة فوق اللون)
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -91,7 +96,6 @@ flutter:
   assets:
      - assets/translations/
      - assets/images/
-     - assets/translations/      
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

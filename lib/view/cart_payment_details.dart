@@ -22,10 +22,25 @@ class CartPaymentDetails extends StatefulWidget {
   State<CartPaymentDetails> createState() => _CartPaymentDetailsState();
 }
 
+String? selectedMethod;
+
+final List<Map<String, dynamic>> paymentMethods = [
+  {"name": "PayPal", "image": "assets/images/patpal.png", "id": "paypal"},
+  {"name": "wallet", "image": "assets/images/wallet.png", "id": "wallet"},
+  {"name": "Visa card", "image": "assets/images/visa.png", "id": "visa"},
+  {
+    "name": "Syriatel cash",
+    "image": "assets/images/syriatel.png",
+    "id": "syriatel"
+  },
+  {"name": "MTN cash", "image": "assets/images/mtn.png", "id": "mtn"},
+];
+
 class _CartPaymentDetailsState extends State<CartPaymentDetails> {
   @override
   void initState() {
     super.initState();
+    selectedMethod = "wallet";
   }
 
   Widget build(BuildContext context) {
@@ -90,6 +105,90 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
                 ),
                 const SizedBox(height: 10),
                 Container(
+                  height: 161,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.white,
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 15, left: 15, right: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Payment method:".tr(),
+                            style: TextStyle(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18)),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 110,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: paymentMethods.length,
+                            itemBuilder: (context, index) {
+                              final method = paymentMethods[index];
+                              final isSelected = selectedMethod == method["id"];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedMethod = method["id"];
+                                    });
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 80,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors.white,
+                                          border: Border.all(
+                                            color: isSelected
+                                                ? AppColors.primary
+                                                : Colors.grey,
+                                            width: isSelected ? 2 : 1,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Image.asset(
+                                            method["image"],
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                      // const SizedBox(height: 8),
+                                      // Text(
+                                      //   method["name"],
+                                      //   style: TextStyle(
+                                      //     fontSize: 14,
+                                      //     fontWeight: isSelected
+                                      //         ? FontWeight.bold
+                                      //         : FontWeight.normal,
+                                      //     color: isSelected
+                                      //         ? AppColors.primary
+                                      //         : AppColors.unselected,
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
                   height: 120,
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -105,7 +204,7 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
                           builder: (context, state) {
                             final cartBloc = context.read<BlocCartBloc>();
                             return Text(
-                              "Total amount:".tr() +
+                              "Total amount: ".tr() +
                                   "${context.read<BlocCartBloc>().get()} \$",
                               style: TextStyle(
                                 color: AppColors.black,
@@ -118,37 +217,92 @@ class _CartPaymentDetailsState extends State<CartPaymentDetails> {
                         const SizedBox(height: 10),
                         Center(
                           child: BlocBuilder<BlocCartBloc, BlocCartState>(
-                            builder: (context, state) {
+                            builder: (context, cartState) {
                               final cartBloc = context.read<BlocCartBloc>();
-                              return ElevatedButton(
-                                onPressed: cartBloc.cartItems.isEmpty
-                                    ? null
-                                    : () async {
-                                        final List<OncePaymentmodel> items =
-                                            widget.paydetails.map((e) {
-                                          return OncePaymentmodel(
-                                            campaignId: e.Campainid,
-                                            boxId: e.boxId,
-                                            amount: e.Amount ?? 0,
-                                          );
-                                        }).toList();
-                                        context
-                                            .read<OncePaymentBloc>()
-                                            .add(OncePayment(items));
-                                      },
-                                child: Text(
-                                  'Pay Now'.tr(),
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.secondary,
-                                  foregroundColor: AppColors.white,
-                                  fixedSize: Size(300, 40),
-                                ),
+
+                              return BlocBuilder<OncePaymentBloc,
+                                  OncePaymentState>(
+                                builder: (context, paymentState) {
+                                  final isLoading =
+                                      paymentState is OncePaymentProcess;
+
+                                  return ElevatedButton(
+                                    onPressed: cartBloc.cartItems.isEmpty ||
+                                            isLoading
+                                        ? null
+                                        : () async {
+                                            final List<OncePaymentmodel> items =
+                                                widget.paydetails.map((e) {
+                                              return OncePaymentmodel(
+                                                campaignId: e.Campainid,
+                                                boxId: e.boxId,
+                                                amount: e.Amount ?? 0,
+                                              );
+                                            }).toList();
+                                            context
+                                                .read<OncePaymentBloc>()
+                                                .add(OncePayment(items));
+                                          },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.secondary,
+                                      foregroundColor: AppColors.white,
+                                      fixedSize: const Size(300, 40),
+                                    ),
+                                    child: isLoading
+                                        ? const SizedBox(
+                                            width: 22,
+                                            height: 22,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : Text(
+                                            'Pay Now'.tr(),
+                                            style:
+                                                const TextStyle(fontSize: 15),
+                                          ),
+                                  );
+                                },
                               );
                             },
                           ),
-                        ),
+                        )
+
+                        // Center(
+                        //   child:
+                        //   BlocBuilder<BlocCartBloc, BlocCartState>(
+                        //     builder: (context, state) {
+                        //       final cartBloc = context.read<BlocCartBloc>();
+                        //       return ElevatedButton(
+                        //         onPressed: cartBloc.cartItems.isEmpty
+                        //             ? null
+                        //             : () async {
+                        //                 final List<OncePaymentmodel> items =
+                        //                     widget.paydetails.map((e) {
+                        //                   return OncePaymentmodel(
+                        //                     campaignId: e.Campainid,
+                        //                     boxId: e.boxId,
+                        //                     amount: e.Amount ?? 0,
+                        //                   );
+                        //                 }).toList();
+                        //                 context
+                        //                     .read<OncePaymentBloc>()
+                        //                     .add(OncePayment(items));
+                        //               },
+                        //         child: Text(
+                        //           'Pay Now'.tr(),
+                        //           style: TextStyle(fontSize: 15),
+                        //         ),
+                        //         style: ElevatedButton.styleFrom(
+                        //           backgroundColor: AppColors.secondary,
+                        //           foregroundColor: AppColors.white,
+                        //           fixedSize: Size(300, 40),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

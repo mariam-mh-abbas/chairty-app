@@ -49,6 +49,29 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                     phone: phoneNumber.text,
                     categoryIds: selectedIds,
                   )));
+      showFlash(
+        context: context,
+        duration: Duration(seconds: 15),
+        builder: (_, controller) {
+          return FlashBar(
+            controller: controller,
+            position: FlashPosition.top,
+            backgroundColor: AppColors.secondary,
+            margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            content: Text(
+              "The otp code is".tr() + " 312297",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white),
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -100,8 +123,18 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                         );
                       } else if (state is CategorybymaincategoryError) {
                         return Center(
-                          child: Text(state.ErrorMsg),
+                          child: Text(
+                            "Internet connection is not available".tr(),
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         );
+
+                        // return Center(
+                        //   child: Text(state.ErrorMsg),
+                        // );
                       } else if (state is CategorybymaincategoryLoaded) {
                         return Column(
                           children:
@@ -130,7 +163,15 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                           }).toList(),
                         );
                       }
-                      return Container();
+                      return Center(
+                        child: Text(
+                          "Internet connection is not available".tr(),
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   Column(
@@ -211,30 +252,6 @@ class _InkindDonaitionRequestState extends State<InkindDonaitionRequest> {
                     child: ElevatedButton(
                       onPressed: () {
                         submitForm();
-                        showFlash(
-                          context: context,
-                          duration: Duration(seconds: 10),
-                          builder: (_, controller) {
-                            return FlashBar(
-                              controller: controller,
-                              position: FlashPosition.top,
-                              backgroundColor: AppColors.secondary,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 60, vertical: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              content: Text(
-                                "The otp code is 312297",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.white),
-                              ),
-                            );
-                          },
-                        );
                       },
                       child: Text('Next').tr(),
                       style: ElevatedButton.styleFrom(

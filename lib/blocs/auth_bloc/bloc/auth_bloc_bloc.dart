@@ -5,7 +5,9 @@ import 'package:bloc/bloc.dart';
 import 'package:charity_project/models/auth_model.dart';
 import 'package:charity_project/services/auth_service.dart';
 import 'package:charity_project/config/shared_prefs.dart';
+import 'package:charity_project/services/device_service.dart';
 import 'package:charity_project/services/google_auth_sevice.dart';
+import 'package:charity_project/services/notification_service.dart';
 import 'package:charity_project/view/set_language_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
@@ -41,7 +43,13 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       await SharedPrefs.saveLanguageLocally(event.preferredLanguage);
       await SharedPrefs.saveUserId(response.user.id);
 
-      // await SharedPrefs.saveLanguageLocally(event.preferredLanguage);
+      final fcm = await NotificationService().getFcmTokenSafe();
+      print("📌 FCM Token: $fcm");
+      if (fcm != null) {
+        await DeviceService().registerDevice(
+          fcmToken: fcm,
+        );
+      }
 
       emit(RegisterSuccess());
     } catch (e) {
@@ -60,6 +68,15 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
 
       await SharedPrefs.saveToken(response.accessToken);
       await SharedPrefs.saveUserId(response.user.id);
+
+      final fcm = await NotificationService().getFcmTokenSafe();
+      print("📌 FCM Token: $fcm");
+      if (fcm != null) {
+        await DeviceService().registerDevice(
+          fcmToken: fcm,
+        );
+      }
+
       emit(LoginSuccess());
     } catch (e) {
       emit(LoginFailure(e.toString()));
@@ -71,9 +88,18 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     emit(LogoutLoading());
     try {
       final prefs = await SharedPreferences.getInstance();
-      await SharedPrefs.clearToken();
-      await SharedPrefs.clearOnboardingSeen();
 
+      final fcm = await NotificationService().getFcmTokenSafe();
+      print("📌 FCM Token: $fcm");
+      if (fcm != null) {
+        await DeviceService().deregisterDevice(
+          fcmToken: fcm,
+        );
+      }
+      await SharedPrefs.clearToken();
+      //  //////
+      await SharedPrefs.clearOnboardingSeen();
+      //  //////
       emit(LogoutSuccess());
     } catch (e) {
       emit(LogoutFailure("Logout failed: ${e.toString()}"));
@@ -102,9 +128,16 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       final response = await authService.loginWithGoogle(
           accessToken: accessToken, preferredLanguage: event.preferredLanguage);
 
-      // حفظ التوكن
       await SharedPrefs.saveToken(response.accessToken);
       await SharedPrefs.saveUserId(response.user.id);
+
+      final fcm = await NotificationService().getFcmTokenSafe();
+      print("📌 FCM Token: $fcm");
+      if (fcm != null) {
+        await DeviceService().registerDevice(
+          fcmToken: fcm,
+        );
+      }
 
       emit(GoogleSuccess(response.user));
     } catch (e) {

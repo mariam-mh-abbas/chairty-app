@@ -38,16 +38,6 @@ class _sign_in_pageState extends State<sign_in_page> {
       body: BlocConsumer<AuthBloc, AuthBlocState>(
         listener: (context, state) async {
           if (state is LoginLoading) {
-            // showDialog(
-            //   context: context,
-            //   barrierDismissible: false,
-            //   builder: (context) => Center(
-            //       child: CircularProgressIndicator(
-            //     color: AppColors.secondary,
-
-            //   )
-            //   ),
-            // );
           } else if (state is LoginSuccess) {
             () async {
               context.read<BlocCartBloc>().add(ClearCart());
@@ -73,50 +63,12 @@ class _sign_in_pageState extends State<sign_in_page> {
                 (route) => false,
               );
             }();
-          }
-          // else if (state is LoginSuccess) {
-          //   () async {
-          //     context.read<BlocCartBloc>().add(ClearCart());
-
-          //     final token = await SharedPrefs.getToken();
-          //     await SharedPrefs.savePhone(phoneNumber.text.trim());
-
-          //     final phone = await SharedPrefs.getPhone();
-          //     context.read<BlocCartBloc>().add(LoadCart(phone));
-
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //       SnackBar(
-          //         content: Text("Logged in".tr()),
-          //         backgroundColor: AppColors.primary,
-          //       ),
-          //     );
-
-          //     Navigator.pushAndRemoveUntil(
-          //       context,
-          //       MaterialPageRoute(builder: (_) => MainNavbarPage()),
-          //       (route) => false,
-          //     );
-          //   }();
-          // }
-          // else if (state is LoginSuccess) {
-
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //         content: Text("Logged in".tr()),
-          //         backgroundColor: Colors.green),
-          //   );
-          //   Navigator.pushAndRemoveUntil(
-          //     context,
-          //     MaterialPageRoute(builder: (_) => MainNavbarPage()),
-          //     (route) => false,
-          //   );
-
-          // }
-          else if (state is LoginFailure) {
+          } else if (state is LoginFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Unable to log on'.tr()),
-                // backgroundColor: Colors.red,
+                content: Text('Unable to log on'.tr()
+                    // + state.message
+                    ),
               ),
             );
           } else if (state is GoogleSuccess) {
@@ -226,28 +178,32 @@ class _sign_in_pageState extends State<sign_in_page> {
                         },
                       ),
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 120,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        reset_password_page()));
-                          },
-                          child: Text(
-                            'Did you forget your password?'.tr(),
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.secondary),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          // SizedBox(
+                          //   width: 120,
+                          // ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          reset_password_page()));
+                            },
+                            child: Text(
+                              'Did you forget your password?'.tr(),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.secondary),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 20,

@@ -233,7 +233,8 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
                               formKey.currentState!.validate()
                           ? () {
                               final item = CartItemModel(
-                                  id: widget.detailshumanncasesmodel.id,
+                                  id: int.parse(
+                                      "${widget.detailshumanncasesmodel.campaignId}2"),
                                   name: widget.detailshumanncasesmodel.title,
                                   Campainid:
                                       widget.detailshumanncasesmodel.campaignId,
@@ -283,7 +284,8 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
                               final userid = await SharedPrefs.getUserId();
 
                               final item = CartItemModel(
-                                  id: widget.detailshumanncasesmodel.id,
+                                  id: int.parse(
+                                      "${widget.detailshumanncasesmodel.campaignId}2"),
                                   name: widget.detailshumanncasesmodel.title,
                                   Campainid:
                                       widget.detailshumanncasesmodel.campaignId,
@@ -300,7 +302,7 @@ class _DonateHumancasePageState extends State<DonateHumancasePage> {
                                   .add(SaveCart(userid.toString()));
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  backgroundColor: Colors.green,
+                                  backgroundColor: AppColors.primary,
                                   content: Text('added_to_cart'.tr(namedArgs: {
                                     'amount': amount.toString()
                                   })

@@ -64,7 +64,37 @@ class _SponsorshipsViewPageState extends State<SponsorshipsViewPage> {
                             ),
                           );
                         } else if (state is AllSponsorshipsBlocError) {
-                          return Center(child: Text(state.ErrorMsg));
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                          );
+                          // return Center(child: Text(state.ErrorMsg));
                         } else if (state is AllSponsorshipsBlocLoaded) {
                           if (state.allSponsorships.isEmpty) {
                             return Center(
@@ -284,7 +314,36 @@ class _SponsorshipsViewPageState extends State<SponsorshipsViewPage> {
                                     }));
                           }
                         }
-                        return Text("data");
+                        return Scaffold(
+                          backgroundColor: AppColors.background,
+                          body: BackgroundWrapper(
+                              child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 270,
+                                ),
+                                Container(
+                                  child: Image.asset(
+                                    "assets/images/error.png",
+                                    height: 190,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Internet connection is not available".tr(),
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                        );
                       },
                     )
                   : BlocBuilder<SponsorshipsByCategoryBlocBloc,
@@ -297,7 +356,36 @@ class _SponsorshipsViewPageState extends State<SponsorshipsViewPage> {
                             ),
                           );
                         } else if (state is SponsorshipsByCategoryBlocError) {
-                          return Center(child: Text(state.ErrorMsg));
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                          );
                         } else if (state is SponsorshipsByCategoryBlocLoaded) {
                           if (state.SponsorshipsByCategory.isEmpty) {
                             return Center(
@@ -522,7 +610,36 @@ class _SponsorshipsViewPageState extends State<SponsorshipsViewPage> {
                                     }));
                           }
                         }
-                        return Text("data");
+                        return Scaffold(
+                          backgroundColor: AppColors.background,
+                          body: BackgroundWrapper(
+                              child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 270,
+                                ),
+                                Container(
+                                  child: Image.asset(
+                                    "assets/images/error.png",
+                                    height: 190,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Internet connection is not available".tr(),
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                        );
                       },
                     )),
         ),

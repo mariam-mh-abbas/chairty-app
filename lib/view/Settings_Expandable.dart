@@ -43,7 +43,7 @@ class _SettingsExpandableState extends State<SettingsExpandable> {
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
                 Spacer(),
@@ -87,35 +87,11 @@ class _SettingsExpandableState extends State<SettingsExpandable> {
                       'Language'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
                 ),
-
-                // TextButton(
-                //   onPressed: () {
-                //     showDialog(
-                //       context: context,
-                //       builder: (context) {
-                //         return AlertDialog(
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(15),
-                //           ),
-                //           // title: Center(child: Text('رمز التحقق')),
-                //           content: change_language(),
-                //         );
-                //       },
-                //     );
-                //   },
-                //   child: Text(
-                //     'Language',
-                //     style: TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w600,
-                //         color: AppColors.black),
-                //   ),
-                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -133,26 +109,11 @@ class _SettingsExpandableState extends State<SettingsExpandable> {
                       'Password'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
                 ),
-                // TextButton(
-                //   onPressed: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => change_password_page()));
-                //   },
-                //   child: Text(
-                //     'Password',
-                //     style: TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w600,
-                //         color: AppColors.black),
-                //   ),
-                // ),
                 // SizedBox(
                 //   height: 10,
                 // ),
@@ -178,34 +139,11 @@ class _SettingsExpandableState extends State<SettingsExpandable> {
                 //       'Theme'.tr(),
                 //       style: TextStyle(
                 //           fontSize: 16,
-                //           fontWeight: FontWeight.w600,
+                //           fontWeight: FontWeight.w500,
                 //           color: AppColors.black),
                 //     ),
                 //   ),
                 // ),
-                // TextButton(
-                //   onPressed: () {
-                //     showDialog(
-                //       context: context,
-                //       builder: (context) {
-                //         return AlertDialog(
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(15),
-                //           ),
-                //           // title: Center(child: Text('رمز التحقق')),
-                //           content: change_theme(),
-                //         );
-                //       },
-                //     );
-                //   },
-                //   child: Text(
-                //     'Theme',
-                //     style: TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w600,
-                //         color: AppColors.black),
-                //   ),
-                // )
               ],
             ),
           ),

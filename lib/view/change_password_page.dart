@@ -60,126 +60,134 @@ class _change_password_pageState extends State<change_password_page> {
           },
           child: Scaffold(
             backgroundColor: AppColors.background,
-            body: BackgroundWrapper(
-                child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AppBar(
-                    backgroundColor: AppColors.white,
-                    // elevation: 5,
-                    // shadowColor: AppColors.unselected,
-                    // title: Text(
-                    //   'Donaition Categories',
-                    //   style: TextStyle(
-                    //       color: AppColors.primary, fontWeight: FontWeight.w700),
-                    // ),
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: BackgroundWrapper(
+                  child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AppBar(
+                        backgroundColor: AppColors.white,
+                        // elevation: 5,
+                        // shadowColor: AppColors.unselected,
+                        // title: Text(
+                        //   'Donaition Categories',
+                        //   style: TextStyle(
+                        //       color: AppColors.primary, fontWeight: FontWeight.w700),
+                        // ),
+                      ),
+                      // SizedBox(
+                      //   height: 200,
+                      // ),
+                      Image.asset(
+                        'assets/images/password.png',
+                        fit: BoxFit.fill,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: buildPasswordField(
+                          controller: oldPassword,
+                          label: "Old Password".tr(),
+                          showPassword: showOld,
+                          toggleVisibility: () {
+                            setState(() {
+                              showOld = !showOld;
+                            });
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your old password'.tr();
+                            } else if (value.length < 8) {
+                              return 'Password must be at least 8 characters'
+                                  .tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: buildPasswordField(
+                          controller: newPassword,
+                          showPassword: showNew,
+                          toggleVisibility: () {
+                            setState(() {
+                              showNew = !showNew;
+                            });
+                          },
+                          label: "New Password".tr(),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter new password'.tr();
+                            } else if (value.length < 8) {
+                              return 'Password must be at least 8 characters'
+                                  .tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: buildPasswordField(
+                          controller: confirmPassword,
+                          showPassword: showConfirm,
+                          toggleVisibility: () {
+                            setState(() {
+                              showConfirm = !showConfirm;
+                            });
+                          },
+                          label: "Confirm New Password".tr(),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please confirm your new password'.tr();
+                            } else if (value != newPassword.text) {
+                              return 'Passwords do not match'.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<ChangePasswrdBloc>().add(
+                                  SubmitChangePasswordEvent(
+                                    oldPassword: oldPassword.text,
+                                    newPassword: newPassword.text,
+                                    confirmPassword: confirmPassword.text,
+                                  ),
+                                );
+                          }
+                        },
+                        child: Text('Confirm'.tr()),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.secondary,
+                            fixedSize: Size(110, 40),
+                            foregroundColor: AppColors.white),
+                      ),
+                    ],
                   ),
-                  // SizedBox(
-                  //   height: 200,
-                  // ),
-                  Image.asset(
-                    'assets/images/password.png',
-                    fit: BoxFit.fill,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: buildPasswordField(
-                      controller: oldPassword,
-                      label: "Old Password".tr(),
-                      showPassword: showOld,
-                      toggleVisibility: () {
-                        setState(() {
-                          showOld = !showOld;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your old password'.tr();
-                        } else if (value.length < 8) {
-                          return 'Password must be at least 8 characters'.tr();
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: buildPasswordField(
-                      controller: newPassword,
-                      showPassword: showNew,
-                      toggleVisibility: () {
-                        setState(() {
-                          showNew = !showNew;
-                        });
-                      },
-                      label: "New Password".tr(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter new password'.tr();
-                        } else if (value.length < 8) {
-                          return 'Password must be at least 8 characters'.tr();
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: buildPasswordField(
-                      controller: confirmPassword,
-                      showPassword: showConfirm,
-                      toggleVisibility: () {
-                        setState(() {
-                          showConfirm = !showConfirm;
-                        });
-                      },
-                      label: "Confirm New Password".tr(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please confirm your new password'.tr();
-                        } else if (value != newPassword.text) {
-                          return 'Passwords do not match'.tr();
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<ChangePasswrdBloc>().add(
-                              SubmitChangePasswordEvent(
-                                oldPassword: oldPassword.text,
-                                newPassword: newPassword.text,
-                                confirmPassword: confirmPassword.text,
-                              ),
-                            );
-                      }
-                    },
-                    child: Text('Confirm'.tr()),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        fixedSize: Size(100, 40),
-                        foregroundColor: AppColors.white),
-                  ),
-                ],
-              ),
-            )),
+                ),
+              )),
+            ),
           ),
         );
       }),

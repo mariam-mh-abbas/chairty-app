@@ -55,7 +55,9 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
                 shadowColor: AppColors.unselected,
               ),
               const SizedBox(height: 250),
-              const CircularProgressIndicator()
+              const CircularProgressIndicator(
+                color: AppColors.secondary,
+              )
             ],
           ),
         ),
@@ -73,8 +75,25 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
                 elevation: 2,
                 shadowColor: AppColors.unselected,
               ),
-              const SizedBox(height: 250),
-              Text('Error loading PDF'.tr()),
+              SizedBox(
+                height: 270,
+              ),
+              Container(
+                child: Image.asset(
+                  "assets/images/error.png",
+                  height: 190,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Internet connection is not available".tr(),
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ],
           ),
         ),

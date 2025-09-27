@@ -245,7 +245,33 @@ class _KaffaratAndSadaqahViewState extends State<KaffaratAndSadaqahView> {
                   child: CircularProgressIndicator(color: AppColors.primary),
                 );
               } else if (state is BoxError) {
-                return Center(child: Text(state.ErrorMsg));
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 270,
+                      ),
+                      Container(
+                        child: Image.asset(
+                          "assets/images/error.png",
+                          height: 190,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Internet connection is not available".tr(),
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+                // return Center(child: Text(state.ErrorMsg));
               } else if (state is BoxLoaded) {
                 return Column(
                   children: [
@@ -413,7 +439,29 @@ class _KaffaratAndSadaqahViewState extends State<KaffaratAndSadaqahView> {
                   ],
                 );
               }
-              return const Text("data");
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Image.asset(
+                        "assets/images/error.png",
+                        height: 190,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Internet connection is not available".tr(),
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
         ),

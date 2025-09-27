@@ -233,7 +233,7 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                                               context);
                                         } else {
                                           final item = CartItemModel(
-                                              id: box.id,
+                                              id: int.parse("${box.id!}1"),
                                               name: box.name,
                                               Campainid: null,
                                               boxId: box.id,
@@ -284,7 +284,7 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                                           final userid =
                                               await SharedPrefs.getUserId();
                                           final newItem = CartItemModel(
-                                              id: box.id,
+                                              id: int.parse("${box.id!}1"),
                                               name: box.name,
                                               Amount: state.totalAmount,
                                               image: finalImage,
@@ -303,7 +303,8 @@ class OneKaffaratAndSadaqahPage extends StatelessWidget {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
-                                              backgroundColor: Colors.green,
+                                              backgroundColor:
+                                                  AppColors.primary,
                                               content: Text('added_to_cart'
                                                       .tr(namedArgs: {
                                                 'amount':

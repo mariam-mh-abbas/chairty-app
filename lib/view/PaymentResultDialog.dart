@@ -47,7 +47,7 @@ class PaymentResultDialog {
                   style: TextStyle(
                     color: Color.fromARGB(148, 0, 0, 0),
                     fontWeight: FontWeight.w600,
-                    fontSize: 13,
+                    fontSize: 14,
                   )).tr(),
               SizedBox(
                 height: 30,
@@ -69,7 +69,7 @@ class PaymentResultDialog {
                     ),
                     child: const Text(
                       "Go Back to Home Page",
-                      style: TextStyle(fontSize: 13),
+                      style: TextStyle(fontSize: 14),
                     ).tr(),
                   ),
                 ],
@@ -120,7 +120,7 @@ class PaymentResultDialog {
                   style: TextStyle(
                     color: Color.fromARGB(148, 0, 0, 0),
                     fontWeight: FontWeight.w600,
-                    fontSize: 13,
+                    fontSize: 14,
                   )).tr(),
               SizedBox(
                 height: 30,
@@ -142,7 +142,7 @@ class PaymentResultDialog {
                     ),
                     child: const Text(
                       "Go Back to Home Page",
-                      style: TextStyle(fontSize: 13),
+                      style: TextStyle(fontSize: 14),
                     ).tr(),
                   ),
                 ],
@@ -163,7 +163,7 @@ class PaymentResultDialog {
         ),
         child: Container(
           width: 530,
-          height: 430,
+          height: 460,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -194,10 +194,10 @@ class PaymentResultDialog {
                   style: TextStyle(
                     color: Color.fromARGB(148, 0, 0, 0),
                     fontWeight: FontWeight.w600,
-                    fontSize: 13,
+                    fontSize: 14,
                   )).tr(),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Column(
                 children: [
@@ -216,7 +216,7 @@ class PaymentResultDialog {
                     ),
                     child: const Text(
                       "Go Back to Home Page",
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 14),
                     ).tr(),
                   ),
                 ],
@@ -268,7 +268,7 @@ class PaymentResultDialog {
                   style: TextStyle(
                     color: Color.fromARGB(148, 0, 0, 0),
                     fontWeight: FontWeight.w600,
-                    fontSize: 13,
+                    fontSize: 14,
                   )).tr(),
               SizedBox(
                 height: 30,
@@ -290,7 +290,7 @@ class PaymentResultDialog {
                     ),
                     child: const Text(
                       "Go Back to Home Page",
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 14),
                     ).tr(),
                   ),
                 ],
@@ -311,7 +311,7 @@ class PaymentResultDialog {
         ),
         child: Container(
           width: 530,
-          height: 430,
+          height: 480,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -320,7 +320,7 @@ class PaymentResultDialog {
           child: Column(
             children: [
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Image.asset(
                 "assets/images/not.png",
@@ -342,7 +342,7 @@ class PaymentResultDialog {
                   style: TextStyle(
                     color: Color.fromARGB(148, 0, 0, 0),
                     fontWeight: FontWeight.w600,
-                    fontSize: 13,
+                    fontSize: 14,
                   )).tr(),
               SizedBox(
                 height: 30,
@@ -364,7 +364,7 @@ class PaymentResultDialog {
                     ),
                     child: const Text(
                       "Go Back to Home Page",
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 14),
                     ).tr(),
                   ),
                 ],
@@ -385,7 +385,7 @@ class PaymentResultDialog {
         ),
         child: Container(
           width: 500,
-          height: 400,
+          height: 450,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: AppColors.white,
@@ -417,10 +417,10 @@ class PaymentResultDialog {
                   style: TextStyle(
                     color: Color.fromARGB(148, 0, 0, 0),
                     fontWeight: FontWeight.w600,
-                    fontSize: 13,
+                    fontSize: 14,
                   )).tr(),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               Column(
                 children: [
@@ -439,7 +439,7 @@ class PaymentResultDialog {
                     ),
                     child: const Text(
                       "Go Back to Home Page",
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 12),
                     ).tr(),
                   ),
                 ],

@@ -59,8 +59,32 @@ class _OneSponsorshipsPageState extends State<OneSponsorshipsPage> {
                         ),
                       );
                     } else if (state is SponsorshipDetailsError) {
+                      // return SizedBox();
                       return Center(
-                        child: Text(state.ErrorMsg),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 270,
+                            ),
+                            Container(
+                              child: Image.asset(
+                                "assets/images/error.png",
+                                height: 190,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Internet connection is not available".tr(),
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     } else if (state is SponsorshipDetailsLoaded) {
                       final String? imageUrl =
@@ -314,7 +338,36 @@ class _OneSponsorshipsPageState extends State<OneSponsorshipsPage> {
                         ],
                       );
                     }
-                    return Text("data");
+                    return Scaffold(
+                      backgroundColor: AppColors.background,
+                      body: BackgroundWrapper(
+                          child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 270,
+                            ),
+                            Container(
+                              child: Image.asset(
+                                "assets/images/error.png",
+                                height: 190,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Internet connection is not available".tr(),
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                    );
                   },
                 ),
               ),

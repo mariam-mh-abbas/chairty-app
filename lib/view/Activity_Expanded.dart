@@ -56,7 +56,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
                 Spacer(),
@@ -96,7 +96,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My donations'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -136,7 +136,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My sponsorships'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -173,7 +173,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My requests'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -213,7 +213,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My volunteers'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -253,7 +253,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My benefits'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -301,7 +301,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My gifts'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -339,7 +339,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My reports'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),
@@ -379,7 +379,7 @@ class _ActivityExpandableState extends State<ActivityExpandable> {
                       'My recharges'.tr(),
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.black),
                     ),
                   ),

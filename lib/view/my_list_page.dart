@@ -10,6 +10,7 @@ import 'package:charity_project/view/contact_us_page.dart';
 import 'package:charity_project/view/d.dart';
 import 'package:charity_project/view/frequently_question_page.dart';
 import 'package:charity_project/view/log_out.dart';
+import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:charity_project/view/onboarding_page.dart';
 import 'package:charity_project/view/profile_page.dart';
 import 'package:charity_project/view/transparency_file_page.dart';
@@ -35,6 +36,15 @@ class _MyListPageState extends State<MyListPage> {
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainNavbarPage()),
+                    (route) => false,
+                  );
+                },
+                icon: Icon(Icons.arrow_back)),
             title: Text(
               'My List'.tr(),
               style: TextStyle(
@@ -63,7 +73,7 @@ class _MyListPageState extends State<MyListPage> {
                               style: TextStyle(
                                 color: AppColors.secondary,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 22,
+                                fontSize: 20,
                               )),
                           SizedBox(
                             height: 10,
@@ -105,7 +115,7 @@ class _MyListPageState extends State<MyListPage> {
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       )),
                                 ],
                               ),
@@ -150,7 +160,7 @@ class _MyListPageState extends State<MyListPage> {
                               style: TextStyle(
                                 color: AppColors.secondary,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 22,
+                                fontSize: 20,
                               )),
                           SizedBox(
                             height: 10,
@@ -179,7 +189,7 @@ class _MyListPageState extends State<MyListPage> {
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       )),
                                 ],
                               ),
@@ -221,7 +231,7 @@ class _MyListPageState extends State<MyListPage> {
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       )),
                                 ],
                               ),
@@ -263,7 +273,7 @@ class _MyListPageState extends State<MyListPage> {
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       )),
                                 ],
                               ),
@@ -304,7 +314,7 @@ class _MyListPageState extends State<MyListPage> {
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       )),
                                 ],
                               ),
@@ -325,7 +335,7 @@ class _MyListPageState extends State<MyListPage> {
                               style: TextStyle(
                                 color: AppColors.secondary,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 22,
+                                fontSize: 20,
                               )),
                           SizedBox(
                             height: 10,
@@ -362,7 +372,7 @@ class _MyListPageState extends State<MyListPage> {
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       )),
                                 ],
                               ),

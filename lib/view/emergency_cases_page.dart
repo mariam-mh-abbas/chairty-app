@@ -1,5 +1,6 @@
 import 'package:charity_project/blocForApp/blocEmergencyHumanCases/bloc/bloc_emergency_human_cases_bloc.dart';
 import 'package:charity_project/view/homa_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/view/app_text_style.dart';
@@ -27,7 +28,13 @@ class EmergencyCasesPage extends StatelessWidget {
           ));
         } else if (state is BlocEmergencyHumanCasesError) {
           return Center(
-            child: Text(state.ErrorMsg),
+            child: Text(
+              "Internet connection is not available".tr(),
+              style: TextStyle(
+                color: AppColors.primary,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           );
         } else if (state is BlocEmergencyHumanCasesLoaded) {
           return ListView.builder(
@@ -126,8 +133,12 @@ class EmergencyCasesPage extends StatelessWidget {
                                         curve: Curves.easeInOut,
                                         clipLinearGradient: true,
                                         lineHeight: 10,
-                                        percent:
-                                            goal > 0 ? (collected / goal) : 0.0,
+                                        percent: goal > 0
+                                            ? (collected / goal).clamp(0.0, 1.0)
+                                            : 0.0,
+
+                                        // percent:
+                                        //     goal > 0 ? (collected / goal) : 0.0,
                                         animation: true,
                                         animationDuration: 1000,
                                       ),

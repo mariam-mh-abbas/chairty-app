@@ -61,9 +61,39 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                             color: AppColors.primary,
                           ));
                         } else if (state is AllHumanCasesError) {
-                          return Center(
-                            child: Text(state.ErrorMsg),
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
                           );
+                          // return Center(
+                          //   child: Text(state.ErrorMsg),
+                          // );
                         } else if (state is AllHumanCasesLoaded) {
                           if (state.humanCasemodel.isEmpty) {
                             return Center(
@@ -216,7 +246,10 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                                                               lineHeight: 10,
                                                               percent: goal > 0
                                                                   ? (collected /
-                                                                      goal)
+                                                                          goal)
+                                                                      .clamp(
+                                                                          0.0,
+                                                                          1.0)
                                                                   : 0.0,
                                                               animation: true,
                                                               animationDuration:
@@ -282,7 +315,36 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                                     }));
                           }
                         } else {
-                          return Text("failed");
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                          );
                         }
                       },
                     )
@@ -295,8 +357,35 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                             color: AppColors.primary,
                           ));
                         } else if (state is HumancaseByCategoryError) {
-                          return Center(
-                            child: Text(state.ErrorMsg),
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
                           );
                         } else if (state is HumancaseByCategoryLoaded) {
                           if (state.humancasebycategory.isEmpty) {
@@ -454,7 +543,10 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                                                               lineHeight: 10,
                                                               percent: goal > 0
                                                                   ? (collected /
-                                                                      goal)
+                                                                          goal)
+                                                                      .clamp(
+                                                                          0.0,
+                                                                          1.0)
                                                                   : 0.0,
                                                               animation: true,
                                                               animationDuration:
@@ -518,7 +610,36 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                                     }));
                           }
                         } else {
-                          return Text("failed");
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                          );
                         }
                       },
                     )),

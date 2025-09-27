@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/blocEmergencyHumanCases/bloc/bloc_emergency_human_cases_bloc.dart';
 import 'package:charity_project/blocForApp/blocHomeCampaign/bloc/campaign_home_bloc.dart';
+import 'package:charity_project/blocs/notification_bloc/bloc/notification_bloc.dart';
 import 'package:charity_project/service/BaseService.dart';
+import 'package:charity_project/services/notification_service.dart';
 import 'package:charity_project/view/ArchivedTabbarPage.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/before_gift.dart';
@@ -14,6 +16,7 @@ import 'package:charity_project/view/donaition_category_tabbar.dart';
 import 'package:charity_project/view/emergency_cases_page.dart';
 import 'package:charity_project/view/notification_page.dart';
 import 'package:charity_project/view/one_campaign_page.dart';
+import 'package:charity_project/view/pay.dart';
 import 'package:charity_project/view/pay_details_page.dart';
 import 'package:charity_project/view/periodically_donaition.dart';
 import 'package:charity_project/view/sadakah_page.dart';
@@ -46,11 +49,166 @@ class HomaPage extends StatelessWidget {
           create: (context) =>
               BlocEmergencyHumanCasesBloc()..add(FetchEmergencyHumanCases()),
         ),
+        // BlocProvider(
+        //   create: (_) => NotificationBloc(NotificationService()),
+        //   child: Builder(
+        //     builder: (context) {
+        //       // هنا الـ NotificationBloc موجود، فينا نضيف الأحداث
+        //       context.read<NotificationBloc>().add(GetNotificationEvent());
+        //       final state = context.read<NotificationBloc>().state;
+        //       if (state is NotificationBadgeState) {
+        //         context.read<NotificationBloc>().add(
+        //               UpdateLastSeenNotifications(state.currentCount),
+        //             );
+        //       }
+
+        //       return HomaPage(); // أو أي صفحة تريد
+        //     },
+        //   ),
+        // )
       ],
       child: Scaffold(
         backgroundColor: AppColors.background,
         //  const Color.fromARGB(255, 246, 240, 232),
         //  const Color.fromARGB(255, 249, 247, 243),
+        appBar:
+            // AppBar(
+            //   title: Text(
+            //     'Kun Auna'.tr(),
+            //     style: TextStyle(
+            //       color: AppColors.primary,
+            //       fontWeight: FontWeight.w700,
+            //     ),
+            //   ),
+            //   backgroundColor: AppColors.white,
+            //   elevation: 0,
+            //   actions: [
+            //     BlocBuilder<NotificationBloc, NotificationState>(
+            //       builder: (context, state) {
+            //         print(state);
+            //         int badgeCount = 0;
+            //         int currentCount = 0;
+
+            //         if (state is NotificationBadgeState) {
+            //           badgeCount = state.badgeCount;
+            //           currentCount = state.currentCount;
+            //         }
+
+            //         return Stack(
+            //           clipBehavior: Clip.none,
+            //           children: [
+            //             IconButton(
+            //               onPressed: () {
+            //                 if (state is NotificationBadgeState) {
+            //                   context.read<NotificationBloc>().add(
+            //                         UpdateLastSeenNotifications(currentCount),
+            //                       );
+            //                 }
+
+            //                 context
+            //                     .read<NotificationBloc>()
+            //                     .add(GetNotificationEvent());
+
+            //                 Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                       builder: (_) => notification_page()),
+            //                 ).then((_) {
+            //                   if (state is NotificationBadgeState) {
+            //                     context.read<NotificationBloc>().add(
+            //                           UpdateLastSeenNotifications(currentCount),
+            //                         );
+            //                   }
+            //                 });
+            //               },
+            //               icon: Icon(
+            //                 Icons.notifications,
+            //                 color: AppColors.secondary,
+            //                 size: 30,
+            //               ),
+            //             ),
+            //             if (badgeCount > 0)
+            //               Positioned(
+            //                 right: 4,
+            //                 top: 4,
+            //                 child: Container(
+            //                   padding: EdgeInsets.all(4),
+            //                   decoration: BoxDecoration(
+            //                     color: Colors.red,
+            //                     shape: BoxShape.circle,
+            //                   ),
+            //                   constraints:
+            //                       BoxConstraints(minWidth: 18, minHeight: 18),
+            //                   child: Center(
+            //                     child: Text(
+            //                       badgeCount.toString(),
+            //                       style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 12,
+            //                         fontWeight: FontWeight.bold,
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //           ],
+            //         );
+            //       },
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(right: 10, left: 10),
+            //       child: InkWell(
+            //         child: Image.asset(
+            //           "assets/images/logo2.png",
+            //           height: 70,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
+            AppBar(
+          title: Text(
+            'Kun Auna'.tr(),
+            style: TextStyle(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          backgroundColor: AppColors.white,
+          elevation: 0, // يلغي الظل إذا ما بدك يبين
+          actions: [
+            IconButton(
+              onPressed: () {
+                context.read<NotificationBloc>().add(GetNotificationEvent());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => notification_page()),
+                );
+              },
+              icon: Icon(
+                Icons.notifications,
+                color: AppColors.secondary,
+                size: 30,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: InkWell(
+                // onTap: () {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => PaymentMethodsUI()),
+                //   );
+                // },
+                child: Image.asset(
+                  "assets/images/logo2.png",
+                  height: 70,
+                ),
+              ),
+            ),
+          ],
+        ),
         body: BackgroundWrapper(
           child: RefreshIndicator(
             color: AppColors.primary,
@@ -59,51 +217,6 @@ class HomaPage extends StatelessWidget {
               // height: 700,
               child: ListView(
                 children: [
-                  AppBar(
-                      title: Text(
-                        'Kun Auna'.tr(),
-                        style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      backgroundColor: AppColors.white,
-                      // elevation: 5,
-                      // shadowColor: AppColors.unselected,
-
-                      actions: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          notification_page()));
-                            },
-                            icon: Icon(
-                              Icons.notifications,
-                              color: AppColors.secondary,
-                            )),
-
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10, left: 10),
-                          child: Image.asset(
-                            "assets/images/logo2.png",
-                            height: 70,
-                          ),
-                        ),
-
-                        // IconButton(
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) => Archivedtabbarpage()));
-                        //     },
-                        //     icon: Icon(
-                        //       Icons.search,
-                        //       color: AppColors.secondary,
-                        //     )),
-                      ]),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Container(
@@ -170,8 +283,21 @@ class HomaPage extends StatelessWidget {
                         ));
                       } else if (state is CampaignHomeError) {
                         return Center(
-                          child: Text(state.ErrorMsg),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: Text(
+                              "Internet connection is not available".tr(),
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         );
+
+                        // return Center(
+                        //   child: Text(state.ErrorMsg),
+                        // );
                       } else if (state is CampaignHomeLoaded) {
                         return SizedBox(
                           height: 170,

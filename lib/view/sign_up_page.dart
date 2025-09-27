@@ -221,22 +221,25 @@ class _sign_up_pageState extends State<sign_up_page> {
                               context: context,
                               duration: Duration(seconds: 10),
                               builder: (_, controller) {
-                                return FlashBar(
-                                  controller: controller,
-                                  position: FlashPosition.top,
-                                  backgroundColor: AppColors.secondary,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 60, vertical: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  content: Text(
-                                    "The otp code is 351894",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.white),
+                                return Container(
+                                  height: 40,
+                                  child: FlashBar(
+                                    controller: controller,
+                                    position: FlashPosition.top,
+                                    backgroundColor: AppColors.secondary,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 60, vertical: 10),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    content: Text(
+                                      "The otp code is".tr() + " 351894",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.white),
+                                    ),
                                   ),
                                 );
                               },

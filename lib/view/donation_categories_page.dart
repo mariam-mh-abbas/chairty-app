@@ -7,6 +7,7 @@ import 'package:charity_project/view/before_inKind_donaition.dart';
 import 'package:charity_project/view/donaition_category_tabbar.dart';
 import 'package:charity_project/view/general_donaition_page.dart';
 import 'package:charity_project/view/homa_page.dart';
+import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -46,6 +47,15 @@ class DonationCategoriesPage extends StatelessWidget {
           child: Column(
         children: [
           AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainNavbarPage()),
+                    (route) => false,
+                  );
+                },
+                icon: Icon(Icons.arrow_back)),
             backgroundColor: AppColors.white,
             // elevation: 5,
             // shadowColor: AppColors.unselected,

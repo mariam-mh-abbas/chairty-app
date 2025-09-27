@@ -212,8 +212,11 @@ class _CampaignViewPageState extends State<CampaignViewPage> {
                                                             // progressColor: AppColors.primary,
                                                             percent: goal > 0
                                                                 ? (collected /
-                                                                    goal)
+                                                                        goal)
+                                                                    .clamp(0.0,
+                                                                        1.0)
                                                                 : 0.0,
+
                                                             animation: true,
                                                             animationDuration:
                                                                 1000,
@@ -277,7 +280,36 @@ class _CampaignViewPageState extends State<CampaignViewPage> {
                             );
                           }
                         }
-                        return Container();
+                        return Scaffold(
+                          backgroundColor: AppColors.background,
+                          body: BackgroundWrapper(
+                              child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 270,
+                                ),
+                                Container(
+                                  child: Image.asset(
+                                    "assets/images/error.png",
+                                    height: 190,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Internet connection is not available".tr(),
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                        );
                       },
                     )
                   : BlocBuilder<CampaignByCategoryIdBloc,
@@ -438,8 +470,11 @@ class _CampaignViewPageState extends State<CampaignViewPage> {
                                                             // progressColor: AppColors.primary,
                                                             percent: goal > 0
                                                                 ? (collected /
-                                                                    goal)
+                                                                        goal)
+                                                                    .clamp(0.0,
+                                                                        1.0)
                                                                 : 0.0,
+
                                                             animation: true,
                                                             animationDuration:
                                                                 1000,
@@ -503,9 +538,47 @@ class _CampaignViewPageState extends State<CampaignViewPage> {
                             );
                           }
                         } else if (state is CampaignByCategoryIdError) {
-                          return Text(state.ErrorMsg);
+                          // return
+                          // Text(state.ErrorMsg);
+                          return Scaffold(
+                            backgroundColor: AppColors.background,
+                            body: BackgroundWrapper(
+                                child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 270,
+                                  ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/error.png",
+                                      height: 190,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Internet connection is not available".tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                          );
                         }
-                        return Container();
+                        return Scaffold(
+                          backgroundColor: AppColors.background,
+                          body: BackgroundWrapper(
+                              child: Center(
+                            child: Text(
+                                "Internet connection is not available".tr()),
+                          )),
+                        );
                       },
                     )),
         ),

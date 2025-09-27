@@ -86,8 +86,9 @@ class _VerificationDialogContentState extends State<Verification_signup_class> {
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("The account could not be created".tr()),
-              backgroundColor: Colors.red,
+              content: Text(
+                  // state.message +
+                  " The account could not be created".tr()),
             ),
           );
         }

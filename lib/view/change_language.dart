@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocs/change_language_bloc/bloc/change_langauge_bloc.dart';
 import 'package:charity_project/blocs/change_language_bloc/bloc/change_langauge_event.dart';
@@ -5,6 +7,7 @@ import 'package:charity_project/blocs/change_language_bloc/bloc/change_langauge_
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/main_navBar_page.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,8 +33,9 @@ class _change_languageState extends State<change_language> {
     }
   }
 
-  void _changeLanguage(String code) {
+  Future<void> _changeLanguage(String code) async {
     if (selectedCode == code) return;
+
     context.read<LanguageBloc>().add(ChangeLanguage(code));
   }
 
@@ -120,7 +124,7 @@ class _change_languageState extends State<change_language> {
                   child: Text('English'.tr()),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.secondary,
-                      fixedSize: Size(105, 40),
+                      fixedSize: Size(110, 40),
                       foregroundColor: AppColors.white),
                 ),
                 SizedBox(
@@ -135,7 +139,7 @@ class _change_languageState extends State<change_language> {
                   child: Text('Arabic'.tr()),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.secondary,
-                      fixedSize: Size(105, 40),
+                      fixedSize: Size(110, 40),
                       foregroundColor: AppColors.white),
                 ),
               ],

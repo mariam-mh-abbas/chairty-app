@@ -39,160 +39,162 @@ class _reset_password_pageState extends State<reset_password_page> {
         width: double.infinity,
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AppBar(
-                backgroundColor: AppColors.white,
-                // elevation: 2,
-                // shadowColor: AppColors.unselected,
-                // title: Text(
-                //   'Volunteering',
-                //   style: TextStyle(
-                //       color: AppColors.primary, fontWeight: FontWeight.w700),
-                // ),
-              ),
-              Image.asset(
-                'assets/images/password.png',
-                fit: BoxFit.fill,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppBar(
+                  backgroundColor: AppColors.white,
+                  // elevation: 2,
+                  // shadowColor: AppColors.unselected,
+                  // title: Text(
+                  //   'Volunteering',
+                  //   style: TextStyle(
+                  //       color: AppColors.primary, fontWeight: FontWeight.w700),
+                  // ),
                 ),
-                child: TextFormField(
-                  controller: phoneNumber,
-                  keyboardType: TextInputType.number,
-                  decoration: AppInputDecoration.defaultDecoration.copyWith(
-                    label: Text("Phone Number".tr()),
-                    prefixIcon: Icon(
-                      Icons.phone_outlined,
-                      color: AppColors.primary,
-                    ),
-                    // prefix: Text('+963')
+                Image.asset(
+                  'assets/images/password.png',
+                  fit: BoxFit.fill,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'please enter your phone Number'.tr();
-                    } else if (value.length != 10) {
-                      return 'it must be 10 numbers'.tr();
-                      // } else if (!RegExp(r'^\d{9}$').hasMatch(value)) {
-                      //   return 'Only digits are allowed';
-                    }
-                    return null;
-                  },
+                  child: TextFormField(
+                    controller: phoneNumber,
+                    keyboardType: TextInputType.number,
+                    decoration: AppInputDecoration.defaultDecoration.copyWith(
+                      label: Text("Phone Number".tr()),
+                      prefixIcon: Icon(
+                        Icons.phone_outlined,
+                        color: AppColors.primary,
+                      ),
+                      // prefix: Text('+963')
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter your phone Number'.tr();
+                      } else if (value.length != 10) {
+                        return 'it must be 10 numbers'.tr();
+                        // } else if (!RegExp(r'^\d{9}$').hasMatch(value)) {
+                        //   return 'Only digits are allowed';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: buildPasswordField(
-                  controller: newPassword,
-                  showPassword: showNew,
-                  toggleVisibility: () {
-                    setState(() {
-                      showNew = !showNew;
-                    });
-                  },
-                  label: "New Password".tr(),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter new password'.tr();
-                    } else if (value.length < 8) {
-                      return 'Password must be at least 8 characters'.tr();
-                    }
-                    return null;
-                  },
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: buildPasswordField(
-                  controller: confirmPassword,
-                  showPassword: showConfirm,
-                  toggleVisibility: () {
-                    setState(() {
-                      showConfirm = !showConfirm;
-                    });
-                  },
-                  label: "Confirm New Password".tr(),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please confirm your new password'.tr();
-                    } else if (value != newPassword.text) {
-                      return 'Passwords do not match'.tr();
-                    }
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: buildPasswordField(
+                    controller: newPassword,
+                    showPassword: showNew,
+                    toggleVisibility: () {
+                      setState(() {
+                        showNew = !showNew;
+                      });
+                    },
+                    label: "New Password".tr(),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter new password'.tr();
+                      } else if (value.length < 8) {
+                        return 'Password must be at least 8 characters'.tr();
+                      }
+                      return null;
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            content: Verification_password_class(
-                              phone: phoneNumber.text,
-                              password: newPassword.text,
-                              confirmPassword: confirmPassword.text,
-                            ),
-                          );
-                        },
-                      );
-                      showFlash(
-                        context: context,
-                        duration: Duration(seconds: 10),
-                        builder: (_, controller) {
-                          return FlashBar(
-                            controller: controller,
-                            position: FlashPosition.top,
-                            backgroundColor: AppColors.secondary,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 60, vertical: 10),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            content: Text(
-                              "The otp code is 759412",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.white),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text('Confirm'.tr()),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      fixedSize: Size(100, 40),
-                      foregroundColor: AppColors.white),
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: buildPasswordField(
+                    controller: confirmPassword,
+                    showPassword: showConfirm,
+                    toggleVisibility: () {
+                      setState(() {
+                        showConfirm = !showConfirm;
+                      });
+                    },
+                    label: "Confirm New Password".tr(),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please confirm your new password'.tr();
+                      } else if (value != newPassword.text) {
+                        return 'Passwords do not match'.tr();
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              content: Verification_password_class(
+                                phone: phoneNumber.text,
+                                password: newPassword.text,
+                                confirmPassword: confirmPassword.text,
+                              ),
+                            );
+                          },
+                        );
+                        showFlash(
+                          context: context,
+                          duration: Duration(seconds: 10),
+                          builder: (_, controller) {
+                            return FlashBar(
+                              controller: controller,
+                              position: FlashPosition.top,
+                              backgroundColor: AppColors.secondary,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 60, vertical: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              content: Text(
+                                "The otp code is".tr() + " 759412",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.white),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Confirm'.tr()),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secondary,
+                        fixedSize: Size(110, 40),
+                        foregroundColor: AppColors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       )),

@@ -71,7 +71,7 @@ class set_language_page extends StatelessWidget {
                       child: Text('English'.tr()),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
-                          fixedSize: Size(105, 40),
+                          fixedSize: Size(110, 40),
                           foregroundColor: AppColors.white),
                     ),
                     SizedBox(
@@ -85,7 +85,7 @@ class set_language_page extends StatelessWidget {
                       child: Text('Arabic'.tr()),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
-                          fixedSize: Size(105, 40),
+                          fixedSize: Size(110, 40),
                           foregroundColor: AppColors.white),
                     ),
                   ],

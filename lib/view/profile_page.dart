@@ -101,175 +101,186 @@ class _profile_pageState extends State<profile_page> {
                         phoneNumber.text = profile.phone ?? '';
                       if (email.text.isEmpty) email.text = profile.email ?? '';
 
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          AppBar(
-                            backgroundColor: AppColors.white,
-                            elevation: 2,
-                            shadowColor: AppColors.unselected,
-                            title: Text(
-                              'Profile'.tr(),
-                              style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                          ),
-                          InkWell(
-                            onTap: isEditing
-                                ? () {
-                                    pickImage();
-                                  }
-                                : null,
-                            child: Stack(
-                              children: [
-                                CircleAvatar(
-                                  radius: 72,
-                                  backgroundImage: selectedImage != null
-                                      ? FileImage(selectedImage!)
-                                      : (profile.profileImage != null &&
-                                              profile.profileImage!.isNotEmpty
-                                          ? NetworkImage(profile.profileImage!)
-                                          : const AssetImage(
-                                                  'assets/images/profile.jpg')
-                                              as ImageProvider),
-                                ),
-                                if (isEditing)
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: const Icon(Icons.camera_alt_rounded,
-                                        size: 50, color: AppColors.primary),
-                                  )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 30),
-                          Form(
-                            key: _nameFormKey,
-                            child: _buildTextField(
-                              controller: username,
-                              label: "User Name".tr(),
-                              icon: Icons.account_circle_outlined,
-                              enabled: isEditing,
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'Please enter your name'.tr();
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          _buildTextField(
-                            controller: phoneNumber,
-                            label: "Phone Number".tr(),
-                            icon: Icons.phone_outlined,
-                            enabled: false,
-                            // prefix: const Text('+963'),
-                          ),
-                          const SizedBox(height: 20),
-                          _buildTextField(
-                            controller: email,
-                            label: "Email".tr(),
-                            icon: Icons.email_outlined,
-                            enabled: false,
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 25, right: 25),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  "assets/images/as.png",
-                                  height: 24,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Your Balance:".tr(),
+                      return Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              AppBar(
+                                backgroundColor: AppColors.white,
+                                elevation: 2,
+                                shadowColor: AppColors.unselected,
+                                title: Text(
+                                  'Profile'.tr(),
                                   style: TextStyle(
                                       color: AppColors.primary,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "${profile.balance.toString()}" + "  \$",
-                                  style: TextStyle(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 17),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: isEditing
-                                    ? null
-                                    : () {
-                                        setState(() {
-                                          isEditing = true;
-                                        });
-                                      },
-                                child: Text('Modify'.tr()),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: isEditing
-                                      ? AppColors.unselected
-                                      : AppColors.secondary,
-                                  fixedSize: const Size(100, 40),
-                                  foregroundColor: AppColors.white,
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: isEditing
+                              SizedBox(
+                                height: 70,
+                              ),
+                              InkWell(
+                                onTap: isEditing
                                     ? () {
-                                        if (_nameFormKey.currentState!
-                                            .validate()) {
-                                          context.read<ProfileBloc>().add(
-                                                UpdateProfileEvent(
-                                                  name: username.text,
-                                                  image: selectedImage,
-                                                ),
-                                              );
-                                          // context.read<ProfileBloc>().add(
-                                          //       ShowProfileEvent(),
-                                          //     );
-                                          setState(() {
-                                            isEditing = false;
-                                          });
-                                        }
+                                        pickImage();
                                       }
                                     : null,
-                                child: Text('Confirm'.tr()),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: isEditing
-                                      ? AppColors.secondary
-                                      : AppColors.unselected,
-                                  fixedSize: const Size(100, 40),
-                                  foregroundColor: AppColors.white,
+                                child: Stack(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 72,
+                                      backgroundImage: selectedImage != null
+                                          ? FileImage(selectedImage!)
+                                          : (profile.profileImage != null &&
+                                                  profile
+                                                      .profileImage!.isNotEmpty
+                                              ? NetworkImage(
+                                                  profile.profileImage!)
+                                              : const AssetImage(
+                                                      'assets/images/profile.jpg')
+                                                  as ImageProvider),
+                                    ),
+                                    if (isEditing)
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: const Icon(
+                                            Icons.camera_alt_rounded,
+                                            size: 50,
+                                            color: AppColors.primary),
+                                      )
+                                  ],
                                 ),
+                              ),
+                              const SizedBox(height: 30),
+                              Form(
+                                key: _nameFormKey,
+                                child: _buildTextField(
+                                  controller: username,
+                                  label: "User Name".tr(),
+                                  icon: Icons.account_circle_outlined,
+                                  enabled: isEditing,
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Please enter your name'.tr();
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              _buildTextField(
+                                controller: phoneNumber,
+                                label: "Phone Number".tr(),
+                                icon: Icons.phone_outlined,
+                                enabled: false,
+                                // prefix: const Text('+963'),
+                              ),
+                              const SizedBox(height: 20),
+                              _buildTextField(
+                                controller: email,
+                                label: "Email".tr(),
+                                icon: Icons.email_outlined,
+                                enabled: false,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 25, right: 25),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/as.png",
+                                      height: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Your Balance:".tr(),
+                                      style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 17),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      "${profile.balance.toString()}" + "  \$",
+                                      style: TextStyle(
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 17),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 70,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: isEditing
+                                        ? null
+                                        : () {
+                                            setState(() {
+                                              isEditing = true;
+                                            });
+                                          },
+                                    child: Text('Modify'.tr()),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: isEditing
+                                          ? AppColors.unselected
+                                          : AppColors.secondary,
+                                      fixedSize: const Size(110, 40),
+                                      foregroundColor: AppColors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  ElevatedButton(
+                                    onPressed: isEditing
+                                        ? () {
+                                            if (_nameFormKey.currentState!
+                                                .validate()) {
+                                              context.read<ProfileBloc>().add(
+                                                    UpdateProfileEvent(
+                                                      name: username.text,
+                                                      image: selectedImage,
+                                                    ),
+                                                  );
+                                              // context.read<ProfileBloc>().add(
+                                              //       ShowProfileEvent(),
+                                              //     );
+                                              setState(() {
+                                                isEditing = false;
+                                              });
+                                            }
+                                          }
+                                        : null,
+                                    child: Text('Confirm'.tr()),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: isEditing
+                                          ? AppColors.secondary
+                                          : AppColors.unselected,
+                                      fixedSize: const Size(110, 40),
+                                      foregroundColor: AppColors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       );
                     } else if (state is ShowProfileError) {
                       return Center(

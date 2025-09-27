@@ -286,7 +286,7 @@ class _GiftRequestState extends State<GiftRequest> {
                               style: AppTextStyle.helpReq,
                             ),
                             Text(
-                              "select this if you don't want to show the gift's value"
+                              "select this if you don't want to show\nthe gift's value"
                                   .tr(),
                               style: AppTextStyle.c,
                             ),

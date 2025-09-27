@@ -162,15 +162,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/OncePayment/bloc/once_payment_bloc.dart';
 import 'package:charity_project/blocForApp/PeriodicallyDonaition/bloc/periodically_donaition_bloc.dart';
@@ -182,15 +173,26 @@ import 'package:charity_project/model/PeriodicallyDonaitionModel.dart';
 import 'package:charity_project/view/PaymentResultDialog.dart';
 import 'package:charity_project/view/app_text_style.dart';
 import 'package:charity_project/view/background.dart';
+import 'package:charity_project/view/cart_payment_details.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PayDetailsPage extends StatelessWidget {
+class PayDetailsPage extends StatefulWidget {
   final CartItemModel paydetails;
   const PayDetailsPage({super.key, required this.paydetails});
 
   @override
+  State<PayDetailsPage> createState() => _PayDetailsPageState();
+}
+
+class _PayDetailsPageState extends State<PayDetailsPage> {
+  @override
+  void initState() {
+    super.initState();
+    selectedMethod = "wallet";
+  }
+
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
@@ -230,75 +232,260 @@ class PayDetailsPage extends StatelessWidget {
             "Payment Checkout".tr(),
             style: AppTextStyle.a,
           ),
-          
         ),
         body: BackgroundWrapper(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                 Image.asset(
-                  "assets/images/pay11.jpg",
-                  height: 210,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  "Payment Details:".tr(),
-                  style: AppTextStyle.a.copyWith(fontSize: 22),
-                ),
-                const SizedBox(height: 20),
-               
-                
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    "assets/images/pay11.jpg",
+                    height: 210,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Payment Details:".tr(),
+                    style: AppTextStyle.a.copyWith(fontSize: 22),
+                  ),
+                  const SizedBox(height: 20),
 
-                /// Name
-                _buildDetailRow("Donation For:", paydetails.name ?? ""),
-                const Divider(),
+                  /// Name
+                  _buildDetailRow(
+                      "Donation For:", widget.paydetails.name ?? ""),
+                  const Divider(),
 
-        if (paydetails.donationType == "Recurring Donation")
-  _buildDetailRow("Donation Frequency:", LangHelper.getTranslatedPeriod(paydetails.periodic), skipValueTranslation: true),
-                
-                if(paydetails.donationType != "Recurring Donation") 
-                _buildDetailRow("Donation Frequency:", paydetails.periodic ?? ""),
-                
-                const Divider(),
+                  if (widget.paydetails.donationType == "Recurring Donation")
+                    _buildDetailRow(
+                        "Donation Frequency:",
+                        LangHelper.getTranslatedPeriod(
+                            widget.paydetails.periodic),
+                        skipValueTranslation: true),
 
-                /// Amount
-                _buildDetailRow("Amount:", "\$${paydetails.Amount?.toString() ?? '0'}"),
-                const Divider(),
+                  if (widget.paydetails.donationType != "Recurring Donation")
+                    _buildDetailRow("Donation Frequency:",
+                        widget.paydetails.periodic ?? ""),
 
-                const Spacer(),
+                  const Divider(),
 
-                /// Pay button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                       final Type = paydetails.donationType!;
-                if (Type == "Sponsorship") {
-                  context.read<SponsorshipDonaitionBloc>().add(DonateToSponsorship(paydetails.id!, paydetails.Amount!));
-                }
-                else if (Type == "Campaign" || Type == "Zakah"|| Type == "Sadaqah" || Type == "HumanCase"|| Type == "Kaffarat and Sadaqah"|| Type == "General Donaition"){
-                   final item = OncePaymentmodel(campaignId: paydetails.Campainid ?? null, boxId: paydetails.boxId ?? null, amount: paydetails.Amount!);
-              context.read<OncePaymentBloc>().add(OncePayment([item]));
-                }
-                 else if (Type == "Recurring Donation"){
-                   final item = Periodicallydonaitionmodel(recurrence: paydetails.periodic!, amount: paydetails.Amount!);
-              context.read<PeriodicallyDonaitionBloc>().add(DonaitePeriodically(item));
-                }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                  /// Amount
+                  _buildDetailRow("Amount:",
+                      "\$${widget.paydetails.Amount?.toString() ?? '0'}"),
+                  const Divider(),
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 161,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.white,
                     ),
-                    child:  Text(
-                      'Pay Now'.tr(),
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(top: 15, left: 15, right: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Payment method:".tr(),
+                              style: TextStyle(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18)),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 110,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: paymentMethods.length,
+                              itemBuilder: (context, index) {
+                                final method = paymentMethods[index];
+                                final isSelected =
+                                    selectedMethod == method["id"];
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedMethod = method["id"];
+                                      });
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColors.white,
+                                            border: Border.all(
+                                              color: isSelected
+                                                  ? AppColors.primary
+                                                  : Colors.grey,
+                                              width: isSelected ? 2 : 1,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Image.asset(
+                                              method["image"],
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        ),
+                                        // const SizedBox(height: 8),
+                                        // Text(
+                                        //   method["name"],
+                                        //   style: TextStyle(
+                                        //     fontSize: 14,
+                                        //     fontWeight: isSelected
+                                        //         ? FontWeight.bold
+                                        //         : FontWeight.normal,
+                                        //     color: isSelected
+                                        //         ? AppColors.primary
+                                        //         : AppColors.unselected,
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 10),
+
+                  // const Spacer(),
+
+                  /// Pay button
+                  SizedBox(
+                      width: double.infinity,
+                      child: BlocBuilder<SponsorshipDonaitionBloc,
+                          SponsorshipDonaitionState>(
+                        builder: (context, sponsorState) {
+                          return BlocBuilder<OncePaymentBloc, OncePaymentState>(
+                            builder: (context, onceState) {
+                              return BlocBuilder<PeriodicallyDonaitionBloc,
+                                  PeriodicallyDonaitionState>(
+                                builder: (context, periodicState) {
+                                  // true إذا أي Bloc بحالة Loading
+                                  final isLoading = sponsorState
+                                          is SponsorshipDonaitionProcess ||
+                                      onceState is OncePaymentProcess ||
+                                      periodicState
+                                          is PeriodicallyDonaitionProcess;
+
+                                  return ElevatedButton(
+                                    onPressed: isLoading
+                                        ? null
+                                        : () {
+                                            final type =
+                                                widget.paydetails.donationType!;
+                                            if (type == "Sponsorship") {
+                                              context
+                                                  .read<
+                                                      SponsorshipDonaitionBloc>()
+                                                  .add(
+                                                    DonateToSponsorship(
+                                                      widget.paydetails.id!,
+                                                      widget.paydetails.Amount!,
+                                                    ),
+                                                  );
+                                            } else if (type == "Campaign" ||
+                                                type == "Zakah" ||
+                                                type == "Sadaqah" ||
+                                                type == "HumanCase" ||
+                                                type ==
+                                                    "Kaffarat and Sadaqah" ||
+                                                type == "General Donaition") {
+                                              final item = OncePaymentmodel(
+                                                campaignId:
+                                                    widget.paydetails.Campainid,
+                                                boxId: widget.paydetails.boxId,
+                                                amount:
+                                                    widget.paydetails.Amount!,
+                                              );
+                                              context
+                                                  .read<OncePaymentBloc>()
+                                                  .add(OncePayment([item]));
+                                            } else if (type ==
+                                                "Recurring Donation") {
+                                              final item =
+                                                  Periodicallydonaitionmodel(
+                                                recurrence:
+                                                    widget.paydetails.periodic!,
+                                                amount:
+                                                    widget.paydetails.Amount!,
+                                              );
+                                              context
+                                                  .read<
+                                                      PeriodicallyDonaitionBloc>()
+                                                  .add(DonaitePeriodically(
+                                                      item));
+                                            }
+                                          },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primary,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16),
+                                    ),
+                                    child: isLoading
+                                        ? const SizedBox(
+                                            width: 24,
+                                            height: 24,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : Text(
+                                            'Pay Now'.tr(),
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      )
+
+                      //     ElevatedButton(
+                      //       onPressed: () {
+                      //          final Type = paydetails.donationType!;
+                      //   if (Type == "Sponsorship") {
+                      //     context.read<SponsorshipDonaitionBloc>().add(DonateToSponsorship(paydetails.id!, paydetails.Amount!));
+                      //   }
+                      //   else if (Type == "Campaign" || Type == "Zakah"|| Type == "Sadaqah" || Type == "HumanCase"|| Type == "Kaffarat and Sadaqah"|| Type == "General Donaition"){
+                      //      final item = OncePaymentmodel(campaignId: paydetails.Campainid ?? null, boxId: paydetails.boxId ?? null, amount: paydetails.Amount!);
+                      // context.read<OncePaymentBloc>().add(OncePayment([item]));
+                      //   }
+                      //    else if (Type == "Recurring Donation"){
+                      //      final item = Periodicallydonaitionmodel(recurrence: paydetails.periodic!, amount: paydetails.Amount!);
+                      // context.read<PeriodicallyDonaitionBloc>().add(DonaitePeriodically(item));
+                      //   }
+                      //       },
+                      //       style: ElevatedButton.styleFrom(
+                      //         backgroundColor: AppColors.primary,
+                      //         padding: const EdgeInsets.symmetric(vertical: 16),
+                      //       ),
+                      //       child:  Text(
+                      //         'Pay Now'.tr(),
+                      //         style: TextStyle(fontSize: 18, color: Colors.white),
+                      //       ),
+                      //     ),
+                      ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ),
@@ -306,7 +493,8 @@ class PayDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String title, String value, {bool skipValueTranslation = false}) {
+  Widget _buildDetailRow(String title, String value,
+      {bool skipValueTranslation = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -327,7 +515,4 @@ class PayDetailsPage extends StatelessWidget {
       ),
     );
   }
-
-  
-
 }

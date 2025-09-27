@@ -1,69 +1,152 @@
-// import 'dart:io';
-// import 'package:dio/dio.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'dart:io';
+import 'package:charity_project/firebase_options.dart';
+import 'package:charity_project/models/notification_model.dart';
+import 'package:charity_project/service/BaseService.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../config/shared_prefs.dart';
 
-// class NotificationService {
-//   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-//   final FlutterLocalNotificationsPlugin _localNotifications =
-//       FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
-//   Future<void> initNotifications() async {
-//     if (Platform.isAndroid) {
-//       await _messaging.requestPermission();
-//       String? FCMtoken = await _messaging.getToken();
-//       print("FCM Token: $FCMtoken");
-//     } else {
-//       print("FCM not supported on this platform");
-//     }
+// Background handler
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (!Platform.isWindows) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-//     String? FCMtoken = await _messaging.getToken();
-//     if (FCMtoken != null) {
-//       await sendFcmToken(FCMtoken);
-//     }
+    const android = AndroidNotificationDetails(
+      'default_channel',
+      'Default',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
 
-//     // تهيئة الإشعارات المحلية
-//     const AndroidInitializationSettings initSettingsAndroid =
-//         AndroidInitializationSettings('@mipmap/ic_launcher');
+    final local = FlutterLocalNotificationsPlugin();
+    await local.initialize(
+      const InitializationSettings(
+          android: AndroidInitializationSettings('@mipmap/ic_launcher')),
+    );
 
-//     const InitializationSettings initSettings = InitializationSettings(
-//       android: initSettingsAndroid,
-//     );
+    local.show(
+      0,
+      message.notification?.title ?? message.data['title'] ?? '',
+      message.notification?.body ?? message.data['body'] ?? '',
+      NotificationDetails(android: android),
+    );
+  }
+}
 
-//     await _localNotifications.initialize(initSettings);
+class NotificationService {
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  final Dio dio = Dio();
 
-//     // استقبال الإشعار والتعامل معه وهو داخل التطبيق
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       _showLocalNotification(message);
-//     });
-//   }
+  Future<void> init() async {
+    if (Platform.isWindows) return;
 
-//   Future<void> _showLocalNotification(RemoteMessage message) async {
-//     const AndroidNotificationDetails androidDetails =
-//         AndroidNotificationDetails(
-//       'default_channel',
-//       'Default',
-//       importance: Importance.max,
-//       priority: Priority.high,
-//     );
+    // Local notifications initialization
+    const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initSettings = InitializationSettings(android: androidInit);
+    await flutterLocalNotificationsPlugin.initialize(initSettings,
+        onDidReceiveNotificationResponse: (details) {
+      // handle notification tap
+      print("Tapped notification: ${details.payload}");
+    });
 
-//     const NotificationDetails details = NotificationDetails(
-//       android: androidDetails,
-//     );
+    // Permissions
+    await _messaging.requestPermission(alert: true, badge: true, sound: true);
 
-//     await _localNotifications.show(
-//       0,
-//       message.notification?.title,
-//       message.notification?.body,
-//       details,
-//     );
-//   }
+    // Background
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-//   Future<void> sendFcmToken(String FCMtoken) async {
-//     final Dio _dio = Dio();
-//     await _dio.post(
-//       'http://127.0.0.1:8000/api/save-fcm-token',
-//       data: {'fcm_token': FCMtoken},
-//     );
-//   }
-// }
+    // Foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      _showLocalNotification(message);
+    });
+
+    // Opened from background/terminated
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleClick);
+    final initial = await _messaging.getInitialMessage();
+    if (initial != null) _handleClick(initial);
+  }
+
+  void _handleClick(RemoteMessage message) {
+    print("User clicked notification: ${message.data}");
+    // هنا ممكن تضيفي نافذة فتح صفحة معينة بناءً على message.data['id']
+  }
+
+  void _showLocalNotification(RemoteMessage message) {
+    final notification = message.notification;
+    flutterLocalNotificationsPlugin.show(
+      notification?.hashCode ?? 0,
+      notification?.title ?? message.data['title'] ?? '',
+      notification?.body ?? message.data['body'] ?? '',
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'default_channel',
+          'General Notifications',
+          importance: Importance.max,
+          priority: Priority.high,
+        ),
+      ),
+    );
+  }
+
+  Future<String?> getFcmTokenSafe() async {
+    if (Platform.isAndroid || Platform.isIOS) return _messaging.getToken();
+    return null;
+  }
+
+  void listenTokenRefresh(Function(String) onRefresh) {
+    if (Platform.isAndroid || Platform.isIOS)
+      _messaging.onTokenRefresh.listen(onRefresh);
+  }
+
+  Future<List<NotificationModel>?> getAllNotifications() async {
+    final token = await SharedPrefs.getToken();
+    if (token == null || token.isEmpty) return null;
+
+    final response = await dio.get(
+      '$baseUrl/api/getAllNotifications',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+
+    if (response.statusCode == 200 && response.data is List) {
+      return (response.data as List)
+          .map((e) => NotificationModel.fromJson(e))
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+  Future<bool> deleteAllNotifications() async {
+    try {
+      final token = await SharedPrefs.getToken();
+      final response = await dio.delete(
+        '$baseUrl/api/deleteAllNotifications',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      throw Exception("Failed to delete all notifications: $e");
+    }
+  }
+
+  Future<bool> deleteNotificationById(int id) async {
+    try {
+      final token = await SharedPrefs.getToken();
+      final response = await dio.delete(
+        '$baseUrl/api/deleteNotification/$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      throw Exception("Failed to delete notification: $e");
+    }
+  }
+}

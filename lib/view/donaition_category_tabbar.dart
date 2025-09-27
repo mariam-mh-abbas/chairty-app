@@ -153,7 +153,8 @@ class _DonaitionCategoryTabbarState extends State<DonaitionCategoryTabbar> {
             ..add(FetchCategoryByMainCategory(widget.category)),
         ),
       ],
-      child: BlocBuilder<CategorybymaincategoryBloc, CategorybymaincategoryState>(
+      child:
+          BlocBuilder<CategorybymaincategoryBloc, CategorybymaincategoryState>(
         builder: (context, state) {
           if (state is CategorybymaincategoryLoading) {
             return Scaffold(
@@ -163,9 +164,49 @@ class _DonaitionCategoryTabbarState extends State<DonaitionCategoryTabbar> {
               ),
             );
           } else if (state is CategorybymaincategoryError) {
-            return Center(child: Text(state.ErrorMsg));
+            return Scaffold(
+              backgroundColor: AppColors.background,
+              body: BackgroundWrapper(
+                  child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AppBar(
+                      backgroundColor: AppColors.white,
+                      elevation: 2,
+                      shadowColor: AppColors.unselected,
+                      // title: Text(
+                      //   'My gifts'.tr(),
+                      //   style: TextStyle(
+                      //       color: AppColors.primary,
+                      //       fontWeight: FontWeight.w700),
+                      // ),
+                    ),
+                    SizedBox(
+                      height: 270,
+                    ),
+                    Container(
+                      child: Image.asset(
+                        "assets/images/error.png",
+                        height: 190,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Internet connection is not available".tr(),
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+            );
+            // return Center(child: Text(state.ErrorMsg));
           } else if (state is CategorybymaincategoryLoaded) {
-
             final tabs = [
               {"id": 0, "name": "All".tr()},
               ...state.categorybymaincategory.map((cat) => {
@@ -187,7 +228,9 @@ class _DonaitionCategoryTabbarState extends State<DonaitionCategoryTabbar> {
                     unselectedLabelColor: AppColors.unselected,
                     labelColor: AppColors.primary,
                     isScrollable: true,
-                    tabs: tabs.map((tab) => Tab(text: tab["name"].toString())).toList(),
+                    tabs: tabs
+                        .map((tab) => Tab(text: tab["name"].toString()))
+                        .toList(),
                   ),
                 ),
                 body: BackgroundWrapper(
@@ -208,7 +251,47 @@ class _DonaitionCategoryTabbarState extends State<DonaitionCategoryTabbar> {
               ),
             );
           }
-          return const SizedBox();
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: BackgroundWrapper(
+                child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AppBar(
+                    backgroundColor: AppColors.white,
+                    elevation: 2,
+                    shadowColor: AppColors.unselected,
+                    // title: Text(
+                    //   'My gifts'.tr(),
+                    //   style: TextStyle(
+                    //       color: AppColors.primary,
+                    //       fontWeight: FontWeight.w700),
+                    // ),
+                  ),
+                  SizedBox(
+                    height: 270,
+                  ),
+                  Container(
+                    child: Image.asset(
+                      "assets/images/error.png",
+                      height: 190,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Internet connection is not available".tr(),
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          );
         },
       ),
     );

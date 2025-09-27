@@ -65,8 +65,45 @@ class _zakahPageState extends State<ZakahPage> {
                 );
               } else if (state is BoxError) {
                 return Center(
-                  child: Text(state.ErrorMsg),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      AppBar(
+                        backgroundColor: AppColors.white,
+                        elevation: 2,
+                        shadowColor: AppColors.unselected,
+                        // title: Text(
+                        //   'My gifts'.tr(),
+                        //   style: TextStyle(
+                        //       color: AppColors.primary,
+                        //       fontWeight: FontWeight.w700),
+                        // ),
+                      ),
+                      SizedBox(
+                        height: 270,
+                      ),
+                      Container(
+                        child: Image.asset(
+                          "assets/images/error.png",
+                          height: 190,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Internet connection is not available".tr(),
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
+                // return Center(
+                //   child: Text(state.ErrorMsg),
+                // );
               } else if (state is BoxLoaded) {
                 final String? imageUrl = state.box.image;
                 final String? finalImage =
@@ -229,7 +266,8 @@ class _zakahPageState extends State<ZakahPage> {
                                                             .validate() &&
                                                         amountin != null) {
                                                       final item = CartItemModel(
-                                                          id: state.box.id!,
+                                                          id: int.parse(
+                                                              "${state.box.id!}1"),
                                                           name: state.box.name,
                                                           Campainid: null,
                                                           boxId: state.box.id!,
@@ -295,7 +333,8 @@ class _zakahPageState extends State<ZakahPage> {
                                                               .getUserId();
 
                                                       final item = CartItemModel(
-                                                          id: state.box.id!,
+                                                          id: int.parse(
+                                                              "${state.box.id!}1"),
                                                           name: state.box.name,
                                                           Campainid: null,
                                                           boxId: state.box.id,
@@ -318,7 +357,7 @@ class _zakahPageState extends State<ZakahPage> {
                                                           .showSnackBar(
                                                         SnackBar(
                                                           backgroundColor:
-                                                              Colors.green,
+                                                              AppColors.primary,
                                                           content: Text(
                                                               'added_to_cart'.tr(
                                                                   namedArgs: {

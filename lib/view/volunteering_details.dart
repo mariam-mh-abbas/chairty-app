@@ -59,7 +59,7 @@ class volunteering_details extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(15),
                       child: Container(
-                        width: 400,
+                        width: double.infinity,
                         child: Card(
                           elevation: 3,
                           color: AppColors.white,
@@ -304,7 +304,7 @@ class volunteering_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     SizedBox(
-                                      width: 200,
+                                      width: 180,
                                       child: Text(
                                         detail.days
                                             .map((e) => e.name)
@@ -333,7 +333,7 @@ class volunteering_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     SizedBox(
-                                      width: 140,
+                                      width: 125,
                                       child: Text(
                                         detail.types
                                             .map((e) => e.name)
@@ -407,9 +407,31 @@ class volunteering_details extends StatelessWidget {
                   );
                 } else if (state is RequestError) {
                   return Center(
-                      child: Text(
-                    '${state.message}',
-                  ));
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 270,
+                        ),
+                        Container(
+                          child: Image.asset(
+                            "assets/images/error.png",
+                            height: 190,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Internet connection is not available".tr(),
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
                   return const SizedBox();
                 }

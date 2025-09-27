@@ -372,7 +372,6 @@ class help_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     SizedBox(
-                                      width: 270,
                                       child: Text(
                                         detail.notes.toString(),
                                         style: TextStyle(
@@ -423,7 +422,6 @@ class help_details extends StatelessWidget {
                                       width: 10,
                                     ),
                                     SizedBox(
-                                      width: 280,
                                       child: Text(
                                         detail.job.toString() ?? "-",
                                         style: TextStyle(
@@ -495,9 +493,31 @@ class help_details extends StatelessWidget {
                   );
                 } else if (state is RequestError) {
                   return Center(
-                      child: Text(
-                    '${state.message}',
-                  ));
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 270,
+                        ),
+                        Container(
+                          child: Image.asset(
+                            "assets/images/error.png",
+                            height: 190,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Internet connection is not available".tr(),
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
                   return const SizedBox();
                 }

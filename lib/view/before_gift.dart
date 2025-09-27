@@ -29,24 +29,24 @@ class BeforeGift extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Why choose a traditional gift when you \ncan give something that lasts forever?'
-                      .tr(),
-                  style: AppTextStyle.a,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 20,
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    'Why choose a traditional gift when you can give something that lasts forever?'
+                        .tr(),
+                    style: AppTextStyle.a.copyWith(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 Center(
-                  child: Text(
-                    "Choose a gift that has a lasting impact and\nbring joy that extends beyond the moment to those you love.\nSend your gift now! Some gifts do not fade;\nthey endure in impact and reward."
-                        .tr(),
-                    style: AppTextStyle.helpReq,
-                    textAlign: TextAlign.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Choose a gift that has a lasting impact and\nbring joy that extends beyond the moment to those you love.\nSend your gift now! Some gifts do not fade;\nthey endure in impact and reward."
+                          .tr(),
+                      style: AppTextStyle.helpReq.copyWith(fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 SizedBox(

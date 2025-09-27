@@ -4,6 +4,7 @@ import 'package:charity_project/blocForApp/blocAllCampaign/bloc/all_campaign_blo
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/cart_payment_details.dart';
+import 'package:charity_project/view/main_navBar_page.dart';
 import 'package:flutter/material.dart';
 import 'package:charity_project/app_colors.dart';
 import 'package:charity_project/blocForApp/InKindDonaition/bloc/in_kind_donaition_bloc.dart';
@@ -29,6 +30,15 @@ class CharityFundPage extends StatelessWidget {
         child: Column(
           children: [
             AppBar(
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainNavbarPage()),
+                      (route) => false,
+                    );
+                  },
+                  icon: Icon(Icons.arrow_back)),
               backgroundColor: AppColors.white,
               // elevation: 5,
               // shadowColor: AppColors.unselected,
@@ -148,7 +158,7 @@ class CharityFundPage extends StatelessWidget {
                                         fontWeight: FontWeight.w700),
                                   ),
                                   SizedBox(
-                                    width: 30,
+                                    width: 10,
                                   ),
                                   // IconButton(
                                   //     onPressed: () async {
@@ -192,7 +202,8 @@ class CharityFundPage extends StatelessWidget {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                              backgroundColor: Colors.green,
+                                              backgroundColor:
+                                                  AppColors.primary,
                                               content: Text(
                                                       'Item Has Been Deleted Successfully')
                                                   .tr()),
@@ -239,7 +250,52 @@ class CharityFundPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Center(
-                      child: BlocBuilder<BlocCartBloc, BlocCartState>(
+                      child:
+                          // BlocBuilder<BlocCartBloc, BlocCartState>(
+                          //   builder: (context, state) {
+                          //     final cartBloc = context.read<BlocCartBloc>();
+
+                          //     final isLoading =
+                          //         state is CartLoading; // غير الاسم حسب حالتك
+                          //     final isDisabled =
+                          //         cartBloc.cartItems.isEmpty || isLoading;
+
+                          //     return ElevatedButton(
+                          //       onPressed: isDisabled
+                          //           ? null
+                          //           : () {
+                          //               Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                   builder: (context) => CartPaymentDetails(
+                          //                     paydetails: cartBloc.cartItems,
+                          //                   ),
+                          //                 ),
+                          //               );
+                          //             },
+                          //       style: ElevatedButton.styleFrom(
+                          //         backgroundColor: AppColors.secondary,
+                          //         foregroundColor: AppColors.white,
+                          //         fixedSize: const Size(300, 40),
+                          //       ),
+                          //       child: isLoading
+                          //           ? const SizedBox(
+                          //               height: 20,
+                          //               width: 20,
+                          //               child: CircularProgressIndicator(
+                          //                 strokeWidth: 2,
+                          //                 color: Colors.white,
+                          //               ),
+                          //             )
+                          //           : Text(
+                          //               'Proceed to Checkout',
+                          //               style: const TextStyle(fontSize: 16),
+                          //             ).tr(),
+                          //     );
+                          //   },
+                          // )
+
+                          BlocBuilder<BlocCartBloc, BlocCartState>(
                         builder: (context, state) {
                           final cartBloc = context.read<BlocCartBloc>();
                           return ElevatedButton(

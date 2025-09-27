@@ -109,7 +109,7 @@ class FirstPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 100,
+                height: 200,
               ),
               OutlinedButton(
                 onPressed: () {
@@ -236,7 +236,7 @@ class SecondPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 100,
+                height: 200,
               ),
               OutlinedButton(
                 onPressed: () {
@@ -363,7 +363,7 @@ class ThirdPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 130,
+                height: 200,
               ),
               ElevatedButton(
                 onPressed: () async {
