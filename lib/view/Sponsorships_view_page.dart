@@ -113,205 +113,191 @@ class _SponsorshipsViewPageState extends State<SponsorshipsViewPage> {
                               ),
                             );
                           } else {
-                            return Expanded(
-                                child: ListView.builder(
-                                    itemCount: state.allSponsorships.length,
-                                    itemBuilder: (context, index) {
-                                      final String? imageUrl =
-                                          state.allSponsorships[index].image;
-                                      final String? finalImage =
-                                          imageUrl != null &&
-                                                  imageUrl.isNotEmpty
-                                              ? Uri.parse(baseUrlImage)
-                                                  .resolve(imageUrl)
-                                                  .toString()
-                                              : null;
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        child: Container(
-                                          height: 190,
-                                          width: double.infinity,
-                                          child: Card(
-                                            elevation: 10,
-                                            color: AppColors.white,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20, right: 20),
-                                                  child: Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        image: finalImage !=
-                                                                null
-                                                            ? DecorationImage(
-                                                                image: NetworkImage(
-                                                                    finalImage),
-                                                                fit: BoxFit
-                                                                    .cover)
-                                                            : DecorationImage(
-                                                                image: AssetImage(
-                                                                    "assets/images/general.png"),
-                                                                fit: BoxFit
-                                                                    .cover)),
+                            return ListView.builder(
+                                itemCount: state.allSponsorships.length,
+                                itemBuilder: (context, index) {
+                                  final String? imageUrl =
+                                      state.allSponsorships[index].image;
+                                  final String? finalImage =
+                                      imageUrl != null && imageUrl.isNotEmpty
+                                          ? Uri.parse(baseUrlImage)
+                                              .resolve(imageUrl)
+                                              .toString()
+                                          : null;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Container(
+                                      height: 190,
+                                      width: double.infinity,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: AppColors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: finalImage != null
+                                                        ? DecorationImage(
+                                                            image: NetworkImage(
+                                                                finalImage),
+                                                            fit: BoxFit.cover)
+                                                        : DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/general.png"),
+                                                            fit: BoxFit.cover)),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    textmax(
+                                                        state
+                                                                .allSponsorships[
+                                                                    index]
+                                                                .title ??
+                                                            "unknown",
+                                                        20),
+                                                    style: AppTextStyle.b,
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
+                                                  SizedBox(
+                                                      height: 40,
+                                                      width: 220,
+                                                      child: Text(
+                                                        maxLines: 2,
                                                         textmax(
                                                             state
                                                                     .allSponsorships[
                                                                         index]
-                                                                    .title ??
-                                                                "unknown",
-                                                            20),
-                                                        style: AppTextStyle.b,
-                                                      ),
-                                                      SizedBox(
-                                                          height: 40,
-                                                          width: 220,
-                                                          child: Text(
-                                                            maxLines: 2,
-                                                            textmax(
-                                                                state
-                                                                        .allSponsorships[
-                                                                            index]
-                                                                        .description ??
-                                                                    "",
-                                                                70),
-                                                            style:
-                                                                AppTextStyle.c,
-                                                          )),
-                                                      // SizedBox(
-                                                      //     height: 50,
-                                                      //     width: 200,
-                                                      //     child: Text(
-                                                      //       state.allSponsorships[index].description ?? "",
-                                                      //       style: AppTextStyle.c,
-                                                      //     )),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [],
-                                                      ),
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    top: 5),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
+                                                                    .description ??
+                                                                "",
+                                                            70),
+                                                        style: AppTextStyle.c,
+                                                      )),
+                                                  // SizedBox(
+                                                  //     height: 50,
+                                                  //     width: 200,
+                                                  //     child: Text(
+                                                  //       state.allSponsorships[index].description ?? "",
+                                                  //       style: AppTextStyle.c,
+                                                  //     )),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [],
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 5),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Amount/Month"
+                                                                  .tr(),
+                                                              style:
+                                                                  AppTextStyle
+                                                                      .c,
+                                                            ),
+                                                            Row(
                                                               children: [
+                                                                Image.asset(
+                                                                  "assets/images/as.png",
+                                                                  height: 20,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 6,
+                                                                ),
                                                                 Text(
-                                                                  "Amount/Month"
-                                                                      .tr(),
+                                                                  "\$ ${state.allSponsorships[index].monthlyAmount ?? 0}",
                                                                   style:
                                                                       AppTextStyle
-                                                                          .c,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Image.asset(
-                                                                      "assets/images/as.png",
-                                                                      height:
-                                                                          20,
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 6,
-                                                                    ),
-                                                                    Text(
-                                                                      "\$ ${state.allSponsorships[index].monthlyAmount ?? 0}",
-                                                                      style:
-                                                                          AppTextStyle
-                                                                              .b,
-                                                                    )
-                                                                  ],
+                                                                          .b,
                                                                 )
                                                               ],
-                                                            ),
-                                                          ),
-                                                          Align(
-                                                            alignment: context
-                                                                        .locale
-                                                                        .languageCode ==
-                                                                    "ar"
-                                                                ? Alignment
-                                                                    .centerLeft
-                                                                : Alignment
-                                                                    .centerRight,
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 10,
-                                                                      right: 10,
-                                                                      bottom:
-                                                                          0),
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => OneSponsorshipsPage(
-                                                                                id: state.allSponsorships[index].id,
-                                                                              )));
-                                                                },
-                                                                child: Text(
-                                                                        "Details")
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: context
+                                                                    .locale
+                                                                    .languageCode ==
+                                                                "ar"
+                                                            ? Alignment
+                                                                .centerLeft
+                                                            : Alignment
+                                                                .centerRight,
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 10,
+                                                                  right: 10,
+                                                                  bottom: 0),
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          OneSponsorshipsPage(
+                                                                            id: state.allSponsorships[index].id,
+                                                                          )));
+                                                            },
+                                                            child:
+                                                                Text("Details")
                                                                     .tr(),
-                                                                style: ElevatedButton.styleFrom(
-                                                                    backgroundColor:
-                                                                        AppColors
-                                                                            .secondary,
-                                                                    foregroundColor:
-                                                                        AppColors
-                                                                            .white,
-                                                                    fixedSize:
-                                                                        Size(
-                                                                            100,
-                                                                            30)),
-                                                              ),
-                                                            ),
+                                                            style: ElevatedButton.styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .secondary,
+                                                                foregroundColor:
+                                                                    AppColors
+                                                                        .white,
+                                                                fixedSize: Size(
+                                                                    100, 30)),
                                                           ),
-                                                        ],
-                                                      )
+                                                        ),
+                                                      ),
                                                     ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    }));
+                                      ),
+                                    ),
+                                  );
+                                });
                           }
                         }
                         return Scaffold(
@@ -404,210 +390,196 @@ class _SponsorshipsViewPageState extends State<SponsorshipsViewPage> {
                               ),
                             );
                           } else {
-                            return Expanded(
-                                child: ListView.builder(
-                                    itemCount:
-                                        state.SponsorshipsByCategory.length,
-                                    itemBuilder: (context, index) {
-                                      final String? imageUrl = state
-                                          .SponsorshipsByCategory[index].image;
-                                      final String? finalImage =
-                                          imageUrl != null &&
-                                                  imageUrl.isNotEmpty
-                                              ? Uri.parse(baseUrlImage)
-                                                  .resolve(imageUrl)
-                                                  .toString()
-                                              : null;
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        child: Container(
-                                          height: 190,
-                                          width: double.infinity,
-                                          child: Card(
-                                            elevation: 10,
-                                            color: AppColors.white,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20, right: 20),
-                                                  child: Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        image: finalImage !=
-                                                                null
-                                                            ? DecorationImage(
-                                                                image: NetworkImage(
-                                                                    finalImage),
-                                                                fit: BoxFit
-                                                                    .cover)
-                                                            : DecorationImage(
-                                                                image: AssetImage(
-                                                                    "assets/images/general.png"),
-                                                                fit: BoxFit
-                                                                    .cover)),
+                            return ListView.builder(
+                                itemCount: state.SponsorshipsByCategory.length,
+                                itemBuilder: (context, index) {
+                                  final String? imageUrl =
+                                      state.SponsorshipsByCategory[index].image;
+                                  final String? finalImage =
+                                      imageUrl != null && imageUrl.isNotEmpty
+                                          ? Uri.parse(baseUrlImage)
+                                              .resolve(imageUrl)
+                                              .toString()
+                                          : null;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Container(
+                                      height: 190,
+                                      width: double.infinity,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: AppColors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: finalImage != null
+                                                        ? DecorationImage(
+                                                            image: NetworkImage(
+                                                                finalImage),
+                                                            fit: BoxFit.cover)
+                                                        : DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/general.png"),
+                                                            fit: BoxFit.cover)),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    textmax(
+                                                        state
+                                                                .SponsorshipsByCategory[
+                                                                    index]
+                                                                .title ??
+                                                            "unknown",
+                                                        20),
+                                                    style: AppTextStyle.b,
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
+                                                  SizedBox(
+                                                      height: 40,
+                                                      width: 220,
+                                                      child: Text(
+                                                        maxLines: 2,
                                                         textmax(
                                                             state
                                                                     .SponsorshipsByCategory[
                                                                         index]
-                                                                    .title ??
-                                                                "unknown",
-                                                            20),
-                                                        style: AppTextStyle.b,
-                                                      ),
-                                                      SizedBox(
-                                                          height: 40,
-                                                          width: 220,
-                                                          child: Text(
-                                                            maxLines: 2,
-                                                            textmax(
-                                                                state
-                                                                        .SponsorshipsByCategory[
-                                                                            index]
-                                                                        .description ??
-                                                                    "",
-                                                                70),
-                                                            style:
-                                                                AppTextStyle.c,
-                                                          )),
-                                                      // SizedBox(
-                                                      //     height: 50,
-                                                      //     width: 200,
-                                                      //     child: Text(
-                                                      //       state
-                                                      //               .SponsorshipsByCategory[
-                                                      //                   index]
-                                                      //               .description ??
-                                                      //           "",
-                                                      //       style:
-                                                      //           AppTextStyle.c,
-                                                      //     )),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [],
-                                                      ),
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    top: 5),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
+                                                                    .description ??
+                                                                "",
+                                                            70),
+                                                        style: AppTextStyle.c,
+                                                      )),
+                                                  // SizedBox(
+                                                  //     height: 50,
+                                                  //     width: 200,
+                                                  //     child: Text(
+                                                  //       state
+                                                  //               .SponsorshipsByCategory[
+                                                  //                   index]
+                                                  //               .description ??
+                                                  //           "",
+                                                  //       style:
+                                                  //           AppTextStyle.c,
+                                                  //     )),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [],
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 5),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Amount/Month"
+                                                                  .tr(),
+                                                              style:
+                                                                  AppTextStyle
+                                                                      .c,
+                                                            ),
+                                                            Row(
                                                               children: [
+                                                                Image.asset(
+                                                                  "assets/images/as.png",
+                                                                  height: 20,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 6,
+                                                                ),
                                                                 Text(
-                                                                  "Amount/Month"
-                                                                      .tr(),
+                                                                  "\$ ${state.SponsorshipsByCategory[index].monthlyAmount ?? 0}",
                                                                   style:
                                                                       AppTextStyle
-                                                                          .c,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Image.asset(
-                                                                      "assets/images/as.png",
-                                                                      height:
-                                                                          20,
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 6,
-                                                                    ),
-                                                                    Text(
-                                                                      "\$ ${state.SponsorshipsByCategory[index].monthlyAmount ?? 0}",
-                                                                      style:
-                                                                          AppTextStyle
-                                                                              .b,
-                                                                    )
-                                                                  ],
+                                                                          .b,
                                                                 )
                                                               ],
-                                                            ),
-                                                          ),
-                                                          Align(
-                                                            alignment: context
-                                                                        .locale
-                                                                        .languageCode ==
-                                                                    "ar"
-                                                                ? Alignment
-                                                                    .centerLeft
-                                                                : Alignment
-                                                                    .centerRight,
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 10,
-                                                                      right: 10,
-                                                                      bottom:
-                                                                          0),
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              OneSponsorshipsPage(id: state.SponsorshipsByCategory[index].id)));
-                                                                },
-                                                                child: Text(
-                                                                        "Details")
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: context
+                                                                    .locale
+                                                                    .languageCode ==
+                                                                "ar"
+                                                            ? Alignment
+                                                                .centerLeft
+                                                            : Alignment
+                                                                .centerRight,
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 10,
+                                                                  right: 10,
+                                                                  bottom: 0),
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) => OneSponsorshipsPage(
+                                                                          id: state
+                                                                              .SponsorshipsByCategory[index]
+                                                                              .id)));
+                                                            },
+                                                            child:
+                                                                Text("Details")
                                                                     .tr(),
-                                                                style: ElevatedButton.styleFrom(
-                                                                    backgroundColor:
-                                                                        AppColors
-                                                                            .secondary,
-                                                                    foregroundColor:
-                                                                        AppColors
-                                                                            .white,
-                                                                    fixedSize:
-                                                                        Size(
-                                                                            100,
-                                                                            30)),
-                                                              ),
-                                                            ),
+                                                            style: ElevatedButton.styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .secondary,
+                                                                foregroundColor:
+                                                                    AppColors
+                                                                        .white,
+                                                                fixedSize: Size(
+                                                                    100, 30)),
                                                           ),
-                                                        ],
-                                                      )
+                                                        ),
+                                                      ),
                                                     ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    }));
+                                      ),
+                                    ),
+                                  );
+                                });
                           }
                         }
                         return Scaffold(

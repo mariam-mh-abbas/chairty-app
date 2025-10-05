@@ -44,15 +44,13 @@ class _sign_up_pageState extends State<sign_up_page> {
       body: BlocConsumer<AuthBloc, AuthBlocState>(
         listener: (context, state) async {
           if (state is GoogleSuccess) {
-            context.read<BlocCartBloc>().add(ClearCart());
-
             final token = await SharedPrefs.getToken();
+            context.read<BlocCartBloc>().add(ClearCart());
 
             // final phone = await SharedPrefs.getPhone();
             final userid = await SharedPrefs.getUserId();
             // context.read<BlocCartBloc>().add(LoadCart(phone));
             context.read<BlocCartBloc>().add(LoadCart(userid.toString()));
-
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Logged in".tr()),
@@ -66,7 +64,11 @@ class _sign_up_pageState extends State<sign_up_page> {
             );
           } else if (state is GoogleFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+              SnackBar(
+                content: Text('Unable to log on'.tr()
+                    // + state.message
+                    ),
+              ),
             );
           }
         },

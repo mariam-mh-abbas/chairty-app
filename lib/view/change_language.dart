@@ -7,7 +7,7 @@ import 'package:charity_project/blocs/change_language_bloc/bloc/change_langauge_
 import 'package:charity_project/config/shared_prefs.dart';
 import 'package:charity_project/view/background.dart';
 import 'package:charity_project/view/main_navBar_page.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

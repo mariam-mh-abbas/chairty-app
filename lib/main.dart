@@ -29,7 +29,6 @@ import 'package:charity_project/blocForApp/blocAllHumanCases/bloc/all_human_case
 import 'package:charity_project/blocForApp/blocCampaignByCategory/bloc/campaign_by_category_id_bloc.dart';
 import 'package:charity_project/blocForApp/blocCart/bloc/bloc_cart_bloc.dart';
 import 'package:charity_project/blocs/volunteering_bloc/bloc/volunteering_bloc.dart';
-import 'package:charity_project/config/service_locater.dart' as service_locator;
 import 'package:charity_project/config/service_locater.dart';
 import 'package:charity_project/config/shared_prefs.dart' as prefs;
 import 'package:charity_project/firebase_options.dart';
@@ -49,17 +48,15 @@ import 'package:charity_project/services/volunteering_service.dart';
 import 'package:charity_project/view/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
   await EasyLocalization.ensureInitialized();
-  // final notificationService = NotificationService();
+
   if (!Platform.isWindows) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -79,8 +76,7 @@ void main() async {
 
   final token = await prefs.SharedPrefs.getToken();
 
-  Widget startPage;
-  startPage = Splash_Screen();
+  Widget startPage = Splash_Screen();
 
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en', 'US'), Locale('ar', 'AR')],
@@ -103,19 +99,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Width: ${MediaQuery.of(context).size.width}');
+    print('Height: ${MediaQuery.of(context).size.height}');
     return MultiBlocProvider(
         providers: [
-          // من فرع main
-          BlocProvider(create: (_) => ReportsBloc(ReportService())),
+          BlocProvider<CampaignHomeBloc>(
+            create: (context) => CampaignHomeBloc()..add(FetchedCampaign()),
+          ),
+          BlocProvider<BlocEmergencyHumanCasesBloc>(
+            create: (context) =>
+                BlocEmergencyHumanCasesBloc()..add(FetchEmergencyHumanCases()),
+          ),
           BlocProvider(
               create: (_) => NotificationBloc(NotificationService())
-                ..add(GetNotificationEvent())
-
-              // ..add(UpdateLastSeenNotifications((context
-              //         .read<NotificationBloc>()
-              //         .state as NotificationBadgeState)
-              //     .currentCount))
-              ),
+                ..add(GetNotificationEvent())),
+          BlocProvider(create: (_) => ReportsBloc(ReportService())),
           BlocProvider(create: (_) => VolunteeringBloc(VolunteeringService())),
           BlocProvider(create: (_) => BenefitsBloc(BenefitsService())),
           BlocProvider(
@@ -132,7 +130,6 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => SponsorshipsBloc(SponsorshipsService())),
           BlocProvider(create: (context) => LanguageBloc(LanguageService())),
-
           BlocProvider(create: (context) => BlocCartBloc()),
           BlocProvider(create: (context) => GiftDonaitionBloc()),
           BlocProvider(create: (context) => OncePaymentBloc()),
@@ -145,18 +142,14 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SponsorshipsByCategoryBlocBloc()),
           BlocProvider(create: (context) => CampaignByCategoryIdBloc()),
           BlocProvider(create: (context) => HumancaseByCategoryBloc()),
-          BlocProvider(create: (context) => CampaignByCategoryIdBloc()),
-          BlocProvider(create: (context) => CampaignHomeBloc()),
           BlocProvider(create: (context) => BlocDetailsCampaignBloc()),
           BlocProvider(create: (context) => BlocHumancaseDetailsBloc()),
           BlocProvider(create: (context) => SponsorshipDetailsBloc()),
-          BlocProvider(create: (context) => BlocEmergencyHumanCasesBloc()),
           BlocProvider(create: (context) => ArchivedCampaignsBloc()),
           BlocProvider(create: (context) => ArchivedHumancasesBloc()),
         ],
         child: ScreenUtilInit(
-            designSize:
-                const Size(375, 812), // حجم التصميم (غيّريه لو تصميمك مختلف)
+            designSize: const Size(411.42857142857144, 914.2857142857143),
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (context, child) {
@@ -170,7 +163,6 @@ class MyApp extends StatelessWidget {
                   localizationsDelegates: context.localizationDelegates,
                   debugShowCheckedModeBanner: false,
                   builder: (context, widget) {
-                    // خيار: تثبيت textScaleFactor (انتبهي لأمور الوصول - أدناه خيار)
                     return MediaQuery(
                       data: MediaQuery.of(context)
                           .copyWith(textScaler: TextScaler.linear(1.0)),

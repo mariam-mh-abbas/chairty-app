@@ -41,133 +41,146 @@ class DonationCategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: BackgroundWrapper(
-          child: Column(
-        children: [
-          AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainNavbarPage()),
-                    (route) => false,
-                  );
-                },
-                icon: Icon(Icons.arrow_back)),
-            backgroundColor: AppColors.white,
-            // elevation: 5,
-            // shadowColor: AppColors.unselected,
-            title: Text(
-              'Donaition Categories'.tr(),
-              style: TextStyle(
-                  color: AppColors.primary, fontWeight: FontWeight.w700),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const MainNavbarPage()),
+          (route) => false,
+        );
+        return false; // ⬅️ مهم حتى ما يغلق الصفحة الحالية قبل ما ننقلك
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: BackgroundWrapper(
+            child: Column(
+          children: [
+            AppBar(
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainNavbarPage()),
+                      (route) => false,
+                    );
+                  },
+                  icon: Icon(Icons.arrow_back)),
+              backgroundColor: AppColors.white,
+              // elevation: 5,
+              // shadowColor: AppColors.unselected,
+              title: Text(
+                'Donaition Categories'.tr(),
+                style: TextStyle(
+                    color: AppColors.primary, fontWeight: FontWeight.w700),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 1.1),
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        if (DonationCategories[index]["title"] == "Campaigns" ||
-                            DonationCategories[index]["title"] ==
-                                "HumanitarianCases" ||
-                            DonationCategories[index]["title"] ==
-                                "Sponsorships") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DonaitionCategoryTabbar(
-                                        category: DonationCategories[index]
-                                            ["backName"]!,
-                                        title: DonationCategories[index]
-                                            ["title"]!,
-                                      )));
-                        } else if (DonationCategories[index]["title"] ==
-                            "Kaffarat and Sadaqah") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => KaffaratAndSadaqahView(
-                                        Type: DonationCategories[index]
-                                            ["backName"]!,
-                                      )));
-                        } else if (DonationCategories[index]["title"] ==
-                            "General Donation") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      GeneralDonaitionPage()));
-                        } else if (DonationCategories[index]["title"] ==
-                            "In-kind Donations") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      BeforeInkindDonaition()));
-                        }
-                      },
-                      child: Card(
-                        color: const Color.fromARGB(255, 248, 247, 245),
-                        elevation: 20,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            // image: DecorationImage(image: AssetImage('assets/images/zzz.png'),fit:BoxFit.cover )
-                          ),
-                          child: Column(
-                            children: [
-                              Stack(children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Image.asset(
-                                    'assets/images/111.png',
-                                    height: 120,
-                                    width: 120,
+            SizedBox(
+              height: 50,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 1.1),
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          if (DonationCategories[index]["title"] ==
+                                  "Campaigns" ||
+                              DonationCategories[index]["title"] ==
+                                  "HumanitarianCases" ||
+                              DonationCategories[index]["title"] ==
+                                  "Sponsorships") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DonaitionCategoryTabbar(
+                                          category: DonationCategories[index]
+                                              ["backName"]!,
+                                          title: DonationCategories[index]
+                                              ["title"]!,
+                                        )));
+                          } else if (DonationCategories[index]["title"] ==
+                              "Kaffarat and Sadaqah") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        KaffaratAndSadaqahView(
+                                          Type: DonationCategories[index]
+                                              ["backName"]!,
+                                        )));
+                          } else if (DonationCategories[index]["title"] ==
+                              "General Donation") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        GeneralDonaitionPage()));
+                          } else if (DonationCategories[index]["title"] ==
+                              "In-kind Donations") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BeforeInkindDonaition()));
+                          }
+                        },
+                        child: Card(
+                          color: const Color.fromARGB(255, 248, 247, 245),
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              // image: DecorationImage(image: AssetImage('assets/images/zzz.png'),fit:BoxFit.cover )
+                            ),
+                            child: Column(
+                              children: [
+                                Stack(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Image.asset(
+                                      'assets/images/111.png',
+                                      height: 120,
+                                      width: 120,
+                                    ),
                                   ),
-                                ),
-                                Positioned(
-                                  top: 25,
-                                  left: 20,
-                                  child: Image.asset(
-                                    height: 85,
-                                    width: 85,
-                                    DonationCategories[index]["image"]!,
-                                    color: AppColors.primary,
+                                  Positioned(
+                                    top: 25,
+                                    left: 20,
+                                    child: Image.asset(
+                                      height: 85,
+                                      width: 85,
+                                      DonationCategories[index]["image"]!,
+                                      color: AppColors.primary,
+                                    ),
                                   ),
-                                ),
-                              ]),
-                              Text(
-                                DonationCategories[index]['title']!.tr(),
-                                style: TextStyle(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600),
-                              )
-                            ],
+                                ]),
+                                Text(
+                                  DonationCategories[index]['title']!.tr(),
+                                  style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  }),
-            ),
-          )
-        ],
-      )),
+                      );
+                    }),
+              ),
+            )
+          ],
+        )),
+      ),
     );
   }
 }

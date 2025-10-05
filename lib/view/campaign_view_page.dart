@@ -78,206 +78,201 @@ class _CampaignViewPageState extends State<CampaignViewPage> {
                               ),
                             );
                           } else {
-                            return Expanded(
-                              child: ListView.builder(
-                                  itemCount: state.Allcampaigns.length,
-                                  itemBuilder: (context, index) {
-                                    final String? imageUrl =
-                                        state.Allcampaigns[index].image;
-                                    final String? finalImage =
-                                        imageUrl != null && imageUrl.isNotEmpty
-                                            ? Uri.parse(baseUrlImage)
-                                                .resolve(imageUrl)
-                                                .toString()
-                                            : null;
-                                    final collected = state.Allcampaigns[index]
-                                            .collectedAmount ??
-                                        0;
-                                    final goal =
-                                        state.Allcampaigns[index].goalAmount ??
-                                            0;
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
-                                      child: Container(
-                                        height: 190,
-                                        width: double.infinity,
-                                        child: Card(
-                                          elevation: 10,
-                                          color: AppColors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20, right: 20),
-                                                child: Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      image: finalImage != null
-                                                          ? DecorationImage(
-                                                              image: NetworkImage(
-                                                                  finalImage),
-                                                              fit: BoxFit.cover)
-                                                          : DecorationImage(
-                                                              image: AssetImage(
-                                                                  "assets/images/general.png"),
-                                                              fit: BoxFit
-                                                                  .cover)),
-                                                ),
+                            return ListView.builder(
+                                itemCount: state.Allcampaigns.length,
+                                itemBuilder: (context, index) {
+                                  final String? imageUrl =
+                                      state.Allcampaigns[index].image;
+                                  final String? finalImage =
+                                      imageUrl != null && imageUrl.isNotEmpty
+                                          ? Uri.parse(baseUrlImage)
+                                              .resolve(imageUrl)
+                                              .toString()
+                                          : null;
+                                  final collected = state.Allcampaigns[index]
+                                          .collectedAmount ??
+                                      0;
+                                  final goal =
+                                      state.Allcampaigns[index].goalAmount ?? 0;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Container(
+                                      height: 190,
+                                      width: double.infinity,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: AppColors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: finalImage != null
+                                                        ? DecorationImage(
+                                                            image: NetworkImage(
+                                                                finalImage),
+                                                            fit: BoxFit.cover)
+                                                        : DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/general.png"),
+                                                            fit: BoxFit.cover)),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 20),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      textmax(
-                                                          state
-                                                                  .Allcampaigns[
-                                                                      index]
-                                                                  .title ??
-                                                              "unknown",
-                                                          22),
-                                                      style: AppTextStyle.b,
-                                                    ),
-                                                    SizedBox(
-                                                        height: 40,
-                                                        width: 220,
-                                                        child: Text(
-                                                          maxLines: 2,
-                                                          textmax(
-                                                              state
-                                                                      .Allcampaigns[
-                                                                          index]
-                                                                      .description ??
-                                                                  "",
-                                                              70),
-                                                          style: AppTextStyle.c,
-                                                        )),
-                                                    // SizedBox(
-                                                    //     height: 40,
-                                                    //     width: 220,
-                                                    //     child: Text(
-                                                    //       maxLines: 2,
-                                                    //       textmax(
-                                                    //           state
-                                                    //                   .Allcampaigns[
-                                                    //                       index]
-                                                    //                   .description ??
-                                                    //               "",
-                                                    //           30),
-                                                    //       style: AppTextStyle.c,
-                                                    //     )),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 200,
-                                                          child:
-                                                              LinearPercentIndicator(
-                                                            maskFilter:
-                                                                MaskFilter.blur(
-                                                                    BlurStyle
-                                                                        .solid,
-                                                                    3),
-                                                            linearGradient:
-                                                                LinearGradient(
-                                                                    colors: [
-                                                                  AppColors
-                                                                      .primary,
-                                                                  AppColors.teal
-                                                                ]),
-                                                            barRadius:
-                                                                Radius.circular(
-                                                                    10),
-                                                            curve: Curves
-                                                                .easeInOut,
-                                                            clipLinearGradient:
-                                                                true,
-                                                            lineHeight: 10,
-                                                            // progressColor: AppColors.primary,
-                                                            percent: goal > 0
-                                                                ? (collected /
-                                                                        goal)
-                                                                    .clamp(0.0,
-                                                                        1.0)
-                                                                : 0.0,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    textmax(
+                                                        state
+                                                                .Allcampaigns[
+                                                                    index]
+                                                                .title ??
+                                                            "unknown",
+                                                        22),
+                                                    style: AppTextStyle.b,
+                                                  ),
+                                                  SizedBox(
+                                                      height: 40,
+                                                      width: 220,
+                                                      child: Text(
+                                                        maxLines: 2,
+                                                        textmax(
+                                                            state
+                                                                    .Allcampaigns[
+                                                                        index]
+                                                                    .description ??
+                                                                "",
+                                                            70),
+                                                        style: AppTextStyle.c,
+                                                      )),
+                                                  // SizedBox(
+                                                  //     height: 40,
+                                                  //     width: 220,
+                                                  //     child: Text(
+                                                  //       maxLines: 2,
+                                                  //       textmax(
+                                                  //           state
+                                                  //                   .Allcampaigns[
+                                                  //                       index]
+                                                  //                   .description ??
+                                                  //               "",
+                                                  //           30),
+                                                  //       style: AppTextStyle.c,
+                                                  //     )),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 200,
+                                                        child:
+                                                            LinearPercentIndicator(
+                                                          maskFilter:
+                                                              MaskFilter.blur(
+                                                                  BlurStyle
+                                                                      .solid,
+                                                                  3),
+                                                          linearGradient:
+                                                              LinearGradient(
+                                                                  colors: [
+                                                                AppColors
+                                                                    .primary,
+                                                                AppColors.teal
+                                                              ]),
+                                                          barRadius:
+                                                              Radius.circular(
+                                                                  10),
+                                                          curve:
+                                                              Curves.easeInOut,
+                                                          clipLinearGradient:
+                                                              true,
+                                                          lineHeight: 10,
+                                                          // progressColor: AppColors.primary,
+                                                          percent: goal > 0
+                                                              ? (collected /
+                                                                      goal)
+                                                                  .clamp(
+                                                                      0.0, 1.0)
+                                                              : 0.0,
 
-                                                            animation: true,
-                                                            animationDuration:
-                                                                1000,
-                                                          ),
+                                                          animation: true,
+                                                          animationDuration:
+                                                              1000,
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  left: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Text(
-                                                                  "\$${state.Allcampaigns[index].collectedAmount} / \$${state.Allcampaigns[index].goalAmount}",
-                                                                  style:
-                                                                      AppTextStyle
-                                                                          .c)
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 90, top: 5),
-                                                      child: ElevatedButton(
-                                                        onPressed: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          OneCampaignPage(
-                                                                            id: state.Allcampaigns[index].id ??
-                                                                                0,
-                                                                          )));
-                                                        },
-                                                        child: Text(
-                                                            "Details".tr()),
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                                backgroundColor:
-                                                                    AppColors
-                                                                        .secondary,
-                                                                foregroundColor:
-                                                                    AppColors
-                                                                        .white,
-                                                                fixedSize: Size(
-                                                                    100, 30)),
                                                       ),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "\$${state.Allcampaigns[index].collectedAmount} / \$${state.Allcampaigns[index].goalAmount}",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .c)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 90, top: 5),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        OneCampaignPage(
+                                                                          id: state.Allcampaigns[index].id ??
+                                                                              0,
+                                                                        )));
+                                                      },
+                                                      child:
+                                                          Text("Details".tr()),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  AppColors
+                                                                      .secondary,
+                                                              foregroundColor:
+                                                                  AppColors
+                                                                      .white,
+                                                              fixedSize: Size(
+                                                                  100, 30)),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  }),
-                            );
+                                    ),
+                                  );
+                                });
                           }
                         }
                         return Scaffold(
@@ -338,204 +333,200 @@ class _CampaignViewPageState extends State<CampaignViewPage> {
                               ),
                             );
                           } else {
-                            return Expanded(
-                              child: ListView.builder(
-                                  itemCount: state.CampaignByCategory.length,
-                                  itemBuilder: (context, index) {
-                                    final String? imageUrl =
-                                        state.CampaignByCategory[index].image;
-                                    final String? finalImage =
-                                        imageUrl != null && imageUrl.isNotEmpty
-                                            ? Uri.parse(baseUrlImage)
-                                                .resolve(imageUrl)
-                                                .toString()
-                                            : null;
-                                    final collected = state
-                                            .CampaignByCategory[index]
-                                            .collectedAmount ??
-                                        0;
-                                    final goal = state.CampaignByCategory[index]
-                                            .goalAmount ??
-                                        0;
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
-                                      child: Container(
-                                        height: 190,
-                                        width: double.infinity,
-                                        child: Card(
-                                          elevation: 10,
-                                          color: AppColors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20, right: 20),
-                                                child: Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      image: finalImage != null
-                                                          ? DecorationImage(
-                                                              image: NetworkImage(
-                                                                  finalImage),
-                                                              fit: BoxFit.cover)
-                                                          : DecorationImage(
-                                                              image: AssetImage(
-                                                                  "assets/images/general.png"),
-                                                              fit: BoxFit
-                                                                  .cover)),
-                                                ),
+                            return ListView.builder(
+                                itemCount: state.CampaignByCategory.length,
+                                itemBuilder: (context, index) {
+                                  final String? imageUrl =
+                                      state.CampaignByCategory[index].image;
+                                  final String? finalImage =
+                                      imageUrl != null && imageUrl.isNotEmpty
+                                          ? Uri.parse(baseUrlImage)
+                                              .resolve(imageUrl)
+                                              .toString()
+                                          : null;
+                                  final collected = state
+                                          .CampaignByCategory[index]
+                                          .collectedAmount ??
+                                      0;
+                                  final goal = state.CampaignByCategory[index]
+                                          .goalAmount ??
+                                      0;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Container(
+                                      height: 190,
+                                      width: double.infinity,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: AppColors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: finalImage != null
+                                                        ? DecorationImage(
+                                                            image: NetworkImage(
+                                                                finalImage),
+                                                            fit: BoxFit.cover)
+                                                        : DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/general.png"),
+                                                            fit: BoxFit.cover)),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 20),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      textmax(
-                                                          state
-                                                                  .CampaignByCategory[
-                                                                      index]
-                                                                  .title ??
-                                                              "unknown",
-                                                          22),
-                                                      style: AppTextStyle.b,
-                                                    ),
-                                                    SizedBox(
-                                                        height: 40,
-                                                        width: 220,
-                                                        child: Text(
-                                                          maxLines: 2,
-                                                          textmax(
-                                                              state
-                                                                      .CampaignByCategory[
-                                                                          index]
-                                                                      .description ??
-                                                                  "",
-                                                              70),
-                                                          style: AppTextStyle.c,
-                                                        )),
-                                                    // SizedBox(
-                                                    //     height: 50,
-                                                    //     width: 200,
-                                                    //     child: Text(
-                                                    //       state
-                                                    //               .CampaignByCategory[
-                                                    //                   index]
-                                                    //               .description ??
-                                                    //           "",
-                                                    //       style: AppTextStyle.c,
-                                                    //     )),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 200,
-                                                          child:
-                                                              LinearPercentIndicator(
-                                                            maskFilter:
-                                                                MaskFilter.blur(
-                                                                    BlurStyle
-                                                                        .solid,
-                                                                    3),
-                                                            linearGradient:
-                                                                LinearGradient(
-                                                                    colors: [
-                                                                  AppColors
-                                                                      .primary,
-                                                                  AppColors.teal
-                                                                ]),
-                                                            barRadius:
-                                                                Radius.circular(
-                                                                    10),
-                                                            curve: Curves
-                                                                .easeInOut,
-                                                            clipLinearGradient:
-                                                                true,
-                                                            lineHeight: 10,
-                                                            // progressColor: AppColors.primary,
-                                                            percent: goal > 0
-                                                                ? (collected /
-                                                                        goal)
-                                                                    .clamp(0.0,
-                                                                        1.0)
-                                                                : 0.0,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    textmax(
+                                                        state
+                                                                .CampaignByCategory[
+                                                                    index]
+                                                                .title ??
+                                                            "unknown",
+                                                        22),
+                                                    style: AppTextStyle.b,
+                                                  ),
+                                                  SizedBox(
+                                                      height: 40,
+                                                      width: 220,
+                                                      child: Text(
+                                                        maxLines: 2,
+                                                        textmax(
+                                                            state
+                                                                    .CampaignByCategory[
+                                                                        index]
+                                                                    .description ??
+                                                                "",
+                                                            70),
+                                                        style: AppTextStyle.c,
+                                                      )),
+                                                  // SizedBox(
+                                                  //     height: 50,
+                                                  //     width: 200,
+                                                  //     child: Text(
+                                                  //       state
+                                                  //               .CampaignByCategory[
+                                                  //                   index]
+                                                  //               .description ??
+                                                  //           "",
+                                                  //       style: AppTextStyle.c,
+                                                  //     )),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 200,
+                                                        child:
+                                                            LinearPercentIndicator(
+                                                          maskFilter:
+                                                              MaskFilter.blur(
+                                                                  BlurStyle
+                                                                      .solid,
+                                                                  3),
+                                                          linearGradient:
+                                                              LinearGradient(
+                                                                  colors: [
+                                                                AppColors
+                                                                    .primary,
+                                                                AppColors.teal
+                                                              ]),
+                                                          barRadius:
+                                                              Radius.circular(
+                                                                  10),
+                                                          curve:
+                                                              Curves.easeInOut,
+                                                          clipLinearGradient:
+                                                              true,
+                                                          lineHeight: 10,
+                                                          // progressColor: AppColors.primary,
+                                                          percent: goal > 0
+                                                              ? (collected /
+                                                                      goal)
+                                                                  .clamp(
+                                                                      0.0, 1.0)
+                                                              : 0.0,
 
-                                                            animation: true,
-                                                            animationDuration:
-                                                                1000,
-                                                          ),
+                                                          animation: true,
+                                                          animationDuration:
+                                                              1000,
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  left: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Text(
-                                                                  "\$${state.CampaignByCategory[index].collectedAmount} / \$${state.CampaignByCategory[index].goalAmount}",
-                                                                  style:
-                                                                      AppTextStyle
-                                                                          .c)
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 90, top: 5),
-                                                      child: ElevatedButton(
-                                                        onPressed: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          OneCampaignPage(
-                                                                            id: state.CampaignByCategory[index].id ??
-                                                                                0,
-                                                                          )));
-                                                        },
-                                                        child: Text(
-                                                            "Details".tr()),
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                                backgroundColor:
-                                                                    AppColors
-                                                                        .secondary,
-                                                                foregroundColor:
-                                                                    AppColors
-                                                                        .white,
-                                                                fixedSize: Size(
-                                                                    100, 30)),
                                                       ),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "\$${state.CampaignByCategory[index].collectedAmount} / \$${state.CampaignByCategory[index].goalAmount}",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .c)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 90, top: 5),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        OneCampaignPage(
+                                                                          id: state.CampaignByCategory[index].id ??
+                                                                              0,
+                                                                        )));
+                                                      },
+                                                      child:
+                                                          Text("Details".tr()),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  AppColors
+                                                                      .secondary,
+                                                              foregroundColor:
+                                                                  AppColors
+                                                                      .white,
+                                                              fixedSize: Size(
+                                                                  100, 30)),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  }),
-                            );
+                                    ),
+                                  );
+                                });
                           }
                         } else if (state is CampaignByCategoryIdError) {
                           // return

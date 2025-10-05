@@ -24,311 +24,325 @@ class CharityFundPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: BackgroundWrapper(
-        child: Column(
-          children: [
-            AppBar(
-              leading: IconButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainNavbarPage()),
-                      (route) => false,
-                    );
-                  },
-                  icon: Icon(Icons.arrow_back)),
-              backgroundColor: AppColors.white,
-              // elevation: 5,
-              // shadowColor: AppColors.unselected,
-              title: Text(
-                'Goodness Box'.tr(),
-                style: TextStyle(
-                    color: AppColors.primary, fontWeight: FontWeight.w600),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const MainNavbarPage()),
+          (route) => false,
+        );
+        return false; // ⬅️ مهم حتى ما يغلق الصفحة الحالية قبل ما ننقلك
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: BackgroundWrapper(
+          child: Column(
+            children: [
+              AppBar(
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainNavbarPage()),
+                        (route) => false,
+                      );
+                    },
+                    icon: Icon(Icons.arrow_back)),
+                backgroundColor: AppColors.white,
+                // elevation: 5,
+                // shadowColor: AppColors.unselected,
+                title: Text(
+                  'Goodness Box'.tr(),
+                  style: TextStyle(
+                      color: AppColors.primary, fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-            Expanded(child: BlocBuilder<BlocCartBloc, BlocCartState>(
-              builder: (context, state) {
-                if (context.read<BlocCartBloc>().cartItems.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Your Goodness Box is currently empty.\nExplore donation opportunities and add what your heart inspires."
-                              .tr(),
-                          style: AppTextStyle.b,
-                          textAlign: TextAlign.center,
-                        ),
-                        Image.asset(
-                          "assets/images/option 1.png",
-                          height: 190,
-                        )
-                      ],
-                    ),
-                  );
-                }
-                return SizedBox(
-                  height: 530,
-                  child: ListView.builder(
-                      itemCount: context.read<BlocCartBloc>().cartItems.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Container(
-                            height: 100,
-                            width: 200,
-                            child: Card(
-                              elevation: 3,
-                              color: AppColors.white,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Container(
-                                      height: 70,
-                                      width: 70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                          image: context
-                                                      .read<BlocCartBloc>()
-                                                      .cartItems[index]
-                                                      .image !=
-                                                  null
-                                              ? NetworkImage(context
-                                                  .read<BlocCartBloc>()
-                                                  .cartItems[index]
-                                                  .image!)
-                                              : const AssetImage(
-                                                      "assets/images/general.png")
-                                                  as ImageProvider,
-                                          fit: BoxFit.cover,
+              Expanded(child: BlocBuilder<BlocCartBloc, BlocCartState>(
+                builder: (context, state) {
+                  if (context.read<BlocCartBloc>().cartItems.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Your Goodness Box is currently empty.\nExplore donation opportunities and add what your heart inspires."
+                                .tr(),
+                            style: AppTextStyle.b,
+                            textAlign: TextAlign.center,
+                          ),
+                          Image.asset(
+                            "assets/images/option 1.png",
+                            height: 190,
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                  return SizedBox(
+                    height: 530,
+                    child: ListView.builder(
+                        itemCount:
+                            context.read<BlocCartBloc>().cartItems.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Container(
+                              height: 100,
+                              width: 200,
+                              child: Card(
+                                elevation: 3,
+                                color: AppColors.white,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          image: DecorationImage(
+                                            image: context
+                                                        .read<BlocCartBloc>()
+                                                        .cartItems[index]
+                                                        .image !=
+                                                    null
+                                                ? NetworkImage(context
+                                                    .read<BlocCartBloc>()
+                                                    .cartItems[index]
+                                                    .image!)
+                                                : const AssetImage(
+                                                        "assets/images/general.png")
+                                                    as ImageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 60,
-                                        width: 180,
-                                        child: Text(
-                                          context
-                                              .read<BlocCartBloc>()
-                                              .cartItems[index]
-                                              .name!,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              color: AppColors.primary,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 18),
-                                        ),
-                                      ),
-                                      Text(
-                                        context
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 60,
+                                          width: 180,
+                                          child: Text(
+                                            context
                                                 .read<BlocCartBloc>()
                                                 .cartItems[index]
-                                                .donationType ??
-                                            "AA",
-                                        style: TextStyle(
-                                            color: AppColors.primary
-                                                .withOpacity(0.5),
-                                            fontWeight: FontWeight.w500),
-                                      ).tr(),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    context
-                                            .read<BlocCartBloc>()
-                                            .cartItems[index]
-                                            .Amount!
-                                            .toString() +
-                                        '\$',
-                                    style: TextStyle(
-                                        color: AppColors.secondary,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  // IconButton(
-                                  //     onPressed: () async {
-                                  //       final phone =
-                                  //           await SharedPrefs.getPhone();
-                                  //       context.read<BlocCartBloc>().add(
-                                  //           DeleteFromCart(
-                                  //               context
-                                  //                       .read<BlocCartBloc>()
-                                  //                       .cartItems[index]
-                                  //                       .id ??
-                                  //                   0,
-                                  //               phone!));
-                                  //       ScaffoldMessenger.of(context)
-                                  //           .showSnackBar(
-                                  //         SnackBar(
-                                  //             backgroundColor: Colors.green,
-                                  //             content: Text(
-                                  //                     'Item Has Been Deleted Successfully')
-                                  //                 .tr()),
-                                  //       );
-                                  //     },
-                                  //     icon: Icon(
-                                  //       Icons.delete,
-                                  //       color: AppColors.primary,
-                                  //     ))
-                                  IconButton(
-                                      onPressed: () async {
-                                        // final phone = await SharedPrefs.getPhone();
-                                        final userid =
-                                            await SharedPrefs.getUserId();
-                                        // context.read<BlocCartBloc>().add(DeleteFromCart(context.read<BlocCartBloc>().cartItems[index].id ?? 0,phone!));
-                                        context.read<BlocCartBloc>().add(
-                                            DeleteFromCart(
-                                                context
-                                                        .read<BlocCartBloc>()
-                                                        .cartItems[index]
-                                                        .id ??
-                                                    0,
-                                                userid.toString()!));
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                              backgroundColor:
-                                                  AppColors.primary,
-                                              content: Text(
-                                                      'Item Has Been Deleted Successfully')
-                                                  .tr()),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: AppColors.primary,
-                                      ))
-                                ],
+                                                .name!,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: AppColors.primary,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18),
+                                          ),
+                                        ),
+                                        Text(
+                                          context
+                                                  .read<BlocCartBloc>()
+                                                  .cartItems[index]
+                                                  .donationType ??
+                                              "AA",
+                                          style: TextStyle(
+                                              color: AppColors.primary
+                                                  .withOpacity(0.5),
+                                              fontWeight: FontWeight.w500),
+                                        ).tr(),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      context
+                                              .read<BlocCartBloc>()
+                                              .cartItems[index]
+                                              .Amount!
+                                              .toString() +
+                                          '\$',
+                                      style: TextStyle(
+                                          color: AppColors.secondary,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    // IconButton(
+                                    //     onPressed: () async {
+                                    //       final phone =
+                                    //           await SharedPrefs.getPhone();
+                                    //       context.read<BlocCartBloc>().add(
+                                    //           DeleteFromCart(
+                                    //               context
+                                    //                       .read<BlocCartBloc>()
+                                    //                       .cartItems[index]
+                                    //                       .id ??
+                                    //                   0,
+                                    //               phone!));
+                                    //       ScaffoldMessenger.of(context)
+                                    //           .showSnackBar(
+                                    //         SnackBar(
+                                    //             backgroundColor: Colors.green,
+                                    //             content: Text(
+                                    //                     'Item Has Been Deleted Successfully')
+                                    //                 .tr()),
+                                    //       );
+                                    //     },
+                                    //     icon: Icon(
+                                    //       Icons.delete,
+                                    //       color: AppColors.primary,
+                                    //     ))
+                                    IconButton(
+                                        onPressed: () async {
+                                          // final phone = await SharedPrefs.getPhone();
+                                          final userid =
+                                              await SharedPrefs.getUserId();
+                                          // context.read<BlocCartBloc>().add(DeleteFromCart(context.read<BlocCartBloc>().cartItems[index].id ?? 0,phone!));
+                                          context.read<BlocCartBloc>().add(
+                                              DeleteFromCart(
+                                                  context
+                                                          .read<BlocCartBloc>()
+                                                          .cartItems[index]
+                                                          .id ??
+                                                      0,
+                                                  userid.toString()!));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                backgroundColor:
+                                                    AppColors.primary,
+                                                content: Text(
+                                                        'Item Has Been Deleted Successfully')
+                                                    .tr()),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: AppColors.primary,
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                );
-              },
-            )),
-            Container(
-              height: 120,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BlocBuilder<BlocCartBloc, BlocCartState>(
-                      builder: (context, state) {
-                        final cartBloc = context.read<BlocCartBloc>();
-                        return Text(
-                          "Total amount:".tr() +
-                              "${context.read<BlocCartBloc>().get()} \$",
-                          style: TextStyle(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    Center(
-                      child:
-                          // BlocBuilder<BlocCartBloc, BlocCartState>(
-                          //   builder: (context, state) {
-                          //     final cartBloc = context.read<BlocCartBloc>();
-
-                          //     final isLoading =
-                          //         state is CartLoading; // غير الاسم حسب حالتك
-                          //     final isDisabled =
-                          //         cartBloc.cartItems.isEmpty || isLoading;
-
-                          //     return ElevatedButton(
-                          //       onPressed: isDisabled
-                          //           ? null
-                          //           : () {
-                          //               Navigator.push(
-                          //                 context,
-                          //                 MaterialPageRoute(
-                          //                   builder: (context) => CartPaymentDetails(
-                          //                     paydetails: cartBloc.cartItems,
-                          //                   ),
-                          //                 ),
-                          //               );
-                          //             },
-                          //       style: ElevatedButton.styleFrom(
-                          //         backgroundColor: AppColors.secondary,
-                          //         foregroundColor: AppColors.white,
-                          //         fixedSize: const Size(300, 40),
-                          //       ),
-                          //       child: isLoading
-                          //           ? const SizedBox(
-                          //               height: 20,
-                          //               width: 20,
-                          //               child: CircularProgressIndicator(
-                          //                 strokeWidth: 2,
-                          //                 color: Colors.white,
-                          //               ),
-                          //             )
-                          //           : Text(
-                          //               'Proceed to Checkout',
-                          //               style: const TextStyle(fontSize: 16),
-                          //             ).tr(),
-                          //     );
-                          //   },
-                          // )
-
-                          BlocBuilder<BlocCartBloc, BlocCartState>(
+                          );
+                        }),
+                  );
+                },
+              )),
+              Container(
+                height: 120,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: AppColors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BlocBuilder<BlocCartBloc, BlocCartState>(
                         builder: (context, state) {
                           final cartBloc = context.read<BlocCartBloc>();
-                          return ElevatedButton(
-                            onPressed: cartBloc.cartItems.isEmpty
-                                ? null
-                                : () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CartPaymentDetails(
-                                                    paydetails: context
-                                                        .read<BlocCartBloc>()
-                                                        .cartItems)));
-                                  },
-                            child: Text(
-                              'Proceed to Checkout',
-                              style: TextStyle(fontSize: 16),
-                            ).tr(),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.secondary,
-                              foregroundColor: AppColors.white,
-                              fixedSize: Size(300, 40),
+                          return Text(
+                            "Total amount:".tr() +
+                                "${context.read<BlocCartBloc>().get()} \$",
+                            style: TextStyle(
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
                             ),
                           );
                         },
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      Center(
+                        child:
+                            // BlocBuilder<BlocCartBloc, BlocCartState>(
+                            //   builder: (context, state) {
+                            //     final cartBloc = context.read<BlocCartBloc>();
+
+                            //     final isLoading =
+                            //         state is CartLoading; // غير الاسم حسب حالتك
+                            //     final isDisabled =
+                            //         cartBloc.cartItems.isEmpty || isLoading;
+
+                            //     return ElevatedButton(
+                            //       onPressed: isDisabled
+                            //           ? null
+                            //           : () {
+                            //               Navigator.push(
+                            //                 context,
+                            //                 MaterialPageRoute(
+                            //                   builder: (context) => CartPaymentDetails(
+                            //                     paydetails: cartBloc.cartItems,
+                            //                   ),
+                            //                 ),
+                            //               );
+                            //             },
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: AppColors.secondary,
+                            //         foregroundColor: AppColors.white,
+                            //         fixedSize: const Size(300, 40),
+                            //       ),
+                            //       child: isLoading
+                            //           ? const SizedBox(
+                            //               height: 20,
+                            //               width: 20,
+                            //               child: CircularProgressIndicator(
+                            //                 strokeWidth: 2,
+                            //                 color: Colors.white,
+                            //               ),
+                            //             )
+                            //           : Text(
+                            //               'Proceed to Checkout',
+                            //               style: const TextStyle(fontSize: 16),
+                            //             ).tr(),
+                            //     );
+                            //   },
+                            // )
+
+                            BlocBuilder<BlocCartBloc, BlocCartState>(
+                          builder: (context, state) {
+                            final cartBloc = context.read<BlocCartBloc>();
+                            return ElevatedButton(
+                              onPressed: cartBloc.cartItems.isEmpty
+                                  ? null
+                                  : () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CartPaymentDetails(
+                                                      paydetails: context
+                                                          .read<BlocCartBloc>()
+                                                          .cartItems)));
+                                    },
+                              child: Text(
+                                'Proceed to Checkout',
+                                style: TextStyle(fontSize: 16),
+                              ).tr(),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.secondary,
+                                foregroundColor: AppColors.white,
+                                fixedSize: Size(300, 40),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

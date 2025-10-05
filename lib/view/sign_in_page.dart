@@ -94,7 +94,11 @@ class _sign_in_pageState extends State<sign_in_page> {
             );
           } else if (state is GoogleFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+              SnackBar(
+                content: Text('Unable to log on'.tr()
+                    // + state.message
+                    ),
+              ),
             );
           }
         },

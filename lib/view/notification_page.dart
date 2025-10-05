@@ -92,6 +92,7 @@ class notification_page extends StatelessWidget {
                 ));
               } else if (state is NotificationSuccess) {
                 final notifications = state.notifications;
+                int newCount = state.notifications.length;
                 return Padding(
                   padding: const EdgeInsets.all(0),
                   child: ListView.builder(
@@ -100,6 +101,7 @@ class notification_page extends StatelessWidget {
                         final notification = notifications[index];
                         return Container(
                           height: 140,
+                          width: double.infinity,
                           child: Card(
                             elevation: 3,
                             color: AppColors.white,

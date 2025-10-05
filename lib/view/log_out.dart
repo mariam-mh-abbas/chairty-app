@@ -56,8 +56,6 @@ class _change_languageState extends State<log_out> {
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        // mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             height: 15,

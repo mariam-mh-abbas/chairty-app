@@ -165,7 +165,15 @@ class EmergencyCasesPage extends StatelessWidget {
             },
           );
         }
-        return Text("data");
+        return Center(
+          child: Text(
+            "Internet connection is not available".tr(),
+            style: TextStyle(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
       },
     );
     ;

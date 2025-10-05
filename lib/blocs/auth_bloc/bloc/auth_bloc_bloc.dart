@@ -98,7 +98,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
       await SharedPrefs.clearToken();
       //  //////
-      await SharedPrefs.clearOnboardingSeen();
+      // await SharedPrefs.clearOnboardingSeen();
       //  //////
       emit(LogoutSuccess());
     } catch (e) {

@@ -112,207 +112,193 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                               ),
                             );
                           } else {
-                            return Expanded(
-                                child: ListView.builder(
-                                    itemCount: state.humanCasemodel.length,
-                                    itemBuilder: (context, index) {
-                                      final String? imageUrl =
-                                          state.humanCasemodel[index].image;
-                                      final String? finalImage =
-                                          imageUrl != null &&
-                                                  imageUrl.isNotEmpty
-                                              ? Uri.parse(baseUrlImage)
-                                                  .resolve(imageUrl)
-                                                  .toString()
-                                              : null;
-                                      final collected = state
-                                              .humanCasemodel[index]
-                                              .collectedAmount ??
+                            return ListView.builder(
+                                itemCount: state.humanCasemodel.length,
+                                itemBuilder: (context, index) {
+                                  final String? imageUrl =
+                                      state.humanCasemodel[index].image;
+                                  final String? finalImage =
+                                      imageUrl != null && imageUrl.isNotEmpty
+                                          ? Uri.parse(baseUrlImage)
+                                              .resolve(imageUrl)
+                                              .toString()
+                                          : null;
+                                  final collected = state.humanCasemodel[index]
+                                          .collectedAmount ??
+                                      0;
+                                  final goal =
+                                      state.humanCasemodel[index].goalAmount ??
                                           0;
-                                      final goal = state.humanCasemodel[index]
-                                              .goalAmount ??
-                                          0;
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        child: Container(
-                                          height: 190,
-                                          width: double.infinity,
-                                          child: Card(
-                                            elevation: 10,
-                                            color: AppColors.white,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20, right: 20),
-                                                  child: Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        image: finalImage !=
-                                                                null
-                                                            ? DecorationImage(
-                                                                image: NetworkImage(
-                                                                    finalImage),
-                                                                fit: BoxFit
-                                                                    .cover)
-                                                            : DecorationImage(
-                                                                image: AssetImage(
-                                                                    "assets/images/general.png"),
-                                                                fit: BoxFit
-                                                                    .cover)),
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Container(
+                                      height: 190,
+                                      width: double.infinity,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: AppColors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: finalImage != null
+                                                        ? DecorationImage(
+                                                            image: NetworkImage(
+                                                                finalImage),
+                                                            fit: BoxFit.cover)
+                                                        : DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/general.png"),
+                                                            fit: BoxFit.cover)),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    textmax(
+                                                        state
+                                                                .humanCasemodel[
+                                                                    index]
+                                                                .title ??
+                                                            "unknown",
+                                                        20),
+                                                    style: AppTextStyle.b,
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
+                                                  SizedBox(
+                                                      height: 40,
+                                                      width: 220,
+                                                      child: Text(
+                                                        maxLines: 2,
                                                         textmax(
                                                             state
                                                                     .humanCasemodel[
                                                                         index]
-                                                                    .title ??
-                                                                "unknown",
-                                                            20),
-                                                        style: AppTextStyle.b,
-                                                      ),
+                                                                    .description ??
+                                                                "",
+                                                            70),
+                                                        style: AppTextStyle.c,
+                                                      )),
+                                                  // SizedBox(
+                                                  //     height: 50,
+                                                  //     width: 200,
+                                                  //     child: Text(
+                                                  //       state.humanCasemodel[index].description ?? "",
+                                                  //       style: AppTextStyle.c,
+                                                  //     )),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
                                                       SizedBox(
-                                                          height: 40,
-                                                          width: 220,
-                                                          child: Text(
-                                                            maxLines: 2,
-                                                            textmax(
-                                                                state
-                                                                        .humanCasemodel[
-                                                                            index]
-                                                                        .description ??
-                                                                    "",
-                                                                70),
-                                                            style:
-                                                                AppTextStyle.c,
-                                                          )),
-                                                      // SizedBox(
-                                                      //     height: 50,
-                                                      //     width: 200,
-                                                      //     child: Text(
-                                                      //       state.humanCasemodel[index].description ?? "",
-                                                      //       style: AppTextStyle.c,
-                                                      //     )),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 200,
-                                                            child:
-                                                                LinearPercentIndicator(
-                                                              maskFilter:
-                                                                  MaskFilter.blur(
-                                                                      BlurStyle
-                                                                          .solid,
-                                                                      3),
-                                                              linearGradient:
-                                                                  LinearGradient(
-                                                                      colors: [
-                                                                    AppColors
-                                                                        .primary,
-                                                                    AppColors
-                                                                        .teal
-                                                                  ]),
-                                                              barRadius: Radius
-                                                                  .circular(10),
-                                                              curve: Curves
-                                                                  .easeInOut,
-                                                              clipLinearGradient:
-                                                                  true,
-                                                              lineHeight: 10,
-                                                              percent: goal > 0
-                                                                  ? (collected /
-                                                                          goal)
-                                                                      .clamp(
-                                                                          0.0,
-                                                                          1.0)
-                                                                  : 0.0,
-                                                              animation: true,
-                                                              animationDuration:
-                                                                  1000,
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10),
-                                                            child: Row(
-                                                              children: [
-                                                                Text(
-                                                                    "\$ ${state.humanCasemodel[index].collectedAmount} / \$ ${state.humanCasemodel[index].goalAmount}",
-                                                                    style:
-                                                                        AppTextStyle
-                                                                            .c)
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
+                                                        width: 200,
+                                                        child:
+                                                            LinearPercentIndicator(
+                                                          maskFilter:
+                                                              MaskFilter.blur(
+                                                                  BlurStyle
+                                                                      .solid,
+                                                                  3),
+                                                          linearGradient:
+                                                              LinearGradient(
+                                                                  colors: [
+                                                                AppColors
+                                                                    .primary,
+                                                                AppColors.teal
+                                                              ]),
+                                                          barRadius:
+                                                              Radius.circular(
+                                                                  10),
+                                                          curve:
+                                                              Curves.easeInOut,
+                                                          clipLinearGradient:
+                                                              true,
+                                                          lineHeight: 10,
+                                                          percent: goal > 0
+                                                              ? (collected /
+                                                                      goal)
+                                                                  .clamp(
+                                                                      0.0, 1.0)
+                                                              : 0.0,
+                                                          animation: true,
+                                                          animationDuration:
+                                                              1000,
+                                                        ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets.only(
-                                                                left: 90,
-                                                                top: 5),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            OneHumanitariancasesViewPage(
-                                                                              id: state.humanCasemodel[index].id ?? 0,
-                                                                            )));
-                                                          },
-                                                          child: Text(
-                                                              "Details".tr()),
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                                  backgroundColor:
-                                                                      AppColors
-                                                                          .secondary,
-                                                                  foregroundColor:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fixedSize:
-                                                                      Size(100,
-                                                                          30)),
+                                                            const EdgeInsets
+                                                                .only(left: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "\$ ${state.humanCasemodel[index].collectedAmount} / \$ ${state.humanCasemodel[index].goalAmount}",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .c)
+                                                          ],
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 90, top: 5),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        OneHumanitariancasesViewPage(
+                                                                          id: state.humanCasemodel[index].id ??
+                                                                              0,
+                                                                        )));
+                                                      },
+                                                      child:
+                                                          Text("Details".tr()),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  AppColors
+                                                                      .secondary,
+                                                              foregroundColor:
+                                                                  AppColors
+                                                                      .white,
+                                                              fixedSize: Size(
+                                                                  100, 30)),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    }));
+                                      ),
+                                    ),
+                                  );
+                                });
                           }
                         } else {
                           return Scaffold(
@@ -405,191 +391,178 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                               ),
                             );
                           } else {
-                            return Expanded(
-                                child: ListView.builder(
-                                    itemCount: state.humancasebycategory.length,
-                                    itemBuilder: (context, index) {
-                                      final String? imageUrl = state
-                                          .humancasebycategory[index].image;
-                                      final String? finalImage =
-                                          imageUrl != null &&
-                                                  imageUrl.isNotEmpty
-                                              ? Uri.parse(baseUrlImage)
-                                                  .resolve(imageUrl)
-                                                  .toString()
-                                              : null;
-                                      final collected = state
-                                          .humancasebycategory[index]
-                                          .collectedAmount!;
-                                      final goal = state
-                                          .humancasebycategory[index]
-                                          .goalAmount!;
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        child: Container(
-                                          height: 190,
-                                          width: double.infinity,
-                                          child: Card(
-                                            elevation: 10,
-                                            color: AppColors.white,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20, right: 20),
-                                                  child: Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        image: finalImage !=
-                                                                null
-                                                            ? DecorationImage(
-                                                                image: NetworkImage(
-                                                                    finalImage),
-                                                                fit: BoxFit
-                                                                    .cover)
-                                                            : DecorationImage(
-                                                                image: AssetImage(
-                                                                    "assets/images/general.png"),
-                                                                fit: BoxFit
-                                                                    .cover)),
+                            return ListView.builder(
+                                itemCount: state.humancasebycategory.length,
+                                itemBuilder: (context, index) {
+                                  final String? imageUrl =
+                                      state.humancasebycategory[index].image;
+                                  final String? finalImage =
+                                      imageUrl != null && imageUrl.isNotEmpty
+                                          ? Uri.parse(baseUrlImage)
+                                              .resolve(imageUrl)
+                                              .toString()
+                                          : null;
+                                  final collected = state
+                                      .humancasebycategory[index]
+                                      .collectedAmount!;
+                                  final goal = state
+                                      .humancasebycategory[index].goalAmount!;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Container(
+                                      height: 190,
+                                      width: double.infinity,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: AppColors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: finalImage != null
+                                                        ? DecorationImage(
+                                                            image: NetworkImage(
+                                                                finalImage),
+                                                            fit: BoxFit.cover)
+                                                        : DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/general.png"),
+                                                            fit: BoxFit.cover)),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    textmax(
+                                                        state
+                                                                .humancasebycategory[
+                                                                    index]
+                                                                .title ??
+                                                            "unknown",
+                                                        20),
+                                                    style: AppTextStyle.b,
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
+                                                  SizedBox(
+                                                      height: 40,
+                                                      width: 220,
+                                                      child: Text(
+                                                        maxLines: 2,
                                                         textmax(
                                                             state
                                                                     .humancasebycategory[
                                                                         index]
-                                                                    .title ??
-                                                                "unknown",
-                                                            20),
-                                                        style: AppTextStyle.b,
-                                                      ),
+                                                                    .description ??
+                                                                "",
+                                                            70),
+                                                        style: AppTextStyle.c,
+                                                      )),
+                                                  // SizedBox(
+                                                  //     height: 50,
+                                                  //     width: 200,
+                                                  //     child: Text(
+                                                  //       state
+                                                  //               .humancasebycategory[
+                                                  //                   index]
+                                                  //               .description ??
+                                                  //           "",
+                                                  //       style:
+                                                  //           AppTextStyle.c,
+                                                  //     )),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
                                                       SizedBox(
-                                                          height: 40,
-                                                          width: 220,
-                                                          child: Text(
-                                                            maxLines: 2,
-                                                            textmax(
-                                                                state
-                                                                        .humancasebycategory[
-                                                                            index]
-                                                                        .description ??
-                                                                    "",
-                                                                70),
-                                                            style:
-                                                                AppTextStyle.c,
-                                                          )),
-                                                      // SizedBox(
-                                                      //     height: 50,
-                                                      //     width: 200,
-                                                      //     child: Text(
-                                                      //       state
-                                                      //               .humancasebycategory[
-                                                      //                   index]
-                                                      //               .description ??
-                                                      //           "",
-                                                      //       style:
-                                                      //           AppTextStyle.c,
-                                                      //     )),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 200,
-                                                            child:
-                                                                LinearPercentIndicator(
-                                                              maskFilter:
-                                                                  MaskFilter.blur(
-                                                                      BlurStyle
-                                                                          .solid,
-                                                                      3),
-                                                              linearGradient:
-                                                                  LinearGradient(
-                                                                      colors: [
-                                                                    AppColors
-                                                                        .primary,
-                                                                    AppColors
-                                                                        .teal
-                                                                  ]),
-                                                              barRadius: Radius
-                                                                  .circular(10),
-                                                              curve: Curves
-                                                                  .easeInOut,
-                                                              clipLinearGradient:
-                                                                  true,
-                                                              lineHeight: 10,
-                                                              percent: goal > 0
-                                                                  ? (collected /
-                                                                          goal)
-                                                                      .clamp(
-                                                                          0.0,
-                                                                          1.0)
-                                                                  : 0.0,
-                                                              animation: true,
-                                                              animationDuration:
-                                                                  1000,
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10),
-                                                            child: Row(
-                                                              children: [
-                                                                Text(
-                                                                    "\$ ${state.humancasebycategory[index].collectedAmount!} / \$ ${state.humancasebycategory[index].goalAmount!}",
-                                                                    style:
-                                                                        AppTextStyle
-                                                                            .c)
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
+                                                        width: 200,
+                                                        child:
+                                                            LinearPercentIndicator(
+                                                          maskFilter:
+                                                              MaskFilter.blur(
+                                                                  BlurStyle
+                                                                      .solid,
+                                                                  3),
+                                                          linearGradient:
+                                                              LinearGradient(
+                                                                  colors: [
+                                                                AppColors
+                                                                    .primary,
+                                                                AppColors.teal
+                                                              ]),
+                                                          barRadius:
+                                                              Radius.circular(
+                                                                  10),
+                                                          curve:
+                                                              Curves.easeInOut,
+                                                          clipLinearGradient:
+                                                              true,
+                                                          lineHeight: 10,
+                                                          percent: goal > 0
+                                                              ? (collected /
+                                                                      goal)
+                                                                  .clamp(
+                                                                      0.0, 1.0)
+                                                              : 0.0,
+                                                          animation: true,
+                                                          animationDuration:
+                                                              1000,
+                                                        ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets.only(
-                                                                left: 90,
-                                                                top: 5),
-                                                        child: ElevatedButton(
-                                                            onPressed: () {
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
+                                                            const EdgeInsets
+                                                                .only(left: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "\$ ${state.humancasebycategory[index].collectedAmount!} / \$ ${state.humancasebycategory[index].goalAmount!}",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .c)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 90, top: 5),
+                                                    child: ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
                                                                           OneHumanitariancasesViewPage(
                                                                             id: state.humancasebycategory[index].id ??
                                                                                 0,
                                                                           )));
-                                                            },
-                                                            child:
-                                                                Text("Details")
-                                                                    .tr(),
-                                                            style: ElevatedButton.styleFrom(
+                                                        },
+                                                        child: Text("Details")
+                                                            .tr(),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
                                                                 backgroundColor:
                                                                     AppColors
                                                                         .secondary,
@@ -598,16 +571,16 @@ class _HumanitariancasesViewPageState extends State<HumanitariancasesViewPage> {
                                                                         .white,
                                                                 fixedSize: Size(
                                                                     100, 30))),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    }));
+                                      ),
+                                    ),
+                                  );
+                                });
                           }
                         } else {
                           return Scaffold(

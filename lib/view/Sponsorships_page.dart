@@ -89,7 +89,7 @@ class sponsorships_page extends StatelessWidget {
                                   horizontal: 10, vertical: 2),
                               child: Container(
                                 height: 250,
-                                // width: 200,
+                                width: double.infinity,
                                 child: Card(
                                   elevation: 3,
                                   color: AppColors.white,

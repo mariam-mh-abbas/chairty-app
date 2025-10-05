@@ -14,68 +14,81 @@ class BeforeHelpRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: BackgroundWrapper(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainNavbarPage()),
-                    (route) => false,
-                  );
-                },
-                icon: Icon(Icons.arrow_back)),
-            backgroundColor: AppColors.white,
-          ),
-          Image.asset(
-            'assets/images/help3.png',
-            height: 250,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            'Do You Need Help?'.tr(),
-            style: AppTextStyle.a,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "We are here to support you.Whether you are facing financialhardshipor an urgent\nsituation,you can submit\na help request and our team\nwill review your case as soon as possible."
-                    .tr(),
-                style: AppTextStyle.helpReq,
-                textAlign: TextAlign.center,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const MainNavbarPage()),
+          (route) => false,
+        );
+        return false; // ⬅️ مهم حتى ما يغلق الصفحة الحالية قبل ما ننقلك
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: BackgroundWrapper(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            AppBar(
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainNavbarPage()),
+                      (route) => false,
+                    );
+                  },
+                  icon: Icon(Icons.arrow_back)),
+              backgroundColor: AppColors.white,
+            ),
+            Image.asset(
+              'assets/images/help3.png',
+              height: 250,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Do You Need Help?'.tr(),
+              style: AppTextStyle.a,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "We are here to support you.Whether you are facing financialhardshipor an urgent\nsituation,you can submit\na help request and our team\nwill review your case as soon as possible."
+                      .tr(),
+                  style: AppTextStyle.helpReq,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 60,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final token = await SharedPrefs.getToken() ?? '';
-              if (token == null || token.isEmpty) {
-                return PaymentResultDialog.VolunteerOrHelp(context,
-                    "We’re happy you’d like to benefit from our services!");
-              } else {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RequestHelpPage()));
-              }
-            },
-            child: Text('Help Request'.tr()),
-            style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                fixedSize: Size(200, 50),
-                foregroundColor: AppColors.white),
-          )
-        ]),
+            SizedBox(
+              height: 60,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final token = await SharedPrefs.getToken() ?? '';
+                if (token == null || token.isEmpty) {
+                  return PaymentResultDialog.VolunteerOrHelp(context,
+                      "We’re happy you’d like to benefit from our services!");
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RequestHelpPage()));
+                }
+              },
+              child: Text('Help Request'.tr()),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  fixedSize: Size(200, 50),
+                  foregroundColor: AppColors.white),
+            )
+          ]),
+        ),
       ),
     );
   }
